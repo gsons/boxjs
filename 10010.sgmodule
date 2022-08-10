@@ -1,0 +1,5 @@
+#!name=联通余量
+#!desc=https://github.com/gsons/boxjs
+
+[Script]
+联通余量(v3) = type=cron,cronexp=*/15 * * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/10010.js
