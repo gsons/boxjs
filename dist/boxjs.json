@@ -5,14 +5,14 @@
     "apps": [
       {
         "id": "gsonhub.test",
-        "name": "测试脚本",
+        "name": "筋斗云",
         "descs_html": [
           "<a onClick=\"window.location.reload(true);\">刷新</a>"
         ],
         "scripts": [
           {
-            "name": "测试脚本",
-            "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/main.js"
+            "name": "查询筋斗云日志",
+            "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud-log.js"
           }
         ],
         "keys": [

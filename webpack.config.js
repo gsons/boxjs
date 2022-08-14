@@ -6,7 +6,10 @@ const isProduction = process.env.NODE_ENV == 'production';
 
 
 const config = {
-    entry: './src/index.ts',
+    entry: {
+        somersaultcloud:'./src/somersaultcloud.ts',
+        "somersaultcloud-log":'./src/somersaultcloud-log.ts'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
     },

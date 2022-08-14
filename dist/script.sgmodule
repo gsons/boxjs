@@ -1,15 +1,19 @@
-#!name=script
-#!desc=脚本集合
-
+#!name= 筋斗云
+#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务
 
 [MITM] 
 hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz
 
-
 [General]
-force-http-engine-hosts = %APPEND% 10010.json
+force-http-engine-hosts = %APPEND% somersaultcloud.json somersaultcloud.xml
 
 [Script]
 
-jindouyun = type=http-request,pattern=^https?:\/\/www\.somersaultcloud\.xyz\/user,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/main.js,timeout=10
+# 筋斗云获取cookie
+somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=10,timeout=10
 
+# 筋斗云定时签到
+somersaultcloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=10
+
+# 查询筋斗云个人信息接口服务 http://somersaultcloud.json http://somersaultcloud.xml
+somersaultcloud-service = type=http-request,pattern=^https?:\/\/somersaultcloud\.(json|xml),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=10,requires-body=true,max-size=0,timeout=10

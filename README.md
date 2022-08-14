@@ -1,4 +1,11 @@
-# 🚀 Welcome to your new awesome project!
+# 🚀 筋斗云自动签到脚本
+
+To install  run
+
+```
+npm i
+```
+
 
 This project has been created using **webpack-cli**, you can now run
 
