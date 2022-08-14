@@ -37,7 +37,7 @@ class Box {
 
     private isMute: boolean;
 
-    public response={};
+    public response = {};
 
     constructor(name: string, namespace: string) {
         this.name = name;
@@ -55,14 +55,14 @@ class Box {
 
         this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
 
-        console.log(`本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
-        console.log('response: '+JSON.stringify(this.response));
+        console.log('response: ' + JSON.stringify(this.response));
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
             let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
-            cacheLog = cacheLog ? cacheLog : '' + this.logMsg.join('\n');
+            cacheLog = (cacheLog ? cacheLog : '') + this.logMsg.join('\n');
             this.setStore(Box.APP_LOG_KEY, cacheLog, true);
+            console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
             $done(val);
         }
 
@@ -86,7 +86,7 @@ class Box {
     }
 
     log(...logMsg: string[]) {
-        logMsg = logMsg.map((vo) => { return this.date('yyyy-MM-dd HH:mm:ss') + ' ' + vo + '\n' });
+        logMsg = logMsg.map((vo) => { return this.date('yyyy-MM-dd HH:mm:ss') + ' ' + vo });
         if (logMsg.length > 0) {
             this.logMsg = [...this.logMsg, ...logMsg]
         }
@@ -137,7 +137,7 @@ class Box {
         }
     }
 
-    private  send(opts: any):Promise<any>{
+    private send(opts: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.doRequest(opts, (err: any, resp: any, body: any) => {
                 if (err) reject(err)
@@ -206,9 +206,9 @@ class Box {
         } else if (this.env == ENV.Node) {
             console.log(this.env);
             //@ts-ignore
-            $nodeHttpClient.get('https://api.juejin.cn/tag_api/v1/query_category_briefs', (res:any) => {
-                let list:any = [];
-                res.on('data', (chunk:any) => {
+            $nodeHttpClient.get('https://api.juejin.cn/tag_api/v1/query_category_briefs', (res: any) => {
+                let list: any = [];
+                res.on('data', (chunk: any) => {
                     list.push(chunk);
                 });
                 res.on('end', () => {
@@ -216,11 +216,11 @@ class Box {
                     console.log(data);
                     callback(null, data, null)
                 });
-            
-            }).on('error', (err:any) => {
-            
+
+            }).on('error', (err: any) => {
+
                 console.log('Error: ', err.message);
-            
+
             });
 
         }
