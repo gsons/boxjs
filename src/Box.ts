@@ -137,6 +137,8 @@ class Box {
     }
 
     private send(opts: any): Promise<any> {
+        console.log(JSON.stringify(opts));
+        console.log('SEND1');
         return new Promise((resolve, reject) => {
             this.doRequest(opts, (err: any, resp: any, body: any) => {
                 try {
@@ -145,6 +147,7 @@ class Box {
                     body = null;
                     this.log('JSON解析错误' + error);
                 }
+                console.log('SEND2');
                 if (err) reject(err)
                 else resolve(body)
             });
