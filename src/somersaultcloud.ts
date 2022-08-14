@@ -90,10 +90,10 @@ class App extends Box {
         if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$/.test($request.url)) {
             this.event = EVENT.SIGN_COOKIE;
         }
-        else if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/jindouyun\.json/.test($request.url)) {
+        else if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/somersaultcloud\.json/.test($request.url)) {
             this.event = EVENT.WEB_HTTP;
         }
-        else if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/jindouyun\.log/.test($request.url)) {
+        else if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/somersaultcloud\.log/.test($request.url)) {
             this.event = EVENT.LOG_HTTP;
         }
         else {
