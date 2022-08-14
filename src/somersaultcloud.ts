@@ -74,7 +74,7 @@ class App extends Box {
         };
 
         let res = null;
-        let html = await this.post(opt);
+        let html = await this.get(opt);
         try {
             res = this.fetchJindouyun(html);
         } catch (error) {
