@@ -21,4 +21,4 @@ to bundle your application
 
 模块地址
 
-https://raw.githubusercontent.com/gsons/boxjs/main/dist/script.sgmodule
+https://raw.githubusercontent.com/gsons/boxjs/main/dist/gsonhub.sgmodule
