@@ -58,6 +58,7 @@ class Box {
         cacheLog = cacheLog ? cacheLog : '' + this.logMsg.join('\n');
         this.setStore(Box.APP_LOG_KEY, cacheLog, true);
         console.log(`本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
+        console.log('response: '+JSON.stringify(this.response));
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
