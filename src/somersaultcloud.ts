@@ -15,6 +15,7 @@ class App extends Box {
 
     constructor(name: string, namespace: string) {
         super(name, namespace);
+        this.initEvent();
     }
 
     async dispatchEvent() {
@@ -33,14 +34,14 @@ class App extends Box {
                 await this.handelSign();
                 break;
             default:
-                this.handelSign();
+                await this.handelSign();
                 break;
         }
     }
 
     async handelSign() {
-        let header = JSON.parse(this.getStore(this.signheaderKey, true));
-        let url = this.getStore(this.signurlKey, true);
+        let header ={};// JSON.parse(this.getStore(this.signheaderKey, true));
+        let url ='http://www.10010.json/user';// this.getStore(this.signurlKey, true);
         let [domain] = /https?:\/\/.*?\//.exec(url);
         let opts = {
             url: `${domain}user/checkin`,
@@ -126,7 +127,7 @@ const namespace = 'gsonhub.somersaultcloud';
 
 const app = new App(name, namespace);
 app.dispatchEvent().catch((e) => {
-    app.log(e);
+    app.log('EEEEEEEEEERRRRRRRRRRR'+e);
 }).finally(() => {
     app.done(app.response);
 });

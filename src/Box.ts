@@ -54,14 +54,15 @@ class Box {
         const costTime = (endTime - this.startTime) / 1000;
 
         this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
-        let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
-        cacheLog = cacheLog ? cacheLog : '' + this.logMsg.join('\n');
-        this.setStore(Box.APP_LOG_KEY, cacheLog, true);
+
         console.log(`本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
         console.log('response: '+JSON.stringify(this.response));
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
+            let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
+            cacheLog = cacheLog ? cacheLog : '' + this.logMsg.join('\n');
+            this.setStore(Box.APP_LOG_KEY, cacheLog, true);
             $done(val);
         }
 
@@ -140,6 +141,7 @@ class Box {
         console.log(JSON.stringify(opts));
         console.log('SEND1');
         return new Promise((resolve, reject) => {
+            console.log('SEND2');
             this.doRequest(opts, (err: any, resp: any, body: any) => {
                 try {
                     body = JSON.parse(body)
@@ -147,7 +149,7 @@ class Box {
                     body = null;
                     this.log('JSON解析错误' + error);
                 }
-                console.log('SEND2');
+                console.log('SEND3');
                 if (err) reject(err)
                 else resolve(body)
             });
@@ -159,9 +161,9 @@ class Box {
         return  this.send(opt);
     }
 
-    get(opt: any) {
+    async get(opt: any) {
         opt['method'] = 'get';
-        return  this.send(opt);
+        return await this.send(opt);
     }
 
     //todo 类型问题
@@ -212,10 +214,29 @@ class Box {
                 (err: any) => callback((err && err.error) || 'UndefinedError', null, null)
             )
         } else if (this.env == ENV.Node) {
-            console.error('Node环境 不支持');
-            callback('Node环境 不支持', null, null)
+            console.log(this.env);
+            //@ts-ignore
+            $nodeHttpClient.get('https://api.juejin.cn/tag_api/v1/query_category_briefs', (res:any) => {
+                let list:any = [];
+                res.on('data', (chunk:any) => {
+                    list.push(chunk);
+                });
+                res.on('end', () => {
+                    const data = JSON.parse(Buffer.concat(list).toString());
+                    console.log(data);
+                    callback(null, data, null)
+                });
+            
+            }).on('error', (err:any) => {
+            
+                console.log('Error: ', err.message);
+            
+            });
+
         }
     }
+
+
 
 
     setStore(key: string, val: string, attach = false): boolean {
