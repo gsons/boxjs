@@ -1,0 +1,15 @@
+#!name=script
+#!desc=脚本集合
+
+
+[MITM] 
+hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz
+
+
+[General]
+force-http-engine-hosts = %APPEND% 10010.json
+
+[Script]
+
+jindouyun = type=http-request,pattern=^https?:\/\/www\.somersaultcloud\.xyz\/user,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/main.js,timeout=10
+

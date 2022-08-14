@@ -16,9 +16,7 @@
           }
         ],
         "keys": [
-          "disabled",
-          "title",
-          "desc"
+          "disabled"
         ],
         "author": "@gsonhub",
         "settings": [
