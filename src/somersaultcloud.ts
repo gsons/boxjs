@@ -20,7 +20,7 @@ class App extends Box {
     async dispatchEvent() {
         switch (this.event) {
             case EVENT.WEB_HTTP:
-                this.handelWebHttp();
+                await this.handelWebHttp();
                 break;
             case EVENT.LOG_HTTP:
                 this.handelLogHttp();
@@ -30,7 +30,7 @@ class App extends Box {
                 this.handelSignCookie();
                 break;
             case EVENT.SIGN:
-                this.handelSign();
+                await this.handelSign();
                 break;
             default:
                 this.handelSign();

@@ -137,7 +137,7 @@ class Box {
 
     private send(opts: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.doPost(opts, (err: any, resp: any, body: any) => {
+            this.doRequest(opts, (err: any, resp: any, body: any) => {
                 try {
                     body = JSON.parse(body)
                 } catch (error) {
@@ -161,7 +161,7 @@ class Box {
     }
 
     //todo 类型问题
-    private doPost(opts: any, callback = (err: any, resp: any, body: any) => { }) {
+    private doRequest(opts: any, callback = (err: any, resp: any, body: any) => { }) {
         const method = opts.method ? opts.method.toLocaleLowerCase() : 'post'
         if (opts.body && opts.headers && !opts.headers['Content-Type']) {
             opts.headers['Content-Type'] = 'application/x-www-form-urlencoded'
