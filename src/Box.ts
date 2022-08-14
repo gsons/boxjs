@@ -138,27 +138,17 @@ class Box {
     }
 
     private  send(opts: any):Promise<any>{
-        console.log(JSON.stringify(opts));
-        console.log('SEND1');
         return new Promise((resolve, reject) => {
-            console.log('SEND2');
             this.doRequest(opts, (err: any, resp: any, body: any) => {
-                try {
-                    body = JSON.parse(body)
-                } catch (error) {
-                    body = null;
-                    this.log('JSON解析错误' + error);
-                }
-                console.log('SEND3');
                 if (err) reject(err)
                 else resolve(body)
             });
         })
     }
 
-    post(opt: any) {
+    async post(opt: any) {
         opt['method'] = 'post';
-        return  this.send(opt);
+        return await this.send(opt);
     }
 
     async get(opt: any) {

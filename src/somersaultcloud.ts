@@ -39,6 +39,7 @@ class App extends Box {
         }
     }
 
+
     async handelSign() {
         let header =JSON.parse(this.getStore(this.signheaderKey, true));
         let url = this.getStore(this.signurlKey, true);
@@ -48,7 +49,8 @@ class App extends Box {
             headers: header,
         };
         this.log('Http request:' + opts.url);
-        let data = await this.get(opts);
+        let data = await this.post(opts);
+        data=JSON.parse(data);
         this.msg(this.name, data.msg, (JSON.stringify(data)));
     }
 
