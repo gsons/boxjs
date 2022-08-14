@@ -17,7 +17,7 @@ class App extends Box {
         super(name, namespace);
     }
 
-    dispatchEvent() {
+    async dispatchEvent() {
         switch (this.event) {
             case EVENT.WEB_HTTP:
                 this.handelWebHttp();
@@ -119,18 +119,13 @@ class App extends Box {
         this.log(JSON.stringify(res));
         return res;
     }
-
-    async run() {
-        this.initEvent();
-        this.dispatchEvent();
-    }
 }
 
 const name = '筋斗云机场';
 const namespace = 'gsonhub.somersaultcloud';
 
 const app = new App(name, namespace);
-app.run().catch((e) => {
+app.dispatchEvent().catch((e) => {
     app.log(e);
 }).finally(() => {
     app.done(app.response);
