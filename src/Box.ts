@@ -122,17 +122,19 @@ class Box {
         return fmt
     }
 
-    httpResponse(res: any) {
+    httpResponse(res: any, headers: any = {}) {
+        const HEADER = {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST,GET',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        };
+        let header = Object.assign(HEADER, headers);
         this.response = {
             response: {
                 status: 200,
-                body: JSON.stringify(res),
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'POST,GET',
-                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-                },
+                body: typeof res == 'string' ? res : JSON.stringify(res),
+                headers: header
             },
         }
     }

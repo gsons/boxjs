@@ -62,7 +62,8 @@ class App extends Box {
 
     handelLogHttp() {
         let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
-        this.httpResponse(cacheLog);
+        cacheLog=cacheLog.replace(/\n/g,'<br>');
+        this.httpResponse(cacheLog,{'Content-Type':'text/html;charset=utf-8'});
     }
 
     async handelWebHttp() {
