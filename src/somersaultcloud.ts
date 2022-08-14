@@ -127,6 +127,7 @@ class App extends Box {
     }
 }
 
+
 const name = '筋斗云';
 const namespace = 'gsonhub.somersaultcloud';
 
