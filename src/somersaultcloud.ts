@@ -40,8 +40,8 @@ class App extends Box {
     }
 
     async handelSign() {
-        let header ={};// JSON.parse(this.getStore(this.signheaderKey, true));
-        let url ='http://www.10010.json/user';// this.getStore(this.signurlKey, true);
+        let header =JSON.parse(this.getStore(this.signheaderKey, true));
+        let url = this.getStore(this.signurlKey, true);
         let [domain] = /https?:\/\/.*?\//.exec(url);
         let opts = {
             url: `${domain}user/checkin`,
