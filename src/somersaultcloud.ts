@@ -15,8 +15,6 @@ class App extends Box {
 
     constructor(name: string, namespace: string) {
         super(name, namespace);
-        this.initEvent();
-        this.dispatchEvent();
     }
 
     dispatchEvent() {
@@ -123,7 +121,8 @@ class App extends Box {
     }
 
     async run() {
-        this.log('ABCD');
+        this.initEvent();
+        this.dispatchEvent();
     }
 }
 
