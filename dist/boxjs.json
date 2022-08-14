@@ -16,7 +16,7 @@
           }
         ],
         "keys": [
-          "disabled"
+          "disabled","gsonhub.somersaultcloud.boxjs-log","gsonhub.somersaultcloud.sign_url", "gsonhub.somersaultcloud.sign_header"
         ],
         "author": "@gsonhub",
         "settings": [
