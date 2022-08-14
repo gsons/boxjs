@@ -152,12 +152,12 @@ class Box {
     }
 
     async post(opt: any) {
-        opt.method = 'post';
+        opt['method'] = 'post';
         return await this.send(opt);
     }
 
     async get(opt: any) {
-        opt.method = 'get';
+        opt['method'] = 'get';
         return await this.send(opt);
     }
 

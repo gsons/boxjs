@@ -47,7 +47,7 @@ class App extends Box {
             headers: header,
         };
         this.log('Http request:' + opts.url);
-        let data = await this.post(opts);
+        let data = await this.get(opts);
         this.msg(this.name, data.msg, (JSON.stringify(data)));
     }
 
