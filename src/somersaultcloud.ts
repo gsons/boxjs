@@ -127,8 +127,7 @@ class App extends Box {
     }
 }
 
-
-const name = '筋斗云';
+const name = '筋斗云机场';
 const namespace = 'gsonhub.somersaultcloud';
 
 const app = new App(name, namespace);
