@@ -136,7 +136,7 @@ class Box {
         }
     }
 
-    private send(opts: any): Promise<any> {
+    private  send(opts: any):Promise<any>{
         console.log(JSON.stringify(opts));
         console.log('SEND1');
         return new Promise((resolve, reject) => {
@@ -154,14 +154,14 @@ class Box {
         })
     }
 
-    async post(opt: any) {
+    post(opt: any) {
         opt['method'] = 'post';
-        return await this.send(opt);
+        return  this.send(opt);
     }
 
-    async get(opt: any) {
+    get(opt: any) {
         opt['method'] = 'get';
-        return await this.send(opt);
+        return  this.send(opt);
     }
 
     //todo 类型问题
