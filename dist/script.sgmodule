@@ -5,7 +5,7 @@
 hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz
 
 [General]
-force-http-engine-hosts = %APPEND% somersaultcloud.json somersaultcloud.xml
+force-http-engine-hosts = %APPEND% somersaultcloud.json somersaultcloud.log
 
 [Script]
 
@@ -15,5 +15,5 @@ somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\
 # 筋斗云定时签到
 somersaultcloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=10
 
-# 查询筋斗云个人信息接口服务 http://somersaultcloud.json http://somersaultcloud.xml
-somersaultcloud-service = type=http-request,pattern=^https?:\/\/somersaultcloud\.(json|xml),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=10,requires-body=true,max-size=0,timeout=10
+# 查询筋斗云个人信息接口服务 http://somersaultcloud.json  查询筋斗云运行日志 somersaultcloud.log
+somersaultcloud-service = type=http-request,pattern=^https?:\/\/somersaultcloud\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=10,requires-body=true,max-size=0,timeout=10

@@ -11,8 +11,8 @@
         ],
         "scripts": [
           {
-            "name": "查询筋斗云日志",
-            "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud-log.js"
+            "name": "筋斗云签到",
+            "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js"
           }
         ],
         "keys": [

@@ -8,6 +8,7 @@ declare var $notification: any;
 declare var $notify: any;
 declare var $done: any;
 
+
 enum ENV {
     Surge, Loon, QuanX, Shadowrocket, Node
 };
@@ -19,7 +20,7 @@ class Box {
     public env: ENV;
 
     //应用名称
-    private name: string;
+    protected name: string;
 
     //缓存命名空间
     private namespace: string;
@@ -34,13 +35,17 @@ class Box {
 
     public static APP_LOG_KEY = 'boxjs-log';
 
+    private isMute: boolean;
+
+    public response={};
+
     constructor(name: string, namespace: string) {
         this.name = name;
         this.namespace = namespace;
         this.logMsg = [];
         this.logSeparator = '';
         this.startTime = new Date().getTime();
-        this.log('', `🔔${this.name}, 开始!`);
+        this.log(`🔔${this.name}, 开始!`);
         this.initEnv();
     }
 
@@ -48,14 +53,14 @@ class Box {
         const endTime = new Date().getTime();
         const costTime = (endTime - this.startTime) / 1000;
 
-        this.log('', `🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
-        let cacheLog=this.getStore(Box.APP_LOG_KEY,true);
-        cacheLog=cacheLog?cacheLog:''+this.logMsg.join('\n');
-        this.setStore(Box.APP_LOG_KEY,cacheLog,true);
-        console.log(`本次运行日志已缓存到变量 ${this.namespace +'.'+ Box.APP_LOG_KEY}`);
-        if(this.env==ENV.Node){
+        this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
+        let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
+        cacheLog = cacheLog ? cacheLog : '' + this.logMsg.join('\n');
+        this.setStore(Box.APP_LOG_KEY, cacheLog, true);
+        console.log(`本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
+        if (this.env == ENV.Node) {
             process.exit(1);
-        }else{
+        } else {
             $done(val);
         }
 
@@ -79,7 +84,7 @@ class Box {
     }
 
     log(...logMsg: string[]) {
-        logMsg=logMsg.map((vo)=>{return this.date('yyyy-MM-dd HH:mm:ss')+' '+vo+'\n'});
+        logMsg = logMsg.map((vo) => { return this.date('yyyy-MM-dd HH:mm:ss') + ' ' + vo + '\n' });
         if (logMsg.length > 0) {
             this.logMsg = [...this.logMsg, ...logMsg]
         }
@@ -106,13 +111,106 @@ class Box {
             'S': date.getMilliseconds()
         };
         if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
-        for (let k in o){
+        for (let k in o) {
             //@ts-ignore
-            let item=o[k];
+            let item = o[k];
             if (new RegExp('(' + k + ')').test(fmt))
                 fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? item : ('00' + item).substr(('' + item).length))
         }
         return fmt
+    }
+
+    httpResponse(res: any) {
+        this.response = {
+            response: {
+                status: 200,
+                body: JSON.stringify(res),
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'POST,GET',
+                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+                },
+            },
+        }
+    }
+
+    private send(opts: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.doPost(opts, (err: any, resp: any, body: any) => {
+                try {
+                    body = JSON.parse(body)
+                } catch (error) {
+                    body = null;
+                    this.log('JSON解析错误' + error);
+                }
+                if (err) reject(err)
+                else resolve(body)
+            });
+        })
+    }
+
+    async post(opt: any) {
+        opt.method = 'post';
+        return await this.send(opt);
+    }
+
+    async get(opt: any) {
+        opt.method = 'get';
+        return await this.send(opt);
+    }
+
+    //todo 类型问题
+    private doPost(opts: any, callback = (err: any, resp: any, body: any) => { }) {
+        const method = opts.method ? opts.method.toLocaleLowerCase() : 'post'
+        if (opts.body && opts.headers && !opts.headers['Content-Type']) {
+            opts.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        }
+        if (opts.headers) delete opts.headers['Content-Length']
+        if (this.env == ENV.Surge || this.env == ENV.Shadowrocket || this.env == ENV.Loon) {
+            if (this.env == ENV.Surge && this.isNeedRewrite) {
+                opts.headers = opts.headers || {}
+                Object.assign(opts.headers, {
+                    'X-Surge-Skip-Scripting': false
+                })
+            }
+            $httpClient[method](opts, (err: any, resp: any, body: any) => {
+                if (!err && resp) {
+                    resp.body = body
+                    resp.statusCode = resp.status ? resp.status : resp.statusCode
+                    resp.status = resp.statusCode
+                }
+                callback(err, resp, body)
+            })
+        } else if (this.env == ENV.QuanX) {
+            opts.method = method
+            if (this.isNeedRewrite) {
+                opts.opts = opts.opts || {}
+                Object.assign(opts.opts, {
+                    hints: false
+                })
+            }
+            $task.fetch(opts).then(
+                (resp: any) => {
+                    const {
+                        statusCode: status,
+                        statusCode,
+                        headers,
+                        body
+                    } = resp
+                    callback(null, {
+                        status,
+                        statusCode,
+                        headers,
+                        body
+                    }, body)
+                },
+                (err: any) => callback((err && err.error) || 'UndefinedError', null, null)
+            )
+        } else if (this.env == ENV.Node) {
+            console.error('Node环境 不支持');
+            callback('Node环境 不支持', null, null)
+        }
     }
 
 

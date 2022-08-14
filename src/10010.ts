@@ -1,19 +1,19 @@
 import Box from "./Box";
 
-class AppLog extends Box {
+class App extends Box {
     constructor(name: string, namespace: string) {
         super(name, namespace)
     }
+
     async run() {
-        let log=this.getStore(Box.APP_LOG_KEY,true);
-        console.log(log);
+        
     }
 }
 
-const name = '筋斗云日志';
-const namespace = 'gsonhub.jindouyun';
+const name = '中国联通';
+const namespace = 'gsonhub.10010';
 
-const app = new AppLog(name, namespace);
+const app = new App(name, namespace);
 app.run().catch((e) => {
     app.log(e);
 }).finally(() => {

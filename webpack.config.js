@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV == 'production';
 const config = {
     entry: {
         somersaultcloud:'./src/somersaultcloud.ts',
-        "somersaultcloud-log":'./src/somersaultcloud-log.ts'
+        "10010":'./src/10010.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
