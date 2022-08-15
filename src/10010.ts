@@ -115,6 +115,7 @@ class App extends Box {
     }
 
     async run() {
+        
         if (!this.cookie && (!this.appId || !this.mobile || !this.password)) {
             throw new Error('⚠️ 请配置 Cookie 或 appId, 手机号(mobile), 密码(password)')
         }
@@ -212,7 +213,7 @@ class App extends Box {
 }
 
 const name = '中国联通';
-const namespace = '@xream.10010';
+const namespace = 'gsonhub.10010';
 const app = new App(name, namespace);
 
 app.run().catch((e) => {

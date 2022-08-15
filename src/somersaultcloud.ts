@@ -61,13 +61,6 @@ class App extends Box {
         this.msg(this.name, `获取Cookie: 成功 (筋斗云)`, ``);
     }
 
-    handelLogHttp() {
-        this.log('运行 》 筋斗云系统运行日志http服务器');
-        let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
-        cacheLog=cacheLog.replace(/\n/g,'<br>');
-        this.httpResponse(cacheLog,{'Content-Type':'text/html;charset=utf-8'});
-    }
-
     async handelWebHttp() {
         this.log('运行 》  筋斗云个人信息查询http服务器');
         let url = this.getStore(this.signurlKey, true);

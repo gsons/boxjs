@@ -33,7 +33,7 @@ enum ENV {
 
     private startTime: number;
 
-    public static APP_LOG_KEY = 'boxjs-log';
+    public static APP_LOG_KEY = 'gsonhub-boxjs-log';
 
     private isMute: boolean;
 
@@ -67,10 +67,10 @@ enum ENV {
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
-            let cacheLog = this.getStore(Box.APP_LOG_KEY, true)+'\n';
+            let cacheLog = this.getStore(Box.APP_LOG_KEY)+'\n';
             cacheLog = (cacheLog ? cacheLog : '') + this.logMsg.join('\n');
-            this.setStore(Box.APP_LOG_KEY, cacheLog, true);
-            console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
+            this.setStore(Box.APP_LOG_KEY, cacheLog);
+            console.log(`注意本次运行日志已缓存到变量 ${Box.APP_LOG_KEY}`);
             $done(this.response);
         }
 
@@ -86,6 +86,13 @@ enum ENV {
             return $prefs.valueForKey(key)
         }
         return null;
+    }
+
+    handelLogHttp() {
+        this.log(`运行 》 ${this.name}系统运行日志http服务器`);
+        let cacheLog = this.getStore(Box.APP_LOG_KEY);
+        cacheLog=cacheLog.replace(/\n/g,'<br>');
+        this.httpResponse(cacheLog,{'Content-Type':'text/html;charset=utf-8'});
     }
 
     msg(title: string, subtitle: string, body: string) {
