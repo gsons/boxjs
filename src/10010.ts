@@ -18,7 +18,7 @@ class App extends Box {
         this.mobile = this.getStore(`mobile`, true);
         this.password = this.getStore(`password`, true);
         this.cookie = this.getStore(`cookie`, true);
-        this.log(JSON.stringify(
+        console.log(JSON.stringify(
             { 
             appId: this.appId,
             mobile: this.mobile,
@@ -43,8 +43,8 @@ class App extends Box {
             throw new Error("查询流量失败！JSON数据解析异常");
         }
 
-        this.log('↓ res body')
-        this.log(JSON.stringify(res))
+        console.log('↓ res body')
+        console.log(JSON.stringify(res))
 
 
         if (vo.status == 200 && res.code === '0000') {
@@ -89,8 +89,8 @@ class App extends Box {
             throw new Error("登录失败！JSON数据解析异常");
         }
 
-        this.log('↓ res body')
-        this.log(body);
+         console.log('↓ res body')
+         console.log(body);
 
         let code = res.code;
         if (code === '0') {
@@ -202,8 +202,8 @@ class App extends Box {
                 }
             }
             const objstr = JSON.stringify(obj);
-            this.log(JSON.stringify(obj));
-            this.setStore(`vvv_flow`, objstr);
+            this.log(objstr);
+            this.setStore(`vvv_flow`, objstr,true);
             detail = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd qq HH:mm:ss'), code: '1', 'msg': '查询成功', data: obj };
         } else {
             detail = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd qq HH:mm:ss'), code: '0', 'msg': '查询失败' };

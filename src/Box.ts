@@ -63,7 +63,7 @@ enum ENV {
 
         this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
 
-        console.log('response: ' + JSON.stringify(this.response));
+        console.log('response: ' + (this.response));
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
