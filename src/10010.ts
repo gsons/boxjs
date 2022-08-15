@@ -132,11 +132,11 @@ class App extends Box {
     handleQuery(res: any) {
         let detail;
         if (res) {
-            let old_obj;
+            let old_obj=null;
             try {
                 old_obj = JSON.parse(this.getStore(`vvv_flow`, true));
             } catch (error) {
-                throw new Error('解析JSON异常');
+                //throw new Error('解析JSON异常');
             }
 
             const query_date = this.date('yyyy-MM-dd', res.time.replace(/-/g, '/'));
