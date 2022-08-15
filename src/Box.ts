@@ -81,6 +81,7 @@ class Box {
     }
 
     msg(title: string, subtitle: string, body: string) {
+        this.log('==============📣系统通知📣=============='+'\n'+title+'\n'+subtitle+'\n'+body);
         if (this.env == ENV.Surge || this.env == ENV.Shadowrocket || this.env == ENV.Loon) $notification.post(title, subtitle, body)
         else if (this.env == ENV.QuanX) $notify(title, subtitle, body)
     }

@@ -26,7 +26,6 @@ class App extends Box {
             case EVENT.LOG_HTTP:
                 this.handelLogHttp();
                 break;
-
             case EVENT.SIGN_COOKIE:
                 this.handelSignCookie();
                 break;
@@ -41,6 +40,7 @@ class App extends Box {
 
 
     async handelSign() {
+        this.log('运行 》 筋斗云签到');
         let header =JSON.parse(this.getStore(this.signheaderKey, true));
         let url = this.getStore(this.signurlKey, true);
         let [domain] = /https?:\/\/.*?\//.exec(url);
@@ -55,18 +55,21 @@ class App extends Box {
     }
 
     handelSignCookie() {
+        this.log('运行 》 获取筋斗云COOKIE');
         this.setStore(this.signurlKey, $request.url, true);
         this.setStore(this.signheaderKey, JSON.stringify($request.headers), true);
         this.msg(this.name, `获取Cookie: 成功 (筋斗云)`, ``);
     }
 
     handelLogHttp() {
+        this.log('运行 》 筋斗云系统运行日志http服务器');
         let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
         cacheLog=cacheLog.replace(/\n/g,'<br>');
         this.httpResponse(cacheLog,{'Content-Type':'text/html;charset=utf-8'});
     }
 
     async handelWebHttp() {
+        this.log('运行 》  筋斗云个人信息查询http服务器');
         let url = this.getStore(this.signurlKey, true);
         let header = JSON.parse(this.getStore(this.signheaderKey, true));
         let opt = {
@@ -125,12 +128,12 @@ class App extends Box {
     }
 }
 
-const name = '筋斗云机场';
+const name = '筋斗云';
 const namespace = 'gsonhub.somersaultcloud';
 
 const app = new App(name, namespace);
 app.dispatchEvent().catch((e) => {
-    app.log('EEEEEEEEEERRRRRRRRRRR'+e);
+    app.log('error '+e);
 }).finally(() => {
     app.done(app.response);
 });
