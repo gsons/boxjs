@@ -14,7 +14,7 @@ enum ENV {
 };
 
 
-class Box {
+ class Box {
 
     //VPN环境名称
     public env: ENV;
