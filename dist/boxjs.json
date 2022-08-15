@@ -13,10 +13,17 @@
           {
             "name": "筋斗云签到",
             "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js"
+          },
+          {
+            "name": "中国联通流量查询",
+            "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js"
           }
         ],
         "keys": [
-          "disabled","gsonhub.somersaultcloud.boxjs-log","gsonhub.somersaultcloud.sign_url", "gsonhub.somersaultcloud.sign_header"
+          "disabled",
+          "gsonhub.somersaultcloud.boxjs-log",
+          "gsonhub.somersaultcloud.sign_url", 
+          "gsonhub.somersaultcloud.sign_header"
         ],
         "author": "@gsonhub",
         "settings": [

@@ -49,7 +49,14 @@ enum ENV {
         this.initEnv();
     }
 
-    public done(val = {}) {
+    //todo 类型
+    transParams(data:any) {
+        return Object.keys(data)
+            .map(k => `${k}=${encodeURIComponent(data[k])}`)
+            .join('&')
+    }
+
+    public done() {
         const endTime = new Date().getTime();
         const costTime = (endTime - this.startTime) / 1000;
 
@@ -59,11 +66,11 @@ enum ENV {
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
-            let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
+            let cacheLog = this.getStore(Box.APP_LOG_KEY, true)+'\n';
             cacheLog = (cacheLog ? cacheLog : '') + this.logMsg.join('\n');
             this.setStore(Box.APP_LOG_KEY, cacheLog, true);
             console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
-            $done(val);
+            $done(this.response);
         }
 
     }
@@ -140,15 +147,24 @@ enum ENV {
         }
     }
 
+    /**
+     * @param opt 
+     * @returns {status,body,headers}
+     */    
     private send(opts: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.doRequest(opts, (err: any, resp: any, body: any) => {
                 if (err) reject(err)
-                else resolve(body)
+                else resolve(resp)
             });
         })
     }
 
+    /**
+     * 
+     * @param opt 
+     * @returns {status,body,headers}
+     */
     async post(opt: any) {
         opt['method'] = 'post';
         return await this.send(opt);
