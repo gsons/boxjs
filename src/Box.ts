@@ -47,6 +47,7 @@ enum ENV {
         this.startTime = new Date().getTime();
         this.log(`🔔${this.name}, 开始!`);
         this.initEnv();
+        this.log('当前环境为：'+this.env);
     }
 
     //todo 类型
