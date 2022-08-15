@@ -1,0 +1,33 @@
+{
+    "id": "gsonhub.app.sub",
+    "name": "@gsonhub 的应用订阅",
+    "author": "@gsonhub",
+    "apps": [
+      {
+        "id": "gsonhub.test",
+        "name": "筋斗云",
+        "descs_html": [
+          "<a onClick=\"window.location.reload(true);\">刷新</a>"
+        ],
+        "scripts": [
+          {
+            "name": "筋斗云签到",
+            "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js"
+          }
+        ],
+        "keys": [
+          "disabled","gsonhub.somersaultcloud.boxjs-log","gsonhub.somersaultcloud.sign_url", "gsonhub.somersaultcloud.sign_header"
+        ],
+        "author": "@gsonhub",
+        "settings": [
+          {
+            "id": "gsonhub.test.disabled",
+            "name": "禁用",
+            "val": false,
+            "type": "boolean",
+            "desc": ""
+          }
+        ]
+      }
+    ]
+  }
