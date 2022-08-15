@@ -1,0 +1,50 @@
+{
+    "id": "gsons.app.sub",
+    "name": "@gsons 的应用订阅",
+    "author": "@gsons",
+    "apps": [
+      {
+        "id": "gsons.jindouyun",
+        "name": "筋斗云",
+        "descs_html": [
+          "<a onClick=\"window.location.reload(true);\">刷新</a>"
+        ],
+        "scripts": [
+          {
+            "name": "手动执行",
+            "script": "http://120.76.73.200:70/json/boxjs/jindouyun.js"
+          }
+        ],
+        "keys": [
+          "disabled",
+          "title",
+          "desc"
+        ],
+        "author": "@gsons",
+        "settings": [
+          {
+            "id": "disabled",
+            "name": "禁用",
+            "val": false,
+            "type": "boolean",
+            "desc": ""
+          },
+          {
+            "id": "gsons_jindouyun_url",
+            "name": "url",
+            "val": "",
+            "type": "text",
+            "desc": ""
+          },
+          {
+            "id": "gsons_jindouyun_header",
+            "name": "header",
+            "placeholder": "",
+            "val": "",
+            "type": "textarea",
+            "desc": ""
+          }
+        ]
+      }
+    ]
+  }

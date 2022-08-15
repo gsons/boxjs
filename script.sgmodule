@@ -1,0 +1,19 @@
+#!name=script
+#!desc=脚本集合
+
+
+[MITM] 
+hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz
+
+
+[General]
+force-http-engine-hosts = %APPEND% 10010.json
+
+[Script]
+10010 = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=http://120.76.73.200:70/json/boxjs/10010.js
+
+txdwk = type=http-request,pattern=^https?:\/\/10010\.json,script-path=http://120.76.73.200:70/json/boxjs/10010.js,requires-body=true,max-size=0,timeout=10
+
+jindouyun = type=http-request,pattern=^https?:\/\/www\.somersaultcloud\.xyz\/user,script-path=http://120.76.73.200:70/json/boxjs/jindouyun.js,timeout=10
+
+jindouyuncron = type=cron,cronexp=10 0 0 * * *,timeout=10,script-path=http://120.76.73.200:70/json/boxjs/jindouyun.js
