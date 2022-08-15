@@ -18,6 +18,13 @@ class App extends Box {
         this.mobile = this.getStore(`mobile`, true);
         this.password = this.getStore(`password`, true);
         this.cookie = this.getStore(`cookie`, true);
+        this.log(JSON.stringify(
+            { 
+            appId: this.appId,
+            mobile: this.mobile,
+            password: this.password,
+            cookie: this.cookie,
+        }));
     }
 
     async query() {

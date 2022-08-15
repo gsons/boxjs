@@ -4,7 +4,7 @@
     "author": "@gsonhub",
     "apps": [
       {
-        "id": "gsonhub.test",
+        "id": "gsonhub.boxjs",
         "name": "筋斗云",
         "descs_html": [
           "<a onClick=\"window.location.reload(true);\">刷新</a>"
@@ -28,7 +28,7 @@
         "author": "@gsonhub",
         "settings": [
           {
-            "id": "gsonhub.test.disabled",
+            "id": "gsonhub.boxjs.disabled",
             "name": "禁用",
             "val": false,
             "type": "boolean",
