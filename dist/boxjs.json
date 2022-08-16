@@ -4,7 +4,7 @@
     "author": "@gsonhub",
     "apps": [
       {
-        "id": "gsonhub.test",
+        "id": "gsonhub.boxjs",
         "name": "筋斗云",
         "descs_html": [
           "<a onClick=\"window.location.reload(true);\">刷新</a>"
@@ -13,19 +13,52 @@
           {
             "name": "筋斗云签到",
             "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js"
+          },
+          {
+            "name": "中国联通流量查询",
+            "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js"
           }
         ],
         "keys": [
-          "disabled","gsonhub.somersaultcloud.boxjs-log","gsonhub.somersaultcloud.sign_url", "gsonhub.somersaultcloud.sign_header"
+          "gsonhub.10010.mobile",
+          "gsonhub.10010.appId",
+          "gsonhub.10010.password",
+          "gsonhub.10010.cookie",
+          "gsonhub.10010.boxjs-log",
+
+          "gsonhub.somersaultcloud.boxjs-log",
+          "gsonhub.somersaultcloud.sign_url", 
+          "gsonhub.somersaultcloud.sign_header"
         ],
         "author": "@gsonhub",
         "settings": [
           {
-            "id": "gsonhub.test.disabled",
-            "name": "禁用",
-            "val": false,
-            "type": "boolean",
-            "desc": ""
+            "id": "gsonhub.10010.mobile",
+            "name": "手机号",
+            "val": "",
+            "type": "text",
+            "desc": "手机号"
+          },
+          {
+            "id": "gsonhub.10010.password",
+            "name": "密码",
+            "val": "",
+            "type": "text",
+            "desc": "密码"
+          },
+          {
+            "id": "gsonhub.10010.appId",
+            "name": "appId",
+            "val": "",
+            "type": "text",
+            "desc": "appId"
+          },
+          {
+            "id": "gsonhub.10010.cookie",
+            "name": "Cookie",
+            "val": "",
+            "type": "text",
+            "desc": "Cookie"
           }
         ]
       }

@@ -33,7 +33,7 @@ enum ENV {
 
     private startTime: number;
 
-    public static APP_LOG_KEY = 'boxjs-log';
+    public static APP_LOG_KEY = 'gsonhub-boxjs-log';
 
     private isMute: boolean;
 
@@ -47,23 +47,31 @@ enum ENV {
         this.startTime = new Date().getTime();
         this.log(`🔔${this.name}, 开始!`);
         this.initEnv();
+        this.log('当前环境为：'+this.env);
     }
 
-    public done(val = {}) {
+    //todo 类型
+    transParams(data:any) {
+        return Object.keys(data)
+            .map(k => `${k}=${encodeURIComponent(data[k])}`)
+            .join('&')
+    }
+
+    public done() {
         const endTime = new Date().getTime();
         const costTime = (endTime - this.startTime) / 1000;
 
         this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
 
-        console.log('response: ' + JSON.stringify(this.response));
+        console.log('response: ' + (this.response));
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
-            let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
+            let cacheLog = this.getStore(Box.APP_LOG_KEY)+'\n';
             cacheLog = (cacheLog ? cacheLog : '') + this.logMsg.join('\n');
-            this.setStore(Box.APP_LOG_KEY, cacheLog, true);
-            console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
-            $done(val);
+            this.setStore(Box.APP_LOG_KEY, cacheLog);
+            console.log(`注意本次运行日志已缓存到变量 ${Box.APP_LOG_KEY}`);
+            $done(this.response);
         }
 
     }
@@ -78,6 +86,13 @@ enum ENV {
             return $prefs.valueForKey(key)
         }
         return null;
+    }
+
+    handelLogHttp() {
+        this.log(`运行 》 ${this.name}系统运行日志http服务器`);
+        let cacheLog = this.getStore(Box.APP_LOG_KEY);
+        cacheLog=cacheLog.replace(/\n/g,'<br>');
+        this.httpResponse(cacheLog,{'Content-Type':'text/html;charset=utf-8'});
     }
 
     msg(title: string, subtitle: string, body: string) {
@@ -140,15 +155,24 @@ enum ENV {
         }
     }
 
+    /**
+     * @param opt 
+     * @returns {status,body,headers}
+     */    
     private send(opts: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.doRequest(opts, (err: any, resp: any, body: any) => {
                 if (err) reject(err)
-                else resolve(body)
+                else resolve(resp)
             });
         })
     }
 
+    /**
+     * 
+     * @param opt 
+     * @returns {status,body,headers}
+     */
     async post(opt: any) {
         opt['method'] = 'post';
         return await this.send(opt);

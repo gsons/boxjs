@@ -50,7 +50,7 @@ class App extends Box {
         };
         this.log('Http request:' + opts.url);
         let data = await this.post(opts);
-        data=JSON.parse(data);
+        data=JSON.parse(data.body);
         this.msg(this.name, data.msg, (JSON.stringify(data)));
     }
 
@@ -59,13 +59,6 @@ class App extends Box {
         this.setStore(this.signurlKey, $request.url, true);
         this.setStore(this.signheaderKey, JSON.stringify($request.headers), true);
         this.msg(this.name, `获取Cookie: 成功 (筋斗云)`, ``);
-    }
-
-    handelLogHttp() {
-        this.log('运行 》 筋斗云系统运行日志http服务器');
-        let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
-        cacheLog=cacheLog.replace(/\n/g,'<br>');
-        this.httpResponse(cacheLog,{'Content-Type':'text/html;charset=utf-8'});
     }
 
     async handelWebHttp() {
@@ -78,9 +71,9 @@ class App extends Box {
         };
 
         let res = null;
-        let html = await this.get(opt);
+        let vo = await this.get(opt);
         try {
-            res = this.fetchJindouyun(html);
+            res = this.fetchJindouyun(vo.body);
         } catch (error) {
             this.log(`获取筋斗云个人信息失败:` + error);
             this.msg(name, `获取筋斗云个人信息失败`, error)
@@ -130,10 +123,10 @@ class App extends Box {
 
 const name = '筋斗云';
 const namespace = 'gsonhub.somersaultcloud';
-
 const app = new App(name, namespace);
+
 app.dispatchEvent().catch((e) => {
-    app.log('error '+e);
+    app.log('APP RUN ERROR: '+e);
 }).finally(() => {
-    app.done(app.response);
+    app.done();
 });
