@@ -5,11 +5,11 @@ const path = require('path');
 const isProduction = process.env.NODE_ENV == 'production';
 
 
-var v="1010";
+var v = "1001";
 const fs = require('fs')
 fs.readFile('src/gsonhub.sgmodule.tpl', (err, buffer) => {
-   let content=buffer.toString().replace(/v=VERSION/g,'_='+v);
-   fs.writeFile('dist/gsonhub.sgmodule',content,()=>{});
+    let content = buffer.toString().replace(/v=VERSION/g, '_=' + v);
+    fs.writeFile('dist/gsonhub.sgmodule', content, () => { });
 });
 
 
@@ -31,20 +31,12 @@ const config = {
                 loader: 'ts-loader',
                 exclude: ['/node_modules/'],
             },
-
-            {
-                test: /\.handlebars$/,
-                loader: 'handlebars-loader',
-                include: [
-                    path.resolve(__dirname, 'src')
-                ],
-            }
             // Add your rules for custom modules here
             // Learn more about loaders from https://webpack.js.org/loaders/
         ],
     },
     resolve: {
-        extensions: ['.handlebars', '.tsx', '.ts', '.jsx', '.js', '...'],
+        extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
     },
 };
 
