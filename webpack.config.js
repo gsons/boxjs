@@ -5,7 +5,7 @@ const path = require('path');
 const isProduction = process.env.NODE_ENV == 'production';
 
 
-var v = "1001";
+var v = "1002";
 const fs = require('fs')
 fs.readFile('src/gsonhub.sgmodule.tpl', (err, buffer) => {
     let content = buffer.toString().replace(/v=VERSION/g, '_=' + v);

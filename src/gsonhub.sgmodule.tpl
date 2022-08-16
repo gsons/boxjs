@@ -10,7 +10,7 @@ force-http-engine-hosts = %APPEND% somersaultcloud.json somersaultcloud.log 1001
 [Script]
 
 # 轮询 查询流量
-10010-for-cron = type=cron,cronexp=*/1 * * * *,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=VERSION
+10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=VERSION
 
 # 查询流量接口服务  http://10010.json http://10010.xml
 10010-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|xml),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=VERSION,requires-body=true,max-size=0,timeout=10

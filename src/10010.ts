@@ -1,5 +1,5 @@
 import Box from "./Box";
-const RSAEncrypt=require('./lib/JSEncrypt');
+const RSAEncrypt = require('./lib/JSEncrypt');
 
 
 class App extends Box {
@@ -19,12 +19,12 @@ class App extends Box {
         this.password = this.getStore(`password`, true);
         this.cookie = this.getStore(`cookie`, true);
         console.log(JSON.stringify(
-            { 
-            appId: this.appId,
-            mobile: this.mobile,
-            password: this.password,
-            cookie: this.cookie,
-        }));
+            {
+                appId: this.appId,
+                mobile: this.mobile,
+                password: this.password,
+                cookie: this.cookie,
+            }));
     }
 
     async query() {
@@ -72,7 +72,7 @@ class App extends Box {
             url: 'https://m.client.10010.com/mobileService/login.htm',
             body: this.transParams({
                 mobile: RSAEncrypt(this.mobile),
-                password:RSAEncrypt(this.password),
+                password: RSAEncrypt(this.password),
                 appId,
                 version: 'iphone_c@9.0100',
             }),
@@ -89,8 +89,8 @@ class App extends Box {
             throw new Error("登录失败！JSON数据解析异常");
         }
 
-         console.log('↓ res body')
-         console.log(body);
+        console.log('↓ res body')
+        console.log(body);
 
         let code = res.code;
         if (code === '0') {
@@ -115,7 +115,7 @@ class App extends Box {
     }
 
     async run() {
-        
+
         if (!this.cookie && (!this.appId || !this.mobile || !this.password)) {
             throw new Error('⚠️ 请配置 Cookie 或 appId, 手机号(mobile), 密码(password)')
         }
@@ -132,7 +132,7 @@ class App extends Box {
     handleQuery(res: any) {
         let detail;
         if (res) {
-            let old_obj=null;
+            let old_obj = null;
             try {
                 old_obj = JSON.parse(this.getStore(`vvv_flow`, true));
             } catch (error) {
@@ -203,7 +203,7 @@ class App extends Box {
             }
             const objstr = JSON.stringify(obj);
             this.log(objstr);
-            this.setStore(`vvv_flow`, objstr,true);
+            this.setStore(`vvv_flow`, objstr, true);
             detail = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd qq HH:mm:ss'), code: '1', 'msg': '查询成功', data: obj };
         } else {
             detail = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd qq HH:mm:ss'), code: '0', 'msg': '查询失败' };
@@ -217,7 +217,7 @@ const namespace = 'gsonhub.10010';
 const app = new App(name, namespace);
 
 app.run().catch((e) => {
-    app.log('APP RUN ERROR: '+e);
+    app.log('APP RUN ERROR: ' + e);
 }).finally(() => {
     app.done();
 });

@@ -41,7 +41,7 @@ class App extends Box {
 
     async handelSign() {
         this.log('运行 》 筋斗云签到');
-        let header =JSON.parse(this.getStore(this.signheaderKey, true));
+        let header = JSON.parse(this.getStore(this.signheaderKey, true));
         let url = this.getStore(this.signurlKey, true);
         let [domain] = /https?:\/\/.*?\//.exec(url);
         let opts = {
@@ -50,7 +50,7 @@ class App extends Box {
         };
         this.log('Http request:' + opts.url);
         let data = await this.post(opts);
-        data=JSON.parse(data.body);
+        data = JSON.parse(data.body);
         this.msg(this.name, data.msg, (JSON.stringify(data)));
     }
 
@@ -126,7 +126,7 @@ const namespace = 'gsonhub.somersaultcloud';
 const app = new App(name, namespace);
 
 app.dispatchEvent().catch((e) => {
-    app.log('APP RUN ERROR: '+e);
+    app.log('APP RUN ERROR: ' + e);
 }).finally(() => {
     app.done();
 });
