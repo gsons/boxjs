@@ -1,22 +1,25 @@
-export type RequestHeader = Record<string, string | number | boolean>;
+import axios from 'axios';
+
+export type RequestHeaders = Record<string, string | number | boolean>;
 export type Method = 'get' | 'GET' | 'post' | 'POST';
 export type ResponseHeader = Record<string, string> & { "set-cookie"?: string[] };
 
 export type RequestData = Record<string, string | number | boolean>;
 
 
-export interface RequestConfig{
+export interface RequestConfig<D>{
     url: string;
-    method: Method;
-    headers?: RequestHeader;
-    data: RequestData,
+    method?: Method;
+    headers?: RequestHeaders;
+    data?: D,
 }
 
-class Http{
-    constructor(){
-
-    }
-    static get(config:RequestConfig){
-
-    }
+export interface Response<T = any> {
+    body: T;
+    status: number;
+    statusText: string;
+    headers: ResponseHeader;
 }
+
+
+    
