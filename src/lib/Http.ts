@@ -1,12 +1,22 @@
-export type RequestHeaders = Record<string, string | number | boolean>;
+export type RequestHeader = Record<string, string | number | boolean>;
 export type Method = 'get' | 'GET' | 'post' | 'POST';
-export type ResponseHeaders = Record<string, string> & { "set-cookie"?: string[] };
+export type ResponseHeader = Record<string, string> & { "set-cookie"?: string[] };
 
-export interface RequestConfig<D = any> {
+export type RequestData = Record<string, string | number | boolean>;
+
+
+export interface RequestConfig{
     url: string;
     method: Method;
-    headers?: RequestHeaders;
-    data: D,
+    headers?: RequestHeader;
+    data: RequestData,
 }
 
+class Http{
+    constructor(){
 
+    }
+    static get(config:RequestConfig){
+
+    }
+}

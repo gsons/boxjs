@@ -18,8 +18,9 @@ fs.readFile('src/gsonhub.sgmodule.tpl', (err, buffer) => {
 
 const config = {
     entry: {
-        somersaultcloud: './src/somersaultcloud.ts',
-        "10010": './src/10010.ts'
+        "somersaultcloud": './src/somersaultcloud.ts',
+        "10010": './src/10010.ts',
+        "test": './src/test.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
