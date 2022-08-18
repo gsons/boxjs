@@ -68,7 +68,7 @@ enum ENV {
             process.exit(1);
         } else {
             let cacheLog = this.getStore(Box.APP_LOG_KEY)+'\n';
-            cacheLog = (cacheLog ? cacheLog : '') + this.logMsg.join('\n');
+            cacheLog = this.logMsg.reverse().join('\n')+(cacheLog ? cacheLog : '');
             this.setStore(Box.APP_LOG_KEY, cacheLog);
             console.log(`注意本次运行日志已缓存到变量 ${Box.APP_LOG_KEY}`);
             $done(this.response);
