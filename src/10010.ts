@@ -138,7 +138,6 @@ class App extends Box {
             } catch (error) {
                 //throw new Error('解析JSON异常');
             }
-
             const query_date = this.date('yyyy-MM-dd', res.time.replace(/-/g, '/'));
 
             const fee_used_flow = parseFloat(res.sumresource);
@@ -149,16 +148,18 @@ class App extends Box {
             const sum_top_flow = (res.summary.sumfengDing * 1024);
             const remain_top_flow = parseFloat(res.summary.remainFengDing);
 
-            //同一天才用缓存
-            const last_day_fee_flow = (old_obj && old_obj.last_day_fee_flow && old_obj.query_date == query_date) ? old_obj.last_day_fee_flow : fee_used_flow;//0点已用收费流量
+            const second = (old_obj) ? parseFloat(((new Date(res.time.replace(/-/g, '/')).getTime() - new Date(old_obj.query_date_time.replace(/-/g, '/')).getTime()) / 1000).toFixed(2)) : 0;
+            const second_flow = (old_obj && old_obj.fee_remain_flow > fee_remain_flow) ? parseFloat((old_obj.fee_remain_flow - fee_remain_flow).toFixed(2)) : 0;
+
+            const last_day_fee_flow = (old_obj && old_obj.last_day_fee_flow) ? old_obj.last_day_fee_flow : fee_used_flow;//0点已用收费流量
             const offset_fee = parseFloat((fee_used_flow - last_day_fee_flow).toFixed(2));
             const one_day_fee_flow = offset_fee >= 0 ? offset_fee : old_obj.one_day_fee_flow;//当天已用收费流量
 
-            const last_day_free_flow = (old_obj && old_obj.last_day_free_flow && old_obj.query_date == query_date) ? old_obj.last_day_free_flow : free_used_flow;//0点已用免费流量
+            const last_day_free_flow = (old_obj && old_obj.last_day_free_flow) ? old_obj.last_day_free_flow : free_used_flow;//0点已用免费流量
             const offset_free = parseFloat((free_used_flow - last_day_free_flow).toFixed(2));
             const one_day_free_flow = (offset_free >= 0 ? offset_free : old_obj.one_day_free_flow);//当天已用免费流量
 
-            const last_day_flow = (old_obj && old_obj.last_day_flow && old_obj.query_date == query_date) ? old_obj.last_day_flow : used_flow;//0点已用流量
+            const last_day_flow = (old_obj && old_obj.last_day_flow) ? old_obj.last_day_flow : used_flow;//0点已用流量
             const offset_flow = parseFloat((used_flow - last_day_flow).toFixed(2));
             const one_day_flow = (offset_flow >= 0 ? offset_flow : old_obj.one_day_flow);//当天已用流量
 
@@ -182,22 +183,21 @@ class App extends Box {
                 'last_day_flow': last_day_flow,
                 'one_day_flow': one_day_flow,
 
-                'second': 0,//每次查询时间差
-                'second_flow': 0,//时间差产生的收费流量
+                'second': second,//每次查询时间差
+                'second_flow': second_flow,//时间差产生的收费流量
             };
 
             if (old_obj) {
-                obj.second = parseFloat(((new Date(obj.query_date_time.replace(/-/g, '/')).getTime() - new Date(old_obj.query_date_time.replace(/-/g, '/')).getTime()) / 1000).toFixed(2));
-                obj.second_flow = parseFloat((old_obj.fee_remain_flow - obj.fee_remain_flow).toFixed(2));
-
-                if (obj.second_flow <= 0 || old_obj.query_date != obj.query_date) {
-                    obj.second_flow = 0;
-                } else {
-                    this.msg('腾讯大王卡', `${obj.second}s 期间 产生跳点流量${obj.second_flow}`, '');
+                if (obj.second_flow > 0) {
+                    this.msg('腾讯大王卡', `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_flow}`, '');
                 }
 
                 //每天0点发送流量报告
                 if (old_obj.query_date != obj.query_date) {
+                    //重置0点流量缓存
+                    obj.last_day_fee_flow=fee_used_flow;
+                    obj.last_day_free_flow=fee_used_flow;
+                    obj.last_day_flow=used_flow;
                     this.msg('腾讯大王卡', `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`, '');
                 }
             }
