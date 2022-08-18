@@ -105,7 +105,7 @@ class App extends Box {
             }
             this.cookie = cookie;
             this.log(cookie)
-            this.setStore(cookie, `cookie`, true);
+            this.setStore('cookie', cookie, true);
             this.log('🍪 登录成功！');
             return true;
         } else {
