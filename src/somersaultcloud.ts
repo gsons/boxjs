@@ -21,7 +21,12 @@ class App extends Box {
         };
         this.log('Http request:' + opts.url);
         let data = await this.post(opts);
-        data = JSON.parse(data.body);
+        try {
+            data = JSON.parse(data.body);
+        } catch (error) {
+            throw new Error('登录状态可能已经失效' + error);
+        }
+
         this.msg(this.name, data.msg, (JSON.stringify(data)));
     }
 
@@ -46,7 +51,7 @@ class App extends Box {
         try {
             res = this.fetchJindouyun(vo.body);
         } catch (error) {
-            throw new Error(`获取筋斗云个人信息失败:` + error);
+            throw new Error(`获取筋斗云个人信息失败，登录状态可能已经失效:` + error);
         }
         this.ajaxSuccess('获取筋斗云个人信息成功', res);
     }

@@ -313,7 +313,7 @@ class App extends Box {
 
             if (old_obj) {
                 if (obj.second_flow > 0) {
-                    this.msg('中国联通', `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_flow}`, '');
+                    this.msg('中国联通', `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
                 }
 
                 //每天0点发送流量报告

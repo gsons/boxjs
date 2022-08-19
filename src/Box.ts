@@ -46,7 +46,7 @@ abstract class Box {
         this.logMsg = [];
         this.logSeparator = '';
         this.startTime = new Date().getTime();
-        this.log(`🔔${this.name}, 开始!`);
+        this.log(`🔔${this.name}, 开始!\n`);
         this.initEnv();
         this.log('当前环境为：' + this.env);
         let mute = this.getStore('mute', true);
