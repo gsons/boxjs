@@ -134,7 +134,7 @@ class App extends Box {
                 await this.handleQueryAction();
                 break;
             default:
-                if (/^https?:\/\/10010\.log/.test($request.url)) {
+                if (/^https?:\/\/10010\.log/.test(url)) {
                     this.handelLogHttp();
                 } else {
                     await this.handleQueryAction();
@@ -312,7 +312,7 @@ class App extends Box {
 
             if (old_obj) {
                 if (obj.second_flow > 0) {
-                    this.msg('腾讯大王卡', `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_flow}`, '');
+                    this.msg('中国联通', `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_flow}`, '');
                 }
 
                 //每天0点发送流量报告
@@ -321,7 +321,7 @@ class App extends Box {
                     obj.last_day_fee_flow = fee_used_flow;
                     obj.last_day_free_flow = fee_used_flow;
                     obj.last_day_flow = used_flow;
-                    this.msg('腾讯大王卡', `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`, '');
+                    this.msg('中国联通', `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`, '');
                 }
             }
             const objstr = JSON.stringify(obj);
