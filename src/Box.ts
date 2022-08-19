@@ -117,6 +117,7 @@ abstract class Box {
     handelLogHttp() {
         this.log(`运行 》 ${this.name}系统运行日志http服务器`);
         let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
+        cacheLog=cacheLog?cacheLog:'';
         cacheLog = cacheLog.replace(/\n/g, '<br>');
         this.httpResponse(cacheLog, { 'Content-Type': 'text/html;charset=utf-8' });
     }

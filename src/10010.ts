@@ -120,7 +120,7 @@ class App extends Box {
     }
 
     async doAction() {
-        let url = typeof $request != 'undefined' && $request.method != 'OPTIONS' ? $request.url : '';
+        let url = (typeof $request != 'undefined' && $request.method != 'OPTIONS' ) ? $request.url : '';
         let [, action] = /action=(\w+)/.exec(url) ?? [];
 
         switch (action) {
