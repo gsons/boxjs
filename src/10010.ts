@@ -174,7 +174,7 @@ class App extends Box {
         try {
             res = JSON.parse(body)
         } catch (e) {
-            throw new Error("验证码方式登录失败！JSON数据解析异常Z");
+            throw new Error("验证码方式登录失败，JSON数据解析异常Z");
         }
 
         let code = res.code;
