@@ -1,4 +1,4 @@
-# 🚀 筋斗云自动签到脚本
+# 🚀 筋斗云自动签到脚本&中国联通流量查询监控
 
 To install  run
 
@@ -19,6 +19,6 @@ yarn build
 ```
 to bundle your application
 
-模块地址
+小火箭模块地址
 
 https://raw.githubusercontent.com/gsons/boxjs/main/dist/gsonhub.sgmodule
