@@ -154,7 +154,7 @@ class App extends Box {
         this.log('〽️ 开始尝试验证码方式登录');
         let appId = this.appId;
         let vo = await this.post({
-            url: 'https://m.client.10010.com/mobileService/randomLogin.htm',
+            url: 'https://m.client.10010.com/mobileService/radomLogin.htm',
             body: this.transParams({
                 mobile: RSAEncrypt(this.mobile),
                 password: RSAEncrypt(this.smscode),
