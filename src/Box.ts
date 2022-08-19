@@ -35,7 +35,7 @@ abstract class Box {
 
     public isMute = false;
 
-    public static APP_LOG_KEY = 'gsonhub-boxjs-log';
+    public static APP_LOG_KEY = 'boxjs-log';
 
     public response = {};
 
