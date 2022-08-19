@@ -167,14 +167,14 @@ class App extends Box {
         })
 
         let body = vo.body;
-        this.log('↓ res body')
+        this.log('↓ res body2')
         this.log(body);
 
         let res;
         try {
             res = JSON.parse(body)
         } catch (e) {
-            throw new Error("验证码方式登录失败！JSON数据解析异常");
+            throw new Error("验证码方式登录失败！JSON数据解析异常w");
         }
 
         let code = res.code;

@@ -1,5 +1,5 @@
-#!name= gsonhub的脚本
-#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务
+#!name= gsonhub的脚本v=VERSION
+#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=VERSION
 
 [MITM] 
 hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz
