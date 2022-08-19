@@ -7,7 +7,7 @@
             "id": "gsonhub.10010",
             "name": "中国联通",
             "descs_html": [
-                "<a href=''http://10010.log'>查看日志</a><br>",
+                "<a href='http://10010.log'>查看日志</a><br>",
                 "<a onClick='window.location.reload(true);'>刷新</a><br>",
                 "<a onClick=\"axios.get('http://10010.json/action=send_code')\">发送验证码</a><br>",
                 "<a onClick=\"axios.get('http://10010.json/action=login')\">验证码登录</a><br>"
@@ -64,7 +64,7 @@
             "name": "筋斗云",
             "descs_html": [
                 "<a onClick='window.location.reload(true);'>刷新</a><br>",
-                "<a href=''http://somersaultcloud.log'>查看日志</a><br>"
+                "<a href='http://somersaultcloud.log'>查看日志</a><br>"
             ],
             "scripts": [
                 {
