@@ -91,10 +91,10 @@ abstract class Box {
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
-            let cacheLog = '\n' + this.getStore(Box.APP_LOG_KEY);
+            let cacheLog = '\n' + this.getStore(Box.APP_LOG_KEY,true);
             cacheLog = this.logMsg.reverse().join('\n') + (cacheLog ? cacheLog : '');
-            this.setStore(Box.APP_LOG_KEY, cacheLog);
-            console.log(`注意本次运行日志已缓存到变量 ${Box.APP_LOG_KEY}`);
+            this.setStore(Box.APP_LOG_KEY, cacheLog,true);
+            console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' +Box.APP_LOG_KEY}`);
             $done(this.response);
         }
 
@@ -115,7 +115,7 @@ abstract class Box {
 
     handelLogHttp() {
         this.log(`运行 》 ${this.name}系统运行日志http服务器`);
-        let cacheLog = this.getStore(Box.APP_LOG_KEY);
+        let cacheLog = this.getStore(Box.APP_LOG_KEY,true);
         cacheLog = cacheLog.replace(/\n/g, '<br>');
         this.httpResponse(cacheLog, { 'Content-Type': 'text/html;charset=utf-8' });
     }
@@ -179,7 +179,6 @@ abstract class Box {
                 headers: header
             },
         }
-        this.done();
     }
 
     ajaxSuccess(msg: string, data: any = null) {
@@ -270,23 +269,6 @@ abstract class Box {
         } else if (this.env == ENV.Node) {
             console.log(this.env);
             //@ts-ignore
-            $nodeHttpClient.get('https://api.juejin.cn/tag_api/v1/query_category_briefs', (res: any) => {
-                let list: any = [];
-                res.on('data', (chunk: any) => {
-                    list.push(chunk);
-                });
-                res.on('end', () => {
-                    const data = JSON.parse(Buffer.concat(list).toString());
-                    console.log(data);
-                    callback(null, data, null)
-                });
-
-            }).on('error', (err: any) => {
-
-                console.log('Error: ', err.message);
-
-            });
-
         }
     }
 

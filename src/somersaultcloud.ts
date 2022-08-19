@@ -46,11 +46,9 @@ class App extends Box {
         try {
             res = this.fetchJindouyun(vo.body);
         } catch (error) {
-            this.log(`获取筋斗云个人信息失败:` + error);
-            this.msg(this.name, `获取筋斗云个人信息失败`, error)
+            throw new Error(`获取筋斗云个人信息失败:` + error);
         }
-        //let result = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: res ? 1 : 0, 'msg': res ? '获取筋斗云个人信息成功' : '获取筋斗云个人信息失败', data: res ? res : null };
-        this.httpResponse(res);
+        this.ajaxSuccess('获取筋斗云个人信息成功', res);
     }
 
 

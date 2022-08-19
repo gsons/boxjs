@@ -6,7 +6,6 @@ declare var $request: any;
 
 class App extends Box {
 
-
     appId: string;
     mobile: string;
     password: string;
@@ -70,7 +69,6 @@ class App extends Box {
             throw new Error(errMsg);
         }
     }
-
 
     async dologin() {
         this.log('〽️ 开始尝试密码方式登录');
@@ -136,12 +134,19 @@ class App extends Box {
                 await this.handleQueryAction();
                 break;
             default:
-                await this.handleQueryAction();
+                if (/^https?:\/\/10010\.log/.test($request.url)) {
+                    this.handelLogHttp();
+                } else {
+                    await this.handleQueryAction();
+                }
+
                 break;
         }
     }
 
     async handleLoginAction() {
+        this.log('运行 》  中国联通验证码登录');
+
         if (!this.mobile || !this.smscode) {
             throw new Error('⚠️ 请配置 手机号(mobile), 验证码(smscode)')
         }
@@ -187,7 +192,7 @@ class App extends Box {
             this.setStore('cookie', cookie, true);
             this.setStore('appId', res.appId, true);
             this.log('appId:\n' + appId)
-            this.log('🍪 验证码方式登录成功！');
+            this.msg(this.name, '🍪 验证码方式登录成功！', '');
             this.ajaxSuccess('验证码方式登录成功！');
         } else {
             let desc = res.dsc;
@@ -197,6 +202,8 @@ class App extends Box {
 
 
     async handleSendCodeAction() {
+        this.log('运行 》  中国联通发送验证码');
+
         if (!this.mobile) {
             throw new Error('⚠️ 请配置 手机号(mobile))');
         }
@@ -222,6 +229,7 @@ class App extends Box {
         }
 
         if (res.rsp_code == '0000') {
+            this.msg(this.name, '发送验证码成功', '');
             this.ajaxSuccess('发送验证码成功');
         } else {
             throw new Error("发送验证码失败！" + body);
@@ -229,6 +237,8 @@ class App extends Box {
     }
 
     async handleQueryAction() {
+        this.log('运行 》  中国联通查询流量');
+
         if (!this.cookie && (!this.appId || !this.mobile || !this.password)) {
             throw new Error('⚠️ 请配置 Cookie 或 appId, 手机号(mobile), 密码(password)')
         }

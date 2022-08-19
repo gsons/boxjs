@@ -7,9 +7,10 @@
             "id": "gsonhub.10010",
             "name": "中国联通",
             "descs_html": [
-                "<a onClick='window.location.reload(true);'>刷新</a>",
-                "<a onClick=\"axios.get('http://10010.json/action=send_code')\">发送验证码</a>",
-                "<a onClick=\"axios.get('http://10010.json/action=login')\">验证码登录</a>"
+                "<a href=''http://10010.log'>查看日志</a><br>",
+                "<a onClick='window.location.reload(true);'>刷新</a><br>",
+                "<a onClick=\"axios.get('http://10010.json/action=send_code')\">发送验证码</a><br>",
+                "<a onClick=\"axios.get('http://10010.json/action=login')\">验证码登录</a><br>"
             ],
             "scripts": [
                 {
@@ -23,6 +24,7 @@
                 "gsonhub.10010.password",
                 "gsonhub.10010.cookie",
                 "gsonhub.10010.smscode",
+                "gsonhub.10010.boxjs-log",
                 "gsonhub.boxjs-log"
             ],
             "author": "@gsonhub",
@@ -54,7 +56,8 @@
             "id": "gsonhub.somersaultcloud",
             "name": "筋斗云",
             "descs_html": [
-                "<a onClick='window.location.reload(true);'>刷新</a>"
+                "<a onClick='window.location.reload(true);'>刷新</a><br>",
+                "<a href=''http://somersaultcloud.log'>查看日志</a><br>"
             ],
             "scripts": [
                 {
@@ -66,6 +69,7 @@
                 "gsonhub.somersaultcloud.boxjs-log",
                 "gsonhub.somersaultcloud.sign_url",
                 "gsonhub.somersaultcloud.sign_header",
+                "gsonhub.somersaultcloud.boxjs-log",
                 "gsonhub.boxjs-log"
             ],
             "author": "@gsonhub",
