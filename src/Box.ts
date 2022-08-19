@@ -58,7 +58,7 @@ abstract class Box {
 
     public run() {
         this.doAction().catch((err) => {
-            this.msg(this.name, 'ERROR: ' + err, '');
+            this.msg(this.name, '' + err, '');
             this.ajaxFail(err);
         }).finally(() => {
             this.done();
