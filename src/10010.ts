@@ -1,12 +1,17 @@
 import Box from "./Box";
 const RSAEncrypt = require('./lib/JSEncrypt');
 
+declare var $request: any;
+
 
 class App extends Box {
+
+
     appId: string;
     mobile: string;
     password: string;
     cookie: string;
+    smscode: string;
 
     constructor(name: string, namespace: string) {
         super(name, namespace);
@@ -18,13 +23,15 @@ class App extends Box {
         this.mobile = this.getStore(`mobile`, true);
         this.password = this.getStore(`password`, true);
         this.cookie = this.getStore(`cookie`, true);
-        console.log(JSON.stringify(
-            {
-                appId: this.appId,
-                mobile: this.mobile,
-                password: this.password,
-                cookie: this.cookie,
-            }));
+        this.smscode = this.getStore(`smscode`, true);
+        const obj = {
+            appId: this.appId,
+            mobile: this.mobile,
+            password: this.password,
+            cookie: this.cookie,
+            smscode: this.smscode
+        };
+        console.log(JSON.stringify(obj));
     }
 
     async query() {
@@ -66,7 +73,7 @@ class App extends Box {
 
 
     async dologin() {
-        this.log('〽️ 开始尝试登录');
+        this.log('〽️ 开始尝试密码方式登录');
         let appId = this.appId;
         let vo = await this.post({
             url: 'https://m.client.10010.com/mobileService/login.htm',
@@ -86,7 +93,7 @@ class App extends Box {
         try {
             res = JSON.parse(body)
         } catch (e) {
-            throw new Error("登录失败！JSON数据解析异常");
+            throw new Error("密码方式登录失败！JSON数据解析异常");
         }
 
         console.log('↓ res body')
@@ -99,23 +106,129 @@ class App extends Box {
             if (Array.isArray(cookie)) {
                 cookie = cookie.join('; ')
             }
-            this.log(` 登录 Cookie`)
+            this.log(` 密码方式登录 Cookie`)
             if (!cookie) {
-                throw new Error(`获取到的登录 Cookie 为空！`)
+                throw new Error(`获取到的密码方式登录 Cookie 为空！`)
             }
             this.cookie = cookie;
             this.log(cookie)
             this.setStore('cookie', cookie, true);
-            this.log('🍪 登录成功！');
+            this.log('🍪 密码方式登录成功！');
             return true;
         } else {
             let desc = res.dsc;
-            throw new Error('登录失败！' + (desc || '未知错误'))
+            throw new Error('密码方式登录失败！' + (desc || '未知错误'))
         }
     }
 
-    async run() {
+    async doAction() {
+        let url = typeof $request != 'undefined' && $request.method != 'OPTIONS' ? $request.url : '';
+        let [, action] = /action=(\w+)/.exec(url) ?? [];
 
+        switch (action) {
+            case 'send_code':
+                await this.handleSendCodeAction();
+                break;
+            case 'login':
+                await this.handleLoginAction();
+                break;
+            case 'query':
+                await this.handleQueryAction();
+                break;
+            default:
+                await this.handleQueryAction();
+                break;
+        }
+    }
+
+    async handleLoginAction() {
+        if (!this.mobile || !this.smscode) {
+            throw new Error('⚠️ 请配置 手机号(mobile), 验证码(smscode)')
+        }
+
+        this.log('〽️ 开始尝试验证码方式登录');
+        let appId = this.appId;
+        let vo = await this.post({
+            url: 'https://m.client.10010.com/mobileService/randomlogin.htm',
+            body: this.transParams({
+                mobile: RSAEncrypt(this.mobile),
+                password: RSAEncrypt(this.smscode),
+                appId: this.random(160),
+                version: 'iphone_c@9.0100',
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+
+        let body = vo.body;
+        let res;
+        try {
+            res = JSON.parse(body)
+        } catch (e) {
+            throw new Error("验证码方式登录失败！JSON数据解析异常");
+        }
+        console.log('↓ res body')
+        console.log(body);
+
+        let code = res.code;
+        if (code === '0') {
+            const headers = vo.headers;
+            let cookie = headers['set-cookie'] || headers['Set-Cookie'];
+            if (Array.isArray(cookie)) {
+                cookie = cookie.join('; ')
+            }
+            this.log(` 验证码方式登录 Cookie`)
+            if (!cookie) {
+                throw new Error(`获取到的验证码方式登录 Cookie 为空！`)
+            }
+            this.cookie = cookie;
+            this.log('cookie:\n' + cookie)
+            this.setStore('cookie', cookie, true);
+            this.setStore('appId', res.appId, true);
+            this.log('appId:\n' + appId)
+            this.log('🍪 验证码方式登录成功！');
+            this.ajaxSuccess('验证码方式登录成功！');
+        } else {
+            let desc = res.dsc;
+            throw new Error('验证码方式登录失败！' + (desc || '未知错误'))
+        }
+    }
+
+
+    async handleSendCodeAction() {
+        if (!this.mobile) {
+            throw new Error('⚠️ 请配置 手机号(mobile))');
+        }
+
+        this.log('〽️ 开始尝试发送验证码');
+        let vo = await this.post({
+            url: 'https://m.client.10010.com/mobileService/sendRadomNum.htm',
+            body: this.transParams({
+                mobile: RSAEncrypt(this.mobile),
+                version: 'iphone_c@9.0100',
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+
+        let body = vo.body;
+        let res;
+        try {
+            res = JSON.parse(body)
+        } catch (e) {
+            throw new Error("发送验证码失败！JSON数据解析异常，" + body);
+        }
+
+        if (res.rsp_code == '0000') {
+            this.ajaxSuccess('发送验证码成功');
+        } else {
+            throw new Error("发送验证码失败！" + body);
+        }
+    }
+
+    async handleQueryAction() {
         if (!this.cookie && (!this.appId || !this.mobile || !this.password)) {
             throw new Error('⚠️ 请配置 Cookie 或 appId, 手机号(mobile), 密码(password)')
         }
@@ -126,11 +239,11 @@ class App extends Box {
             res = await this.query();
         }
         this.handleQuery(res);
-        return this;
     }
 
+
+
     handleQuery(res: any) {
-        let detail;
         if (res) {
             let old_obj = null;
             try {
@@ -195,29 +308,21 @@ class App extends Box {
                 //每天0点发送流量报告
                 if (old_obj.query_date != obj.query_date) {
                     //重置0点流量缓存
-                    obj.last_day_fee_flow=fee_used_flow;
-                    obj.last_day_free_flow=fee_used_flow;
-                    obj.last_day_flow=used_flow;
+                    obj.last_day_fee_flow = fee_used_flow;
+                    obj.last_day_free_flow = fee_used_flow;
+                    obj.last_day_flow = used_flow;
                     this.msg('腾讯大王卡', `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`, '');
                 }
             }
             const objstr = JSON.stringify(obj);
             this.log(objstr);
             this.setStore(`vvv_flow`, objstr, true);
-            detail = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd qq HH:mm:ss'), code: '1', 'msg': '查询成功', data: obj };
+            this.ajaxSuccess('查询流量成功', obj);
         } else {
-            detail = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd qq HH:mm:ss'), code: '0', 'msg': '查询失败' };
+            throw new Error('查询流量失败');
         }
-        this.httpResponse(detail);
     }
 }
 
-const name = '中国联通';
-const namespace = 'gsonhub.10010';
-const app = new App(name, namespace);
+new App('中国联通', 'gsonhub.10010').run();
 
-app.run().catch((e) => {
-    app.log('APP RUN ERROR: ' + e);
-}).finally(() => {
-    app.done();
-});

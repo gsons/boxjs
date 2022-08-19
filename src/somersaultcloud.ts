@@ -2,41 +2,12 @@ declare var $request: any;
 
 import Box from "./Box";
 
-enum EVENT {
-    WEB_HTTP, LOG_HTTP, SIGN_COOKIE, SIGN,
-}
 
 class App extends Box {
-    private event: EVENT;
 
     private signurlKey = 'sign_url';
 
     private signheaderKey = 'sign_header';
-
-    constructor(name: string, namespace: string) {
-        super(name, namespace);
-        this.initEvent();
-    }
-
-    async dispatchEvent() {
-        switch (this.event) {
-            case EVENT.WEB_HTTP:
-                await this.handelWebHttp();
-                break;
-            case EVENT.LOG_HTTP:
-                this.handelLogHttp();
-                break;
-            case EVENT.SIGN_COOKIE:
-                this.handelSignCookie();
-                break;
-            case EVENT.SIGN:
-                await this.handelSign();
-                break;
-            default:
-                await this.handelSign();
-                break;
-        }
-    }
 
 
     async handelSign() {
@@ -76,25 +47,29 @@ class App extends Box {
             res = this.fetchJindouyun(vo.body);
         } catch (error) {
             this.log(`获取筋斗云个人信息失败:` + error);
-            this.msg(name, `获取筋斗云个人信息失败`, error)
+            this.msg(this.name, `获取筋斗云个人信息失败`, error)
         }
-        let result = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: res ? 1 : 0, 'msg': res ? '获取筋斗云个人信息成功' : '获取筋斗云个人信息失败', data: res ? res : null };
+        //let result = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: res ? 1 : 0, 'msg': res ? '获取筋斗云个人信息成功' : '获取筋斗云个人信息失败', data: res ? res : null };
         this.httpResponse(res);
     }
 
 
-    initEvent() {
-        if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$/.test($request.url)) {
-            this.event = EVENT.SIGN_COOKIE;
-        }
-        else if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/somersaultcloud\.json/.test($request.url)) {
-            this.event = EVENT.WEB_HTTP;
-        }
-        else if (typeof $request != 'undefined' && $request.method != 'OPTIONS' && /^https?:\/\/somersaultcloud\.log/.test($request.url)) {
-            this.event = EVENT.LOG_HTTP;
-        }
-        else {
-            this.event = EVENT.SIGN;
+
+    async doAction() {
+        if (typeof $request != 'undefined' && $request.method != 'OPTIONS') {
+            if (/^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$/.test($request.url)) {
+                this.handelSignCookie();
+            }
+            else if (/^https?:\/\/somersaultcloud\.json/.test($request.url)) {
+                await this.handelWebHttp();
+            }
+            else if (/^https?:\/\/somersaultcloud\.log/.test($request.url)) {
+                this.handelLogHttp();
+            } else {
+                await this.handelSign();
+            }
+        } else {
+            await this.handelSign();
         }
     }
 
@@ -121,12 +96,5 @@ class App extends Box {
     }
 }
 
-const name = '筋斗云';
-const namespace = 'gsonhub.somersaultcloud';
-const app = new App(name, namespace);
+new App('筋斗云', 'gsonhub.somersaultcloud').run();
 
-app.dispatchEvent().catch((e) => {
-    app.log('APP RUN ERROR: ' + e);
-}).finally(() => {
-    app.done();
-});

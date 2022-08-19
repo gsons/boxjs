@@ -14,7 +14,7 @@ enum ENV {
 };
 
 
- class Box {
+abstract class Box {
 
     //VPN环境名称
     public env: ENV;
@@ -33,11 +33,12 @@ enum ENV {
 
     private startTime: number;
 
+    public isMute = false;
+
     public static APP_LOG_KEY = 'gsonhub-boxjs-log';
 
-    private isMute: boolean;
-
     public response = {};
+
 
     constructor(name: string, namespace: string) {
         this.name = name;
@@ -47,14 +48,37 @@ enum ENV {
         this.startTime = new Date().getTime();
         this.log(`🔔${this.name}, 开始!`);
         this.initEnv();
-        this.log('当前环境为：'+this.env);
+        this.log('当前环境为：' + this.env);
+        this.isMute = this.getStore('mute', true) ? true : false;
+    }
+
+    //入口方法
+    abstract doAction(): Promise<void>;
+
+    public run() {
+        this.doAction().catch((err) => {
+            this.msg(this.name, 'APP RUN ERROR: ' + err, '');
+            this.ajaxFail(err);
+        }).finally(() => {
+            this.done();
+        });
     }
 
     //todo 类型
-    transParams(data:any) {
+    transParams(data: any) {
         return Object.keys(data)
             .map(k => `${k}=${encodeURIComponent(data[k])}`)
             .join('&')
+    }
+
+    random(length: number) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
     }
 
     public done() {
@@ -67,8 +91,8 @@ enum ENV {
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
-            let cacheLog = this.getStore(Box.APP_LOG_KEY)+'\n';
-            cacheLog = this.logMsg.reverse().join('\n')+(cacheLog ? cacheLog : '');
+            let cacheLog = '\n' + this.getStore(Box.APP_LOG_KEY);
+            cacheLog = this.logMsg.reverse().join('\n') + (cacheLog ? cacheLog : '');
             this.setStore(Box.APP_LOG_KEY, cacheLog);
             console.log(`注意本次运行日志已缓存到变量 ${Box.APP_LOG_KEY}`);
             $done(this.response);
@@ -88,15 +112,17 @@ enum ENV {
         return null;
     }
 
+
     handelLogHttp() {
         this.log(`运行 》 ${this.name}系统运行日志http服务器`);
         let cacheLog = this.getStore(Box.APP_LOG_KEY);
-        cacheLog=cacheLog.replace(/\n/g,'<br>');
-        this.httpResponse(cacheLog,{'Content-Type':'text/html;charset=utf-8'});
+        cacheLog = cacheLog.replace(/\n/g, '<br>');
+        this.httpResponse(cacheLog, { 'Content-Type': 'text/html;charset=utf-8' });
     }
 
     msg(title: string, subtitle: string, body: string) {
-        this.log('==============📣系统通知📣=============='+'\n'+title+'\n'+subtitle+'\n'+body);
+        this.log('==============📣系统通知📣==============' + '\n' + title + '\n' + subtitle + '\n' + body);
+        if (this.isMute) return;
         if (this.env == ENV.Surge || this.env == ENV.Shadowrocket || this.env == ENV.Loon) $notification.post(title, subtitle, body)
         else if (this.env == ENV.QuanX) $notify(title, subtitle, body)
     }
@@ -153,12 +179,23 @@ enum ENV {
                 headers: header
             },
         }
+        this.done();
+    }
+
+    ajaxSuccess(msg: string, data: any = null) {
+        let result = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: 1, 'msg': msg, data: data };
+        this.httpResponse(result);
+    }
+
+    ajaxFail(msg: string, data: any = null) {
+        let result = { time: new Date().getTime(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: 0, 'msg': msg, data: data };
+        this.httpResponse(result);
     }
 
     /**
      * @param opt 
      * @returns {status,body,headers}
-     */    
+     */
     private send(opts: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.doRequest(opts, (err: any, resp: any, body: any) => {
