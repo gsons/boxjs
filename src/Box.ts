@@ -49,7 +49,8 @@ abstract class Box {
         this.log(`🔔${this.name}, 开始!`);
         this.initEnv();
         this.log('当前环境为：' + this.env);
-        this.isMute = this.getStore('mute', true) ? true : false;
+        let mute = this.getStore('mute', true);
+        this.isMute = mute == 'true';
     }
 
     //入口方法
@@ -91,10 +92,10 @@ abstract class Box {
         if (this.env == ENV.Node) {
             process.exit(1);
         } else {
-            let cacheLog = '\n' + this.getStore(Box.APP_LOG_KEY,true);
+            let cacheLog = '\n' + this.getStore(Box.APP_LOG_KEY, true);
             cacheLog = this.logMsg.reverse().join('\n') + (cacheLog ? cacheLog : '');
-            this.setStore(Box.APP_LOG_KEY, cacheLog,true);
-            console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' +Box.APP_LOG_KEY}`);
+            this.setStore(Box.APP_LOG_KEY, cacheLog, true);
+            console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
             $done(this.response);
         }
 
@@ -115,7 +116,7 @@ abstract class Box {
 
     handelLogHttp() {
         this.log(`运行 》 ${this.name}系统运行日志http服务器`);
-        let cacheLog = this.getStore(Box.APP_LOG_KEY,true);
+        let cacheLog = this.getStore(Box.APP_LOG_KEY, true);
         cacheLog = cacheLog.replace(/\n/g, '<br>');
         this.httpResponse(cacheLog, { 'Content-Type': 'text/html;charset=utf-8' });
     }
