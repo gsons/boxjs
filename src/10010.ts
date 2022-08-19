@@ -154,7 +154,7 @@ class App extends Box {
         this.log('〽️ 开始尝试验证码方式登录');
         let appId = this.appId;
         let vo = await this.post({
-            url: 'https://m.client.10010.com/mobileService/randomlogin.htm',
+            url: 'https://m.client.10010.com/mobileService/randomLogin.htm',
             body: this.transParams({
                 mobile: RSAEncrypt(this.mobile),
                 password: RSAEncrypt(this.smscode),
@@ -174,7 +174,7 @@ class App extends Box {
         try {
             res = JSON.parse(body)
         } catch (e) {
-            throw new Error("验证码方式登录失败！JSON数据解析异常");
+            throw new Error("验证码方式登录失败！JSON数据解析异常Z");
         }
 
         let code = res.code;
