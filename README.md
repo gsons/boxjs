@@ -1,6 +1,23 @@
 ## 🚀 BOXJS脚本集合
 
-> 筋斗云自动签到脚本&中国联通流量查询监控
+> 筋斗云自动签到领取流量脚本&中国联通自动登录流量查询监控
+<table>
+    <tr align="center">
+        <th>脚本</th>
+        <th>功能</th>
+        <th>支持情况</th>
+    </tr>
+    <tr align="center">
+        <td>中国联通</td>
+        <td>自动登录/流量监控与查询</td>
+        <td>✔</td>
+    </tr>
+    <tr align="center">
+        <td>筋斗云</td>
+        <td>定时签到/信息查询</td>
+        <td>✔</td>
+    </tr>
+</table>
 
 ### 安装
 ```
@@ -56,3 +73,8 @@ npm run build
 4. [筋斗云运行日志](http://somersaultcloud.log)
 
     [http://somersaultcloud.log](http://somersaultcloud.log)
+
+## 运行截图
+![image](https://gsons.github.io/demo/notice.jpg)
+
+![image](https://gsons.github.io/demo/scriptable.jpg)      
