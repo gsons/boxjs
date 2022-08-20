@@ -1,7 +1,7 @@
 const path = require('path');
-
-
-const isProduction = process.env.NODE_ENV == 'production';
+// const isProduction = process.env.NODE_ENV == 'production';
+const http=require('http-server');
+http.createServer();
 
 const config = {
     entry: {
@@ -27,8 +27,10 @@ const config = {
                     loader: './webpack.tpl-loader',
                     options: {
                         baseurl: {
-                            production: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
-                            development: 'http://192.168.101.149:8080',
+                            //线上地址
+                            online: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
+                            //本地地址
+                            local: 'http://192.168.101.149:8080',
                         }
 
                     },
@@ -39,21 +41,10 @@ const config = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
-    },
-
-    devServer: {
-        hot: false,
-        static: path.join(__dirname, 'dist')
-    },
+    }
 };
 
 module.exports = () => {
-    if (isProduction) {
-        config.mode = 'production';
-
-
-    } else {
-        config.mode = 'development';
-    }
+    config.mode = 'production';
     return config;
 };

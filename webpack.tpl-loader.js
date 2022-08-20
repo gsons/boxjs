@@ -5,7 +5,7 @@ module.exports = function (context) {
     const divi = isProduction ? 60 * 1000 : 1000;
     const version = parseInt((new Date().getTime() - new Date('2022-01-01').getTime()) / divi).toString(36) //从2022年开始算 分钟/秒 时间戳的36进制 生成版本号
     const options = this.getOptions();
-    const baseUrl = isProduction ? options.baseurl.production : options.baseurl.development;
+    const baseUrl = isProduction ? options.baseurl.online : options.baseurl.local;
     const [, name, ext] = /(\w+)\.tpl\.(\w+)/.exec(this.resourcePath)??[];
     let content = context
         .replace(/\${baseUrl}/g, baseUrl)

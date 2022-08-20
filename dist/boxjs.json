@@ -1,5 +1,5 @@
 {
-    "id": "gsonhub.app.sub",
+    "id": "gsonhub.app",
     "name": "@gsonhub的应用订阅",
     "author": "@gsonhub",
     "apps": [
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=759p"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=75es"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=759p"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=75es"
                 }
             ],
             "keys": [
