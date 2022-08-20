@@ -8,7 +8,7 @@ npm i
 ```
 ### 配置
 > 在webpack.config.js 配置你的线上地址(online)与本地IP地址(local)
-```json
+```c
 {
     baseurl: {
         online:'https://raw.githubusercontent.com/gsons/boxjs/main/dist',//线上地址
