@@ -1,21 +1,7 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require('path');
 
+
 const isProduction = process.env.NODE_ENV == 'production';
-
-if (isProduction) {
-    const v = parseInt((new Date().getTime() - new Date('2022-01-01').getTime()) / 1000 / 60).toString(36) //从2022年开始算分钟时间戳的36进制 生成版本号
-    const fs = require('fs')
-    fs.readFile('src/tpl/gsonhub.sgmodule.tpl', (err, buffer) => {
-        let content = buffer.toString().replace(/v=VERSION/g, 'v=' + v);
-        fs.writeFile('dist/gsonhub.sgmodule', content, () => { });
-        console.log('\n************************************')
-        console.log('* 本次发布版本号为：' + v + '')
-        console.log('************************************\n')
-    });
-}
-
 
 const config = {
     entry: {
@@ -35,12 +21,29 @@ const config = {
                 loader: 'ts-loader',
                 exclude: ['/node_modules/'],
             },
-            // Add your rules for custom modules here
-            // Learn more about loaders from https://webpack.js.org/loaders/
+            {
+                test: /\.tpl\.\w+$/i,
+                use: {
+                    loader: './webpack.tpl-loader',
+                    options: {
+                        baseurl: {
+                            production: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
+                            development: 'http://192.168.101.149:8080',
+                        }
+
+                    },
+                },
+                exclude: ['/node_modules/'],
+            },
         ],
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+    },
+
+    devServer: {
+        hot: false,
+        static: path.join(__dirname, 'dist')
     },
 };
 

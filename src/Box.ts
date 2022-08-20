@@ -16,7 +16,7 @@ enum ENV {
 
 abstract class Box {
 
-    //VPN环境名称
+    //环境名称
     public env: ENV;
 
     //应用名称

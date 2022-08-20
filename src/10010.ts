@@ -2,8 +2,6 @@ import Box from "./Box";
 const RSAEncrypt = require('./lib/JSEncrypt');
 
 declare var $request: any;
-
-
 class App extends Box {
 
     appId: string;
@@ -334,6 +332,9 @@ class App extends Box {
         }
     }
 }
+
+require ('./tpl/boxjs.tpl.json');
+require ('./tpl/gsonhub.tpl.sgmodule');
 
 new App('中国联通', 'gsonhub.10010').run();
 

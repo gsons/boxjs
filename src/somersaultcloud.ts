@@ -2,13 +2,11 @@ declare var $request: any;
 
 import Box from "./Box";
 
-
 class App extends Box {
 
     private signurlKey = 'sign_url';
 
     private signheaderKey = 'sign_header';
-
 
     async handelSign() {
         this.log('运行 》 筋斗云签到');
@@ -98,6 +96,9 @@ class App extends Box {
         return res;
     }
 }
+
+require ('./tpl/boxjs.tpl.json');
+require ('./tpl/gsonhub.tpl.sgmodule');
 
 new App('筋斗云', 'gsonhub.somersaultcloud').run();
 
