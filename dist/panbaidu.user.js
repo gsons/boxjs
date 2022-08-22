@@ -7,8 +7,7 @@
 // @match        *://pan.baidu.com/*
 // @match        *://yun.baidu.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
-// @require      https://lib.baomitu.com/jquery/3.6.0/jquery.js
-// @require      https://lib.baomitu.com/sweetalert/2.1.2/sweetalert.min.js
+// @require      http://libs.baidu.com/jquery/2.0.0/jquery.min.js
 // @require      https://lib.baomitu.com/clipboard.js/2.0.6/clipboard.min.js
 // @run-at       document-idle
 // @grant        unsafeWindow
@@ -109,25 +108,27 @@
     }
 
     function doRequest(option) {
+        let name = option.name ?? '';
+        let url = option.url ?? '';
         return new Promise((resolve, reject) => {
             let config = {
                 method: 'POST',
                 responseType: 'json',
                 timeout: 10000, // 10秒超时
-                url: '',
+                url: url,
                 data: '',
                 onload: (res) => {
                     if (res.status = 200) {
                         resolve(res.response);
                     } else {
-                        reject(`状态码错误：${res.status}`);
+                        reject(`请求${name}（${url}）网络时状态码错误：${res.status}`);
                     }
                 },
                 ontimeout: () => {
-                    reject(`请求超时，请检查网络后再试`);
+                    reject(`请求${name}（${url}）网络时超时，请检查网络后再试`);
                 },
                 onerror: () => {
-                    reject(`发生未知错误，请稍后再试`);
+                    reject(`请求${name}（${url}）网络时发生未知错误，请稍后再试`);
                 }
             };
             config = Object.assign(config, option);
@@ -142,12 +143,12 @@
         console.log('开始分享文件');
         let url = `/share/set?channel=chunlei&clienttype=0&web=1&channel=chunlei&web=1&app_id=250528&bdstoken=&clienttype=0`;
         let data = `fid_list=[${theFile.fs_id}]&schannel=4&channel_list=[]&period=1&pwd=${pwd}`;
-        let res = await doRequest({ url: url, data: data });
-        if (res.errno === 0) {
+        let res = await doRequest({ name: '百度云分享', url: url, data: data });
+        if (res && res.errno === 0) {
             console.log('结束分享文件', res);
             return res;
         } else {
-            throw new Error('分享文件失败！');
+            throw new Error('分享文件失败！' + JSON.stringify(res));
         }
     }
 
@@ -161,7 +162,7 @@
     async function getUInfo() {
         console.log('开始获取UInfo');
         let url = "https://pan.baidu.com/rest/2.0/xpan/nas?method=uinfo&" + new Date().getTime();
-        let res = await doRequest({ url: url, method: 'get' });
+        let res = await doRequest({ name: '百度云用户信息', url: url, method: 'get' });
         console.log('结束获取UInfo', res);
         return res;
     }
@@ -169,8 +170,8 @@
     async function getDownloadDomain() {
         console.log('开始获取百度云下载域名');
         let bdUrl = "https://pan.baidu.com/pcloud/user/getinfo?query_uk=477485340" + '&' + new Date().getTime();
-        let res = await doRequest({ url: bdUrl, method: 'get' });
-        if (res.errno === 0) {
+        let res = await doRequest({ name: '百度云域名信息', url: bdUrl, method: 'get' });
+        if (res && res.errno === 0) {
             console.log('结束获取百度云下载域名', res.user_info.intro);
             return res.user_info.intro
         } else {
@@ -231,29 +232,30 @@
 
     async function getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile) {
         console.log('开始获取百度云直链地址');
+        let vv = parseInt((new Date().getTime() - new Date('2022-01-01').getTime()) / 60000).toString(36);
         let data = new FormData();
         const shorturl = share_res.shorturl;
         data.append('surl', shorturl.substring(shorturl.lastIndexOf('/') + 1, shorturl.length));
         data.append('pwd', pwd);
         data.append('shareid', share_res.shareid);
-        data.append('from', uInfo.uk);
+        data.append('from', uInfo.uk + vv);
         data.append('fsidlist', `[${theFile.fs_id}]`);
         data.append('start', new Date().getTime());
         data.append('code', '9383');
-        data.append('u', uInfo.baidu_name);
+        data.append('u', uInfo.baidu_name + vv);
         data.append('fn', theFile.server_filename);
         data.append('token', '');
         data.append('au', 'https://pic.rmb.bdstatic.com/bjh/faa1661e54ab1bf491bf630fe16f277b.gif');
         let downloadUrl = `${getAppSettingData().getDownloadUrl}?version=${getAppSettingData().scriptVersion}&t=8888` + new Date().getTime();
         downloadUrl = domain + downloadUrl + getAppSettingData().param;
         console.log({ url: downloadUrl, data: data });
-        let res = await doRequest({ url: downloadUrl, data: data });
-        if (res.errno === 0) {
+        let res = await doRequest({ name: '百度云直链', url: downloadUrl, data: data });
+        if (res && res.errno === 0) {
             console.log('结束获取百度云直链地址', res);
             return res
         } else {
             console.error('获取百度云直链地址失败', res);
-            throw new Error('获取百度云直链地址失败');
+            throw new Error('获取百度云直链地址失败' + JSON.stringify(res));
         }
     }
 
@@ -288,7 +290,7 @@
 
     //发送至aria2
     async function ariaDownload(response) {
-        console.log('开始启用aria下载资源');
+        console.log('开始启用aria2下载资源');
         let path = formatTime('yyyyMMdd');
         let rpcDir = `E:/code/lu.php/live/${path}`;
         let rpcUrl = 'http://localhost:6800/jsonrpc';
@@ -299,36 +301,49 @@
         delete response.aria2info.params[2]['piece-length'];
         let data = JSON.stringify(response.aria2info);
         data = data.replace('{{{rpcDir}}}', rpcDir).replace('{{{rpcToken}}}', '');
-        let res = await doRequest({ url: rpcUrl, data: data });
+        let res = await doRequest({ name: 'Aria2', 'timeout': 3000, url: rpcUrl, data: data });
         if (res.result) {
-            console.log('结束启用aria下载资源', res);
+            console.log('结束启用aria2下载资源', res);
         } else {
-            console.error('启用aria下载资源出错了！', res)
-            throw new Error('启用aria下载资源出错了！');
+            console.error('启用aria2下载资源出错了！', res)
+            throw new Error('启用aria2下载资源出错了！' + JSON.stringify(res));
         }
     }
-    function htmlLog(msg, color = 'black') {
+    function htmlLog(msg, type = 'log') {
+        let colorMap = { 'log': '#333', 'info': '#198754', 'warn': '#ffc107', 'error': '#dc3545', };
+        let color = colorMap[type] ?? '#333';
         let date = formatTime('MM-dd HH:mm:ss');
         console.log(msg);
         $('.nd-detail').append(`<div><span>${date} </span><span style="color:${color}"> ${msg}</span></div>`)
     }
+
+    async function checkAria2() {
+        try {
+            await doRequest({ name: 'Aria2', 'method': 'get', url: 'http://localhost:6800/jsonrpc', 'timeout': 500 });
+        } catch (error) {
+            throw new Error('请安装并且启动Aria2软件');
+        }
+    }
+
+
     async function main() {
         let fileListArr = getSelectedFileList();
+        await checkAria2();
         let len;
-        if (len=fileListArr.length) {
+        if (len = fileListArr.length) {
             htmlLog(`正在下载${len}个文件。。。`);
             console.log(`选中了${len}个文件`, fileListArr);
             let domain = await getDownloadDomain();
             let uInfo = await getUInfo();
-            let countArr={};let fail=0;
+            let countArr = {}; let fail = 0;
             while (fileListArr.length) {
                 let theFile = fileListArr.shift();
-                countArr[theFile.fs_id]=countArr[theFile.fs_id]?countArr[theFile.fs_id]+1:1;
-                let times=countArr[theFile.fs_id];
-                htmlLog(`开始第${times}次处理文件 ${theFile.server_filename}...`);
+                countArr[theFile.fs_id] = countArr[theFile.fs_id] ? countArr[theFile.fs_id] + 1 : 1;
+                let times = countArr[theFile.fs_id];
+                htmlLog(`开始第${times}次处理文件 《${theFile.server_filename}》...`);
                 let pwd = getRndPwd(4);
                 if (theFile.isdir !== 0) {
-                    htmlLog('目录无法下载！', 'yellow');
+                    htmlLog('目录无法下载！', 'warn');
                     continue;
                 }
                 console.log(countArr);
@@ -337,30 +352,34 @@
                     let share_res = await doShare(theFile, pwd);
                     let res_url = await getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile);
                     await ariaDownload(res_url);
-                    htmlLog(`下载文件 ${theFile.server_filename} 成功`,'green')
+                    htmlLog(`下载文件 《${theFile.server_filename}》 成功`, 'info')
                 } catch (error) {
-                    if(times>=2){
+                    if (times >= 2) {
                         fail++;
-                        htmlLog(`下载文件 ${theFile.server_filename} 失败，${error}`, 'red')
-                    }else{
+                        htmlLog(`下载文件 《${theFile.server_filename}》 失败，${error}`, 'error')
+                    } else {
                         fileListArr.push(theFile);
-                        htmlLog(`下载文件 ${theFile.server_filename} 异常，正在重新尝试下载， ${error}`, 'yellow')
+                        htmlLog(`下载文件 《${theFile.server_filename}》 异常，正在重新尝试下载， ${error}`, 'warn')
                     }
                 }
             }
-            htmlLog(`本次下载了${len}个文件,成功(${len-fail})，失败(${fail})`,'green');
+            htmlLog(`本次下载了${len}个文件,成功【${len - fail}】，失败【${fail}】`, 'info');
 
         } else {
             throw new Error('请选择文件下载');
         }
     }
-    $('button[title="新建在线文档"]').parent().parent().append($('button[title="新建在线文档"]').parent().html().replace(/新建在线文档/g, 'aria2下载').replace(/u-icon-newly-build/g, 'u-icon-download'));
+
+    $('.wp-s-pan-file-main__nav').append($('button[title="新建在线文档"]').parent().html().replace(/新建在线文档/g, 'aria2下载').replace(/u-icon-newly-build/g, 'u-icon-download'));
+    $('button[title="aria2下载"]').css('color', '#ff2066');
     $(document).on('click', '[title="aria2下载"]', () => {
         htmlLog('panbaidu 脚本开始！', 'START');
-        $('.nd-detail').html('');
+        //$('.nd-detail').html('');
+        $('.nd-detail__title').siblings().remove()
         $('[title="aria2下载"]').attr('disabled', true);
         main().catch((err) => {
-            htmlLog(`系统错误终止运行，${err}`, 'red')
+            htmlLog(`系统错误终止运行，${err}`, 'error')
+            alert(`系统错误终止运行，${err}`);
             console.error(err);
         }).finally(() => {
             $('[title="aria2下载"]').attr('disabled', null);
