@@ -25,7 +25,7 @@
                 "gsonhub.10010.cookie",
                 "gsonhub.10010.smscode",
                 "gsonhub.10010.mute",
-                "gsonhub.10010.boxjs-log"
+                //"gsonhub.10010.boxjs-log"
             ],
 
             "author": "@gsonhub",
@@ -77,7 +77,7 @@
                 "gsonhub.somersaultcloud.sign_url",
                 "gsonhub.somersaultcloud.sign_header",
                 "gsonhub.somersaultcloud.mute",
-                "gsonhub.somersaultcloud.boxjs-log"
+                //"gsonhub.somersaultcloud.boxjs-log"
             ],
             "author": "@gsonhub",
             "settings": [
