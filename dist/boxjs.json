@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=75es"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=779i"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=75es"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=779i"
                 }
             ],
             "keys": [
