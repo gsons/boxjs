@@ -118,7 +118,7 @@
                 data: '',
                 onload: (res) => {
                     if (res.status = 200) {
-                        resolve(res.response||res.responseText);
+                        resolve(res.response || res.responseText);
                     } else {
                         reject(`请求${name}（${url}）网络时状态码错误：${res.status}`);
                     }
@@ -151,13 +151,7 @@
         }
     }
 
-    function doAwait(second) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(second);
-            }, second * 1000);
-        });
-    }
+
     async function getUInfo() {
         console.log('开始获取UInfo');
         let url = "https://pan.baidu.com/rest/2.0/xpan/nas?method=uinfo&" + new Date().getTime();
@@ -248,12 +242,12 @@
         downloadUrl = domain + downloadUrl + getAppSettingData().param;
         console.log({ url: downloadUrl, data: data });
         let res = await doRequest({ name: '百度云直链', url: downloadUrl, data: data });
-        if(typeof res=='string'){
-            try{
-                res=JSON.parse(res.split('}{')[0]+'}')
-            }catch(e){
-               console.error('获取百度云直链地址失败 JSON解析错误');
-               res={};
+        if (typeof res == 'string') {
+            try {
+                res = JSON.parse(res.split('}{')[0] + '}')
+            } catch (e) {
+                console.error('获取百度云直链地址失败 JSON解析错误');
+                res = {};
             }
         }
         if (res && res.errno === 0) {
@@ -331,8 +325,35 @@
         }
     }
 
+    async function handleManyFile(theFiles, domain) {
+        let handleOneFile = async function (theFile) {
+            let fsid = theFile.fs_id;
+            let vv = parseInt((new Date().getTime() - new Date('2022-08-22').getTime())).toString(36);
+            let uInfo = { uk: vv, baidu_name: '救赎——' + vv };// await getUInfo();
+            let pwd = getRndPwd(4);
+            try {
+                let share_res = await doShare(theFile, pwd);
+                let res_url = await getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile);
+                await ariaDownload(res_url);
+                theFile.status = true;
+                theFile.error = '';
+            } catch (error) {
+                theFile.status = false;
+                theFile.error = error;
+            }
+            return theFile;
+        }
+        let list = [];
+        theFiles.forEach((theFile) => {
+            list.push(handleOneFile(theFile));
+        });
+        let res = await Promise.all(list);
+        return res;
+    }
 
-    async function main() {
+
+
+    async function run() {
         let fileListArr = getSelectedFileList();
         await checkAria2();
         let len;
@@ -340,38 +361,35 @@
             htmlLog(`正在处理${len}个文件。。。`);
             console.log(`选中了${len}个文件`, fileListArr);
             let domain = await getDownloadDomain();
-            let vv = parseInt((new Date().getTime() - new Date('2022-01-01').getTime()) / 60000).toString(36);
-            let uInfo ={uk:vv,baidu_name:'殉情者的救赎——'+vv};// await getUInfo();
-            let countArr = {}; let fail = 0;
+            let countArr = {}; let success = 0, fail = 0;
             while (fileListArr.length) {
-                let theFile = fileListArr.shift();
-                countArr[theFile.fs_id] = countArr[theFile.fs_id] ? countArr[theFile.fs_id] + 1 : 1;
-                let times = countArr[theFile.fs_id];
-                htmlLog(`开始第${times}次处理文件 《${theFile.server_filename}》...`);
-                let pwd = getRndPwd(4);
-                if (theFile.isdir !== 0) {
-                    len--;
-                    htmlLog('目录无法下载！', 'warn');
-                    continue;
+                let fileList = []; let num = 2;
+                while (num-- && fileListArr.length) {
+                    let theFile = fileListArr.shift();
+                    countArr[theFile.fs_id] = countArr[theFile.fs_id] ? countArr[theFile.fs_id] + 1 : 1;
+                    let tt=countArr[theFile.fs_id];
+                    htmlLog(`开始第${tt}次处理文件 《${theFile.server_filename}》...`);
+                    fileList.push(theFile);
                 }
-                console.log(countArr);
-                try {
-                    //throw new Error('ERROR');
-                    let share_res = await doShare(theFile, pwd);
-                    let res_url = await getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile);
-                    await ariaDownload(res_url);
-                    htmlLog(`获取文件《${theFile.server_filename}》的直链成功`, 'info')
-                } catch (error) {
-                    if (times >= 2) {
-                        fail++;
-                        htmlLog(`获取文件 《${theFile.server_filename}》的直链失败，${error}`, 'error')
+                let res = await handleManyFile(fileList, domain);
+                res.forEach(voFile => {
+                    let fsid = voFile.fs_id;
+                    let times = countArr[fsid];
+                    if (voFile.status) {
+                        success++;
+                        htmlLog(`获取文件《${voFile.server_filename}》的直链成功`, 'info')
                     } else {
-                        fileListArr.push(theFile);
-                        htmlLog(`获取文件 《${theFile.server_filename}》的直链异常，正在重新尝试， ${error}`, 'warn')
+                        if (times >= 2) {
+                            fail++;
+                            htmlLog(`获取文件 《${voFile.server_filename}》的直链失败，${voFile.error}`, 'error')
+                        } else {
+                            fileListArr.push(voFile);
+                            htmlLog(`获取文件 《${voFile.server_filename}》的直链异常，正在重新尝试， ${voFile.error}`, 'warn')
+                        }
                     }
-                }
+                })
             }
-            let msg=`本次处理${len}个文件,成功【${len - fail}】，失败【${fail}】,请前往aria2查看具体下载情况`;
+            let msg = `本次处理${len}个文件,成功【${success}】，失败【${fail}】,请前往aria2查看具体下载情况`;
             htmlLog(msg, 'info');
             showNotice(msg);
         } else {
@@ -387,20 +405,24 @@
         })
     }
 
-    $('.wp-s-pan-file-main__nav').append($('button[title="新建在线文档"]').parent().html().replace(/新建在线文档/g, 'aria2下载').replace(/u-icon-newly-build/g, 'u-icon-download'));
-    $('button[title="aria2下载"]').css('color', '#ff2066');
-    $(document).on('click', '[title="aria2下载"]', () => {
-        htmlLog('panbaidu 脚本开始！', 'START');
-        //$('.nd-detail').html('');
-        $('.nd-detail__title').siblings().remove()
-        $('[title="aria2下载"]').attr('disabled', true);
-        main().catch((err) => {
-            htmlLog(`系统错误终止运行，${err}`, 'error')
-            showNotice(`下载出错了，请稍后再试，${err}`);
-            console.error(err);
-        }).finally(() => {
-            $('[title="aria2下载"]').attr('disabled', null);
-            htmlLog('panbaidu 结束！', 'END');
+    function main() {
+        $('.wp-s-pan-file-main__nav').append($('button[title="新建在线文档"]').parent().html().replace(/新建在线文档/g, 'aria2下载').replace(/u-icon-newly-build/g, 'u-icon-download'));
+        $('button[title="aria2下载"]').css('color', '#ff2066');
+        $(document).on('click', '[title="aria2下载"]', () => {
+            htmlLog('panbaidu 脚本开始！', 'START');
+            //$('.nd-detail').html('');
+            $('.nd-detail__title').siblings().remove()
+            $('[title="aria2下载"]').attr('disabled', true);
+            run().catch((err) => {
+                htmlLog(`系统错误终止运行，${err}`, 'error')
+                showNotice(`下载出错了，请稍后再试，${err}`);
+                console.error(err);
+            }).finally(() => {
+                $('[title="aria2下载"]').attr('disabled', null);
+                htmlLog('panbaidu 结束！', 'END');
+            });
         });
-    });
+    }
+
+    main();
 })();
