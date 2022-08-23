@@ -401,6 +401,23 @@
         showNotice(msg);
     }
 
+    async  function getPathFile(path='/video/girllive/ai'){
+        let fileArr=[];
+        let dir=encodeURIComponent(path);
+        let url=`https://pan.baidu.com/api/list?clienttype=0&app_id=250528&web=1&dp-logid=47771500697406310037&order=time&desc=1&dir=${dir}&num=200&page=1`;
+        let res=await doRequest({url:url});
+        let list=res['list'];
+        list.forEach((vo)=>{
+            if(vo.isdir){
+                getPathFile(vo.path).then((arr)=>{arr.forEach(v=>{fileArr.push(v);})});
+            }
+            else{
+                fileArr.push(vo.path);
+            }
+        });
+        return fileArr;
+    }
+
     async function run() {
         let fileListArr = getSelectedFileList();
         let tryTimes = 2, limit =2;
