@@ -172,57 +172,6 @@
         }
     }
 
-    let globalData = {
-        scriptVersion: '1.5.5',
-        domain: 'http://82.156.65.179',
-        domainB: 'http://bd.yyxxs.cn',
-        domainC: 'http://82.156.15.149',
-        domainD: 'http://42.193.51.61',
-        domainE: 'http://81.70.253.99',
-        domainF: 'http://119.28.139.214',
-        domainG: 'http://49.234.47.193',
-        // domainH: 'http://localhost:48818',
-        param: '',
-        downloading: 0,
-        sending: 0,
-        storageNamePrefix: 'softxm_storageName', // 本地储存名称前缀
-        paramDomain: `https://softxm.lanzoui.com`, // 教程跳转地址
-        paramDomain2: `https://pic.rmb.bdstatic.com`, // 教程跳转地址
-    }
-
-    let getAppSettingData = function () {
-        return {
-            scriptVersion: globalData.scriptVersion,
-            param: globalData.param,
-            storageNamePrefix: globalData.storageNamePrefix,
-            getDownloadUrl: `/bd/getDownloadUrl2.php`,
-            aria2DownloadUrl: `${globalData.paramDomain}/b01nqc7yj`, // Aria2软件下载地址
-            aria2CourseUrl: `https://www.cnblogs.com/softxmm/p/13972678.html#aria2`, // Aria2教程地址
-            idmDownloadUrl: `https://www.cnblogs.com/softxmm/p/13972678.html#idm`, // idm教程地址
-        }
-    }
-
-    let getStorage = {
-        getAppConfig: (key) => {
-            return GM_getValue(getAppSettingData().storageNamePrefix + '_app_' + key) || '';
-        },
-        setAppConfig: (key, value) => {
-            GM_setValue(getAppSettingData().storageNamePrefix + '_app_' + key, value || '');
-        },
-        getLastUse: (key) => {
-            return GM_getValue(getAppSettingData().storageNamePrefix + '_last_' + key) || '';
-        },
-        setLastUse: (key, value) => {
-            GM_setValue(getAppSettingData().storageNamePrefix + '_last_' + key, value || '');
-        },
-        getCommonValue: (key) => {
-            return GM_getValue(getAppSettingData().storageNamePrefix + '_common_' + key) || '';
-        },
-        setCommonValue: (key, value) => {
-            GM_setValue(getAppSettingData().storageNamePrefix + '_common_' + key, value || '');
-        }
-    }
-
     async function getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile) {
         console.log('开始获取百度云直链地址');
         let data = new FormData();
@@ -238,8 +187,8 @@
         data.append('fn', theFile.server_filename);
         data.append('token', '');
         data.append('au', 'https://pic.rmb.bdstatic.com/bjh/faa1661e54ab1bf491bf630fe16f277b.gif');
-        let downloadUrl = `${getAppSettingData().getDownloadUrl}?version=${getAppSettingData().scriptVersion}&t=8888` + new Date().getTime();
-        downloadUrl = domain + downloadUrl + getAppSettingData().param;
+        let downloadUrl = `/bd/getDownloadUrl2.php?version=1.5.5&t=8888` + new Date().getTime();
+        downloadUrl = domain + downloadUrl;
         console.log({ url: downloadUrl, data: data });
         let res = await doRequest({ name: '百度云直链', url: downloadUrl, data: data });
         if (typeof res == 'string') {
@@ -289,7 +238,7 @@
     }
 
     //发送至aria2
-    async function ariaDownload(response) {
+    async function ariaDownload(response,theFile) {
         console.log('开始启用aria2下载资源');
         let path = formatTime('yyyyMMdd');
         let rpcDir = `E:/code/lu.php/live/${path}`;
@@ -339,7 +288,7 @@
                 let res_url = await getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile);
                 let ttt2=new Date().getTime();
                 let vvv2=ttt2-ttt1;
-                await ariaDownload(res_url);
+                await ariaDownload(res_url,theFile);
                 let ttt3=new Date().getTime();
                 let vvv3=ttt3-ttt2;
                 theFile.vvv=[vvv1,vvv2,vvv3];
@@ -401,19 +350,19 @@
         showNotice(msg);
     }
 
-    
-    async  function getPathFile(path='/video/girllive/ai'){
+
+    async function getPathFile(path='/video/girllive/ai'){
         let fileArr=[];
         let dir=encodeURIComponent(path);
         let url=`https://pan.baidu.com/api/list?clienttype=0&app_id=250528&web=1&dp-logid=47771500697406310037&order=time&desc=1&dir=${dir}&num=200&page=1`;
         let res=await doRequest({url:url});
-        let list=res['list'];
-        list.forEach((vo)=>{
+        let list=res.list??[];
+        await list.forEach(async (vo)=>{
             if(vo.isdir){
-                getPathFile(vo.path).then((arr)=>{arr.forEach(v=>{fileArr.push(v);})});
+                fileArr.concat(await getPathFile(vo.path));
             }
             else{
-                fileArr.push(vo.path);
+                fileArr.push(vo);
             }
         });
         return fileArr;
@@ -423,21 +372,16 @@
         let fileListArr = getSelectedFileList();
         let tryTimes = 2, limit =2;
         await checkAria2();
-
-        fileListArr = fileListArr.filter((vo) => {
-            if (vo.isdir !== 0) {
-                htmlLog(`注意目录《${vo.server_filename}》无法下载！`, 'warn');
-            }
-            return vo.isdir === 0;
-        });
-
+        let arr=fileListArr;
+        let i=arr.length;
+        while(i--){ if(arr[i].isdir) fileListArr=fileListArr.concat(await getPathFile(arr[i].path));}
+        fileListArr=fileListArr.filter((v)=>{return v.isdir===0});
         let len = fileListArr.length;
         if (len > 0) {
             htmlLog(`正在处理${len}个文件。。。`);
             console.log(`正在处理${len}个文件`, fileListArr);
             let domain = await getDownloadDomain();
-            await doHandleFilePool(fileListArr, domain, tryTimes, limit); 
-
+            await doHandleFilePool(fileListArr, domain, tryTimes, limit);
         } else {
             throw new Error('请选择文件下载');
         }
