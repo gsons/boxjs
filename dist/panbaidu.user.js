@@ -349,6 +349,16 @@
                 theFile.status = false;
                 theFile.error = error;
             }
+
+            if (theFile.status) {
+                htmlLog(`获取文件《${theFile.server_filename}》的直链成功`, 'info')
+            } else {
+                if (times < tryTimes) {
+                    htmlLog(`获取文件 《${theFile.server_filename}》的直链异常，正在重新尝试， ${theFile.error}`, 'warn')
+                } else {
+                    htmlLog(`获取文件 《${theFile.server_filename}》的直链失败，${theFile.error}`, 'error')
+                }
+            }
             return theFile;
         }
         const result = [];
@@ -357,19 +367,8 @@
             let theFile = theFiles.shift();
             const p = Promise.resolve(handleFile(theFile, times));
             result.push(p);
-            if (limit <= theFiles.length) {
-                const e = p.then((voFile) => {
-                    executing.splice(executing.indexOf(e), 1);
-                    if (voFile.status) {
-                        htmlLog(`获取文件《${voFile.server_filename}》的直链成功`, 'info')
-                    } else {
-                        if (times < tryTimes) {
-                            htmlLog(`获取文件 《${voFile.server_filename}》的直链异常，正在重新尝试， ${voFile.error}`, 'warn')
-                        } else {
-                            htmlLog(`获取文件 《${voFile.server_filename}》的直链失败，${voFile.error}`, 'error')
-                        }
-                    }
-                });
+            if (0 <= theFiles.length) {
+                const e = p.then(() =>executing.splice(executing.indexOf(e), 1));
                 executing.push(e);
                 if (executing.length >= limit) {
                     await Promise.race(executing);
