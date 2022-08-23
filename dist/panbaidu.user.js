@@ -325,15 +325,24 @@
         }
     }
 
-    async function handleFilePool(theFiles, domain, times, limit) {
-        let handleFile = async function (theFile) {
+    async function handleFilePool(theFiles, domain, times, tryTimes, limit) {
+        let handleFile = async function (theFile, tt) {
+            htmlLog(`开始第${tt}次处理文件 《${theFile.server_filename}》...`);
             let vv = parseInt((new Date().getTime() - new Date('2022-08-22').getTime())).toString(36);
             let uInfo = { uk: vv, baidu_name: '救赎——' + vv };// await getUInfo();
             let pwd = getRndPwd(4);
             try {
+                let ttt=new Date().getTime();
                 let share_res = await doShare(theFile, pwd);
+                let ttt1=new Date().getTime();
+                let vvv1=ttt1-ttt;
                 let res_url = await getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile);
+                let ttt2=new Date().getTime();
+                let vvv2=ttt2-ttt1;
                 await ariaDownload(res_url);
+                let ttt3=new Date().getTime();
+                let vvv3=ttt3-ttt2;
+                theFile.vvv=[vvv1,vvv2,vvv3];
                 theFile.status = true;
                 theFile.error = '';
             } catch (error) {
@@ -346,11 +355,21 @@
         const executing = [];
         while (theFiles.length) {
             let theFile = theFiles.shift();
-            htmlLog(`开始第${times}次处理文件 《${theFile.server_filename}》...`);
-            const p = Promise.resolve(handleFile(theFile));
+            const p = Promise.resolve(handleFile(theFile, times));
             result.push(p);
             if (limit <= theFiles.length) {
-                const e = p.then(() => executing.splice(executing.indexOf(e), 1));
+                const e = p.then((voFile) => {
+                    executing.splice(executing.indexOf(e), 1);
+                    if (voFile.status) {
+                        htmlLog(`获取文件《${voFile.server_filename}》的直链成功`, 'info')
+                    } else {
+                        if (times < tryTimes) {
+                            htmlLog(`获取文件 《${voFile.server_filename}》的直链异常，正在重新尝试， ${voFile.error}`, 'warn')
+                        } else {
+                            htmlLog(`获取文件 《${voFile.server_filename}》的直链失败，${voFile.error}`, 'error')
+                        }
+                    }
+                });
                 executing.push(e);
                 if (executing.length >= limit) {
                     await Promise.race(executing);
@@ -361,33 +380,31 @@
     }
 
     async function doHandleFilePool(files, domain, tryTimes = 2, limit = 2) {
-        let theFiles = files; let len = theFiles.length, success = 0, fail = 0;
+        let tt_start=new Date().getTime();
+        let theFiles = files; let len = theFiles.length, success = 0;
         for (var i = 0; i < tryTimes; i++) {
             if (theFiles.length === 0) break;
-            theFiles = await handleFilePool(theFiles, domain, i + 1, limit);
+            theFiles = await handleFilePool(theFiles, domain, i + 1, tryTimes, limit);
+            //console.log(theFiles);
             theFiles = theFiles.filter((voFile) => {
                 if (voFile.status) {
                     success++;
-                    htmlLog(`获取文件《${voFile.server_filename}》的直链成功`, 'info')
-                } else {
-                    if (i < (tryTimes - 1)) {
-                        htmlLog(`获取文件 《${voFile.server_filename}》的直链异常，正在重新尝试， ${voFile.error}`, 'warn')
-                    } else {
-                        fail++;
-                        htmlLog(`获取文件 《${voFile.server_filename}》的直链失败，${voFile.error}`, 'error')
-                    }
                 }
                 return !voFile.status;
             });
         }
-        let msg = `本次处理${len}个文件,成功【${success}】，失败【${fail}】,请前往aria2查看具体下载情况`;
+        let tt_end=new Date().getTime();
+        let sss=parseInt((tt_end-tt_start)/1000);
+        let mm=parseInt(sss/60);
+        let ss=sss-mm*60;
+        let msg = `本次处理${len}个文件,成功【${success}】，失败【${len - success}】,用时${mm}分,${ss}秒 请前往aria2查看具体下载情况`;
         htmlLog(msg, 'info');
         showNotice(msg);
     }
 
     async function run() {
         let fileListArr = getSelectedFileList();
-        let tryTimes = 2, limit = 3
+        let tryTimes = 2, limit =2;
         await checkAria2();
 
         fileListArr = fileListArr.filter((vo) => {
@@ -402,7 +419,7 @@
             htmlLog(`正在处理${len}个文件。。。`);
             console.log(`正在处理${len}个文件`, fileListArr);
             let domain = await getDownloadDomain();
-            await doHandleFilePool(fileListArr, domain, tryTimes, limit);
+            await doHandleFilePool(fileListArr, domain, tryTimes, limit); 
 
         } else {
             throw new Error('请选择文件下载');
