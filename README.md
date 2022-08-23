@@ -74,7 +74,7 @@ npm run build
 
     [http://somersaultcloud.log](http://somersaultcloud.log)
 
-## 运行截图
+## 运行截图[]
 ![image](https://gsons.github.io/demo/notice.jpg)
 
 ![image](https://gsons.github.io/demo/scriptable.jpg)      
