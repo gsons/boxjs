@@ -118,7 +118,7 @@
                 data: '',
                 onload: (res) => {
                     if (res.status = 200) {
-                        resolve(res.response || res.responseText);
+                        resolve(res.response || res.responseText||'');
                     } else {
                         reject(`请求${name}（${url}）网络时状态码错误：${res.status}`);
                     }
