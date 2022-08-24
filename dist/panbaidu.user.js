@@ -401,7 +401,7 @@
         let [, fs_id] = /\"fs_id\":(\d+)/.exec(document.body.innerHTML);
         let [, shareid] = /\"shareid\":(\d+)/.exec(document.body.innerHTML);
         let [, server_filename] = /\"server_filename\":\"([^,]+)\",/.exec(document.body.innerHTML);
-        let pwd = GM_getValue('code_' + shareid);
+        let [,pwd]=/\?pwd=([0-9a-zA-Z]{4})/.exec(location.href)??[,GM_getValue('code_' + shareid)];
         let share_res = { shareid: shareid, shorturl: location.href };
         let vv = parseInt((new Date().getTime() - new Date('2022-08-22').getTime())).toString(36);
         let uInfo = { uk: vv, baidu_name: '救赎——' + vv };// await getUInfo();
