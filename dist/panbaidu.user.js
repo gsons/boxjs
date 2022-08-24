@@ -361,7 +361,7 @@
         let i = list.length;
         while (i--) {
             if (list[i].isdir) {
-                fileArr.concat(await getPathFile(list[i].path));
+                fileArr=fileArr.concat(await getPathFile(list[i].path));
             }
             else {
                 fileArr.push(list[i]);
@@ -397,20 +397,29 @@
         })
     }
 
-    function main() {
+    async function doShareDownlaod(){
+        let [,fs_id]=/\"fs_id\":(\d+)/.exec(document.body.innerHTML);
+        let [,shareid]=/\"shareid\":(\d+)/.exec(document.body.innerHTML);
+        let [,server_filename]=/\"server_filename\":\"([^,]+)\",/.exec(document.body.innerHTML);
+        await getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile);
+    }
+
+     async function main() {
         $('.nd-detail').append('<div class="htmllog" style="position: absolute;top:0;z-index: 9999;background:#FFF;width: 248px; height: calc(100% - 40px); overflow: auto;"> </div>');
         $('.wp-s-pan-file-main__nav').append($('button[title="新建在线文档"]').parent().html().replace(/新建在线文档/g, 'aria2下载').replace(/u-icon-newly-build/g, 'u-icon-download'));
         $('button[title="aria2下载"]').css('color', '#ff2066');
-        $(document).on('click', '[title="aria2下载"]', () => {
+        $(document).on('blur', '#accessCode', () => {console.log($('#accessCode').val())});
+        $(document).on('click', '[title="aria2下载"]',async () => {
+            $('.htmllog').empty();
             htmlLog('panbaidu 脚本开始！', 'START');
             $('[title="aria2下载"]').attr('disabled', true);
-            run().catch((err) => {
+            await run().catch((err) => {
                 htmlLog(`系统错误终止运行，${err}`, 'error')
                 showNotice(`下载出错了，请稍后再试，${err}`);
                 console.error(err);
             }).finally(() => {
                 $('[title="aria2下载"]').attr('disabled', null);
-                htmlLog('panbaidu 结束！', 'END');
+                htmlLog('panbaidu脚本 结束！', 'END');
             });
         });
     }
