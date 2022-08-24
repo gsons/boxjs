@@ -426,7 +426,7 @@
             if (/\/s\//.test(location.href)) {
                 console.log('panbaidu 脚本开始！', 'START');
                 await doAwait(1.5);
-                $('.x-button-box').prepend($('a[title="取消分享"]').prop("outerHTML").replace(/取消分享/g, 'aria2下载').replace(/icon-share-cancel/g, 'icon-download'));
+                $('.x-button-box').prepend($('a[title="保存到手机"]').prop("outerHTML").replace(/保存到手机/g, 'aria2下载').replace(/icon-qrcode/g, 'icon-download'));
                 $('a[title="aria2下载"]').css('color', '#ff2066');
                 $(document).on('click', 'a[title="aria2下载"]', async () => {
                     $('a[title="aria2下载"]').attr('disabled', true);
