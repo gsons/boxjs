@@ -238,7 +238,7 @@
     }
 
     //发送至aria2
-    async function ariaDownload(response,theFile) {
+    async function ariaDownload(response, theFile) {
         console.log('开始启用aria2下载资源');
         let path = formatTime('yyyyMMdd');
         let rpcDir = `E:/code/lu.php/live/${path}`;
@@ -263,7 +263,7 @@
         let color = colorMap[type] ?? '#333';
         let date = formatTime('MM-dd HH:mm:ss');
         console.log(msg);
-        $('.nd-detail').append(`<div><span>${date} </span><span style="color:${color}"> ${msg}</span></div>`)
+        $('.htmllog').append(`<div><span>${date} </span><span style="color:${color}"> ${msg}</span></div>`)
     }
 
     async function checkAria2() {
@@ -281,17 +281,17 @@
             let uInfo = { uk: vv, baidu_name: '救赎——' + vv };// await getUInfo();
             let pwd = getRndPwd(4);
             try {
-                let ttt=new Date().getTime();
+                let ttt = new Date().getTime();
                 let share_res = await doShare(theFile, pwd);
-                let ttt1=new Date().getTime();
-                let vvv1=ttt1-ttt;
+                let ttt1 = new Date().getTime();
+                let vvv1 = ttt1 - ttt;
                 let res_url = await getRealDownloadUrl(domain, share_res, uInfo, pwd, theFile);
-                let ttt2=new Date().getTime();
-                let vvv2=ttt2-ttt1;
-                await ariaDownload(res_url,theFile);
-                let ttt3=new Date().getTime();
-                let vvv3=ttt3-ttt2;
-                theFile.vvv=[vvv1,vvv2,vvv3];
+                let ttt2 = new Date().getTime();
+                let vvv2 = ttt2 - ttt1;
+                await ariaDownload(res_url, theFile);
+                let ttt3 = new Date().getTime();
+                let vvv3 = ttt3 - ttt2;
+                theFile.vvv = [vvv1, vvv2, vvv3];
                 theFile.status = true;
                 theFile.error = '';
             } catch (error) {
@@ -317,7 +317,7 @@
             const p = Promise.resolve(handleFile(theFile, times));
             result.push(p);
             if (0 <= theFiles.length) {
-                const e = p.then(() =>executing.splice(executing.indexOf(e), 1));
+                const e = p.then(() => executing.splice(executing.indexOf(e), 1));
                 executing.push(e);
                 if (executing.length >= limit) {
                     await Promise.race(executing);
@@ -328,7 +328,7 @@
     }
 
     async function doHandleFilePool(files, domain, tryTimes = 2, limit = 2) {
-        let tt_start=new Date().getTime();
+        let tt_start = new Date().getTime();
         let theFiles = files; let len = theFiles.length, success = 0;
         for (var i = 0; i < tryTimes; i++) {
             if (theFiles.length === 0) break;
@@ -341,41 +341,43 @@
                 return !voFile.status;
             });
         }
-        let tt_end=new Date().getTime();
-        let sss=parseInt((tt_end-tt_start)/1000);
-        let mm=parseInt(sss/60);
-        let ss=sss-mm*60;
+        let tt_end = new Date().getTime();
+        let sss = parseInt((tt_end - tt_start) / 1000);
+        let mm = parseInt(sss / 60);
+        let ss = sss - mm * 60;
         let msg = `本次处理${len}个文件,成功【${success}】，失败【${len - success}】,用时${mm}分,${ss}秒 请前往aria2查看具体下载情况`;
         htmlLog(msg, 'info');
         showNotice(msg);
     }
 
 
-    async function getPathFile(path='/video/girllive/ai'){
-        let fileArr=[];
-        let dir=encodeURIComponent(path);
-        let url=`https://pan.baidu.com/api/list?clienttype=0&app_id=250528&web=1&dp-logid=47771500697406310037&order=time&desc=1&dir=${dir}&num=200&page=1`;
-        let res=await doRequest({url:url});
-        let list=res.list??[];
-        await list.forEach(async (vo)=>{
-            if(vo.isdir){
-                fileArr.concat(await getPathFile(vo.path));
+    async function getPathFile(path = '/video/girllive/ai') {
+        let fileArr = [];
+        let dir = encodeURIComponent(path);
+        let url = `https://pan.baidu.com/api/list?clienttype=0&app_id=250528&web=1&dp-logid=47771500697406310037&order=time&desc=1&dir=${dir}&num=200&page=1`;
+        let res = await doRequest({ url: url });
+        let list = res.list ?? [];
+
+        let i = list.length;
+        while (i--) {
+            if (list[i].isdir) {
+                fileArr.concat(await getPathFile(list[i].path));
             }
-            else{
-                fileArr.push(vo);
+            else {
+                fileArr.push(list[i]);
             }
-        });
+        }
         return fileArr;
     }
 
     async function run() {
         let fileListArr = getSelectedFileList();
-        let tryTimes = 2, limit =2;
+        let tryTimes = 2, limit = 2;
         await checkAria2();
-        let arr=fileListArr;
-        let i=arr.length;
-        while(i--){ if(arr[i].isdir) fileListArr=fileListArr.concat(await getPathFile(arr[i].path));}
-        fileListArr=fileListArr.filter((v)=>{return v.isdir===0});
+        let arr = fileListArr;
+        let i = arr.length;
+        while (i--) { if (arr[i].isdir) fileListArr = fileListArr.concat(await getPathFile(arr[i].path)); }
+        fileListArr = fileListArr.filter((v) => { return v.isdir === 0 });
         let len = fileListArr.length;
         if (len > 0) {
             htmlLog(`正在处理${len}个文件。。。`);
@@ -396,12 +398,11 @@
     }
 
     function main() {
+        $('.nd-detail').append('<div class="htmllog" style="position: absolute;top:0;z-index: 9999;background:#FFF;width: 248px; height: calc(100% - 40px); overflow: auto;"> </div>');
         $('.wp-s-pan-file-main__nav').append($('button[title="新建在线文档"]').parent().html().replace(/新建在线文档/g, 'aria2下载').replace(/u-icon-newly-build/g, 'u-icon-download'));
         $('button[title="aria2下载"]').css('color', '#ff2066');
         $(document).on('click', '[title="aria2下载"]', () => {
             htmlLog('panbaidu 脚本开始！', 'START');
-            //$('.nd-detail').html('');
-            $('.nd-detail__title').siblings().remove()
             $('[title="aria2下载"]').attr('disabled', true);
             run().catch((err) => {
                 htmlLog(`系统错误终止运行，${err}`, 'error')
