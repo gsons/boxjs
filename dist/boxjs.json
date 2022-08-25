@@ -24,8 +24,7 @@
                 "gsonhub.10010.password",
                 "gsonhub.10010.cookie",
                 "gsonhub.10010.smscode",
-                "gsonhub.10010.mute",
-                "gsonhub.10010.boxjs-log"
+                "gsonhub.10010.mute"
             ],
 
             "author": "@gsonhub",
