@@ -251,6 +251,15 @@ class App extends Box {
     }
 
 
+    getFeeFlowLimt(feeflow:number){
+        var curDate = new Date();
+        var curMonth = curDate.getMonth(); 
+        curDate.setMonth(curMonth + 1);
+        curDate.setDate(0) 
+        curDate.getDate();
+        let dd= curDate.getDate() - new Date().getDate()+1;
+        return parseInt((feeflow/dd).toFixed(0));
+    }
 
     handleQuery(res: any) {
         if (res) {
@@ -307,20 +316,24 @@ class App extends Box {
 
                 'second': second,//每次查询时间差
                 'second_flow': second_flow,//时间差产生的收费流量
+
+                'fee_flow_limit':this.getFeeFlowLimt(fee_remain_flow),
             };
 
             if (old_obj) {
                 if (obj.second_flow > 0) {
-                    this.msg('中国联通', `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
+                    this.log( `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
                 }
-
+                if(obj.one_day_fee_flow>(obj.fee_flow_limit/2)&&obj.second_flow > 0){
+                    this.msg(this.name,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}`,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}，${obj.second}s 期间 产生跳点流量${obj.second_flow}`)
+                }
                 //每天0点发送流量报告
                 if (old_obj.query_date != obj.query_date) {
                     //重置0点流量缓存
                     obj.last_day_fee_flow = fee_used_flow;
                     obj.last_day_free_flow = free_used_flow;
                     obj.last_day_flow = used_flow;
-                    this.msg('中国联通', `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`, '');
+                    this.msg(this.name, `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`, '');
                 }
             }
             const objstr = JSON.stringify(obj);

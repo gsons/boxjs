@@ -6,8 +6,7 @@ http.createServer();
 const config = {
     entry: {
         "somersaultcloud": './src/somersaultcloud.ts',
-        "10010": './src/10010.ts',
-        "baidu": './src/baidu.ts'
+        "10010": './src/10010.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
