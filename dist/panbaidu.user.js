@@ -431,7 +431,7 @@
                 $(document).on('click', 'a[title="aria2下载"]', async () => {
                     $('a[title="aria2下载"]').attr('disabled', true);
                     await doShareDownlaod().catch((err) => {
-                        showNotice(`出错了，请稍后再试，${err}`);
+                        showNotice(`出错了，请尝试保存到网盘再下载，${err}`);
                         console.error(err);
                     }).finally(() => {
                         $('a[title="aria2下载"]').attr('disabled', null);
