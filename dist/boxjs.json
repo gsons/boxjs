@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=7fy8"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=7fyn"
                 }
             ],
             "keys": [
@@ -24,7 +24,8 @@
                 "gsonhub.10010.password",
                 "gsonhub.10010.cookie",
                 "gsonhub.10010.smscode",
-                "gsonhub.10010.mute"
+                "gsonhub.10010.mute",
+                "gsonhub.10010.boxjs-log"
             ],
 
             "author": "@gsonhub",
@@ -68,13 +69,15 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=7fy8"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=7fyn"
                 }
             ],
             "keys": [
+                "gsonhub.somersaultcloud.boxjs-log",
                 "gsonhub.somersaultcloud.sign_url",
                 "gsonhub.somersaultcloud.sign_header",
-                "gsonhub.somersaultcloud.mute"
+                "gsonhub.somersaultcloud.mute",
+                "gsonhub.somersaultcloud.boxjs-log"
             ],
             "author": "@gsonhub",
             "settings": [

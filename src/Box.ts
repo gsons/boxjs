@@ -210,7 +210,7 @@ abstract class Box {
     private send(opts: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.doRequest(opts, (err: any, resp: any, body: any) => {
-                if (err) reject(new BaseErr(err,))
+                if (err) reject(new BaseErr(err,Err.HTTP))
                 else resolve(resp)
             });
         })
