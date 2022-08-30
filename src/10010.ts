@@ -1,5 +1,7 @@
 import Box from "./Box";
 const RSAEncrypt = require('./lib/JSEncrypt');
+import BaseErr from "./lib/BaseErr"
+
 
 declare var $request: any;
 class App extends Box {
@@ -44,7 +46,7 @@ class App extends Box {
         try {
             res = JSON.parse(body);
         } catch (e) {
-            throw new Error("查询流量失败！JSON数据解析异常");
+            throw new BaseErr("查询流量失败！JSON数据解析异常");
         }
 
         console.log('↓ res body')
@@ -64,7 +66,7 @@ class App extends Box {
             } else if (desc) {
                 errMsg = "查询流量失败！" + desc;
             }
-            throw new Error(errMsg);
+            throw new BaseErr(errMsg);
         }
     }
 
@@ -89,7 +91,7 @@ class App extends Box {
         try {
             res = JSON.parse(body)
         } catch (e) {
-            throw new Error("密码方式登录失败！JSON数据解析异常");
+            throw new BaseErr("密码方式登录失败！JSON数据解析异常");
         }
 
         console.log('↓ res body')
@@ -104,7 +106,7 @@ class App extends Box {
             }
             this.log(` 密码方式登录 Cookie`)
             if (!cookie) {
-                throw new Error(`获取到的密码方式登录 Cookie 为空！`)
+                throw new BaseErr(`获取到的密码方式登录 Cookie 为空！`)
             }
             this.cookie = cookie;
             this.log(cookie)
@@ -113,7 +115,7 @@ class App extends Box {
             return true;
         } else {
             let desc = res.dsc;
-            throw new Error('密码方式登录失败！' + (desc || '未知错误'))
+            throw new BaseErr('密码方式登录失败！' + (desc || '未知错误'))
         }
     }
 
@@ -146,7 +148,7 @@ class App extends Box {
         this.log('运行 》  中国联通验证码登录');
 
         if (!this.mobile || !this.smscode) {
-            throw new Error('⚠️ 请配置 手机号(mobile), 验证码(smscode)')
+            throw new BaseErr('⚠️ 请配置 手机号(mobile), 验证码(smscode)')
         }
 
         this.log('〽️ 开始尝试验证码方式登录');
@@ -172,7 +174,7 @@ class App extends Box {
         try {
             res = JSON.parse(body)
         } catch (e) {
-            throw new Error("验证码方式登录失败，JSON数据解析异常Z");
+            throw new BaseErr("验证码方式登录失败，JSON数据解析异常Z");
         }
 
         let code = res.code;
@@ -184,7 +186,7 @@ class App extends Box {
             }
             this.log(` 验证码方式登录 Cookie`)
             if (!cookie) {
-                throw new Error(`获取到的验证码方式登录 Cookie 为空！`)
+                throw new BaseErr(`获取到的验证码方式登录 Cookie 为空！`)
             }
             this.cookie = cookie;
             this.log('cookie:\n' + cookie)
@@ -195,7 +197,7 @@ class App extends Box {
             this.ajaxSuccess('验证码方式登录成功！');
         } else {
             let desc = res.dsc;
-            throw new Error('验证码方式登录失败！' + (desc || '未知错误'))
+            throw new BaseErr('验证码方式登录失败！' + (desc || '未知错误'))
         }
     }
 
@@ -204,7 +206,7 @@ class App extends Box {
         this.log('运行 》  中国联通发送验证码');
 
         if (!this.mobile) {
-            throw new Error('⚠️ 请配置 手机号(mobile))');
+            throw new BaseErr('⚠️ 请配置 手机号(mobile))');
         }
 
         this.log('〽️ 开始尝试发送验证码');
@@ -224,14 +226,14 @@ class App extends Box {
         try {
             res = JSON.parse(body)
         } catch (e) {
-            throw new Error("发送验证码失败！JSON数据解析异常，" + body);
+            throw new BaseErr("发送验证码失败！JSON数据解析异常，" + body);
         }
 
         if (res.rsp_code == '0000') {
             this.msg(this.name, '发送验证码成功', '');
             this.ajaxSuccess('发送验证码成功');
         } else {
-            throw new Error("发送验证码失败！" + body);
+            throw new BaseErr("发送验证码失败！" + body);
         }
     }
 
@@ -239,7 +241,7 @@ class App extends Box {
         this.log('运行 》  中国联通查询流量');
 
         if (!this.cookie && (!this.appId || !this.mobile || !this.password)) {
-            throw new Error('⚠️ 请配置 Cookie 或 appId, 手机号(mobile), 密码(password)')
+            throw new BaseErr('⚠️ 请配置 Cookie 或 appId, 手机号(mobile), 密码(password)')
         }
         let res = await this.query();
         if (res) {
@@ -267,7 +269,7 @@ class App extends Box {
             try {
                 old_obj = JSON.parse(this.getStore(`vvv_flow`, true));
             } catch (error) {
-                //throw new Error('解析JSON异常');
+                //throw new BaseErr('解析JSON异常');
             }
             const query_date = this.date('yyyy-MM-dd', res.time.replace(/-/g, '/'));
 
@@ -321,10 +323,10 @@ class App extends Box {
             };
 
             if (old_obj) {
-                if (obj.second_flow > 0) {
+                if (obj.second_flow > 1) {
                     this.log( `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
                 }
-                if(obj.one_day_fee_flow>(obj.fee_flow_limit/2)&&obj.second_flow > 0){
+                if(obj.one_day_fee_flow>(obj.fee_flow_limit/2)&&obj.second_flow > 1){
                     this.msg(this.name,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}`,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}，${obj.second}s 期间 产生跳点流量${obj.second_flow}`)
                 }
                 //每天0点发送流量报告
@@ -333,7 +335,7 @@ class App extends Box {
                     obj.last_day_fee_flow = fee_used_flow;
                     obj.last_day_free_flow = free_used_flow;
                     obj.last_day_flow = used_flow;
-                    this.msg(this.name, `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`, '');
+                    this.msg(this.name, `过去一天已用收费流量${one_day_fee_flow}`, `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`);
                 }
             }
             const objstr = JSON.stringify(obj);
@@ -341,7 +343,7 @@ class App extends Box {
             this.setStore(`vvv_flow`, objstr, true);
             this.ajaxSuccess('查询流量成功', obj);
         } else {
-            throw new Error('查询流量失败');
+            throw new BaseErr('查询流量失败');
         }
     }
 }

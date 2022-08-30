@@ -1,3 +1,6 @@
+import BaseErr from "./lib/BaseErr";
+import {Err} from "./lib/BaseErr";
+
 declare var $task: any;
 declare var $persistentStore: any;
 declare var $prefs: any;
@@ -58,8 +61,16 @@ abstract class Box {
 
     public run() {
         this.doAction().catch((err) => {
-            this.log(this.name, '' + err);
-            this.ajaxFail(err);
+            if(err instanceof BaseErr){
+                if(err.code==Err.BASE){
+                    this.msg(this.name, err.message,err.stack);
+                }
+                else if(err.code==Err.HTTP){
+                    this.msg(this.name, '网络异常：'+err.message,err.stack);
+                }
+            }
+            this.log(err);
+            this.ajaxFail(err.message||err);
         }).finally(() => {
             this.done();
         });
@@ -85,20 +96,19 @@ abstract class Box {
     public done() {
         const endTime = new Date().getTime();
         const costTime = (endTime - this.startTime) / 1000;
-
-        this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
-
-        console.log('response: ' + (this.response));
+        console.log('response: ' + JSON.stringify((this.response)));
         if (this.env == ENV.Node) {
+            this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
             process.exit(1);
         } else {
             let cacheLog = '\n' + this.getStore(Box.APP_LOG_KEY, true);
+            cacheLog=cacheLog.split('\n').slice(0,1500).join('\n');
             cacheLog = this.logMsg.reverse().join('\n') + (cacheLog ? cacheLog : '');
             this.setStore(Box.APP_LOG_KEY, cacheLog, true);
             console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
+            this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
             $done(this.response);
         }
-
     }
 
     getStore(key: string, attach = false): string {
@@ -200,7 +210,7 @@ abstract class Box {
     private send(opts: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.doRequest(opts, (err: any, resp: any, body: any) => {
-                if (err) reject(err)
+                if (err) reject(new BaseErr(err,))
                 else resolve(resp)
             });
         })
