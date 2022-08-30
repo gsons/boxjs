@@ -66,11 +66,11 @@ abstract class Box {
                     this.msg(this.name, err.message,err.stack);
                 }
                 else if(err.code==Err.HTTP){
-                    if(Math.random()>0.5){
+                    if(Math.random()>0.8){
                         this.msg(this.name, '网络异常：'+err.message,err.stack);
                     }
                     else{
-                        this.log(this.name, '网络异常：'+err.message,err.stack);
+                        this.log(this.name, '网络异常Log：'+err.message,err.stack);
                     }
                 }else{
                     this.log(err.message,err.stack);
