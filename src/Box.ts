@@ -66,10 +66,18 @@ abstract class Box {
                     this.msg(this.name, err.message,err.stack);
                 }
                 else if(err.code==Err.HTTP){
-                    this.msg(this.name, '网络异常：'+err.message,err.stack);
+                    if(Math.random()>0.5){
+                        this.msg(this.name, '网络异常：'+err.message,err.stack);
+                    }
+                    else{
+                        this.log(this.name, '网络异常：'+err.message,err.stack);
+                    }
+                }else{
+                    this.log(err.message,err.stack);
                 }
+            }else{
+                this.log(err);
             }
-            this.log(err);
             this.ajaxFail(err.message||err);
         }).finally(() => {
             this.done();
@@ -97,16 +105,15 @@ abstract class Box {
         const endTime = new Date().getTime();
         const costTime = (endTime - this.startTime) / 1000;
         console.log('response: ' + JSON.stringify((this.response)));
+        this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
         if (this.env == ENV.Node) {
-            this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
             process.exit(1);
         } else {
             let cacheLog = '\n' + this.getStore(Box.APP_LOG_KEY, true);
-            cacheLog=cacheLog.split('\n').slice(0,1500).join('\n');
+            cacheLog=cacheLog.split('\n').slice(0,10000).join('\n');
             cacheLog = this.logMsg.reverse().join('\n') + (cacheLog ? cacheLog : '');
             this.setStore(Box.APP_LOG_KEY, cacheLog, true);
             console.log(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + Box.APP_LOG_KEY}`);
-            this.log(`🔔${this.name}, 结束! 🕛 ${costTime} 秒`);
             $done(this.response);
         }
     }
