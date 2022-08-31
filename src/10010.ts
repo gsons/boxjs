@@ -254,12 +254,7 @@ class App extends Box {
 
 
     getFeeFlowLimt(feeflow:number){
-        var curDate = new Date();
-        var curMonth = curDate.getMonth(); 
-        curDate.setMonth(curMonth + 1);
-        curDate.setDate(0) 
-        curDate.getDate();
-        let dd= curDate.getDate() - new Date().getDate()+1;
+        var dd=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate()-new Date().getDate()+1;
         return parseInt((feeflow/dd).toFixed(0));
     }
 
