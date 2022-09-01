@@ -279,15 +279,15 @@ class App extends Box {
             const second = (old_obj) ? parseFloat(((new Date(res.time.replace(/-/g, '/')).getTime() - new Date(old_obj.query_date_time.replace(/-/g, '/')).getTime()) / 1000).toFixed(2)) : 0;
             const second_flow = (old_obj && old_obj.fee_remain_flow > fee_remain_flow) ? parseFloat((old_obj.fee_remain_flow - fee_remain_flow).toFixed(2)) : 0;
 
-            const last_day_fee_flow = (old_obj && old_obj.last_day_fee_flow) ? old_obj.last_day_fee_flow : fee_used_flow;//0点已用收费流量
+            const last_day_fee_flow = (old_obj && old_obj.last_day_fee_flow>=0) ? old_obj.last_day_fee_flow : fee_used_flow;//0点已用收费流量
             const offset_fee = parseFloat((fee_used_flow - last_day_fee_flow).toFixed(2));
             const one_day_fee_flow = offset_fee >= 0 ? offset_fee : old_obj.one_day_fee_flow;//当天已用收费流量
 
-            const last_day_free_flow = (old_obj && old_obj.last_day_free_flow) ? old_obj.last_day_free_flow : free_used_flow;//0点已用免费流量
+            const last_day_free_flow = (old_obj && old_obj.last_day_free_flow>=0) ? old_obj.last_day_free_flow : free_used_flow;//0点已用免费流量
             const offset_free = parseFloat((free_used_flow - last_day_free_flow).toFixed(2));
             const one_day_free_flow = (offset_free >= 0 ? offset_free : old_obj.one_day_free_flow);//当天已用免费流量
 
-            const last_day_flow = (old_obj && old_obj.last_day_flow) ? old_obj.last_day_flow : used_flow;//0点已用流量
+            const last_day_flow = (old_obj && old_obj.last_day_flow>=0) ? old_obj.last_day_flow : used_flow;//0点已用流量
             const offset_flow = parseFloat((used_flow - last_day_flow).toFixed(2));
             const one_day_flow = (offset_flow >= 0 ? offset_flow : old_obj.one_day_flow);//当天已用流量
 
@@ -327,9 +327,9 @@ class App extends Box {
                 //每天0点发送流量报告
                 if (old_obj.query_date != obj.query_date) {
                     //重置0点流量缓存
-                    obj.last_day_fee_flow = fee_used_flow+0.01;
-                    obj.last_day_free_flow = free_used_flow+0.01;
-                    obj.last_day_flow = used_flow+0.01;
+                    obj.last_day_fee_flow = fee_used_flow;
+                    obj.last_day_free_flow = free_used_flow;
+                    obj.last_day_flow = used_flow;
                     this.msg(this.name, `过去一天已用收费流量${one_day_fee_flow}`, `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`);
                 }
             }
