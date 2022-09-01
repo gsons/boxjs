@@ -14,7 +14,7 @@ function fetchDir($dir){
                      $obj['del_dirs']=array_merge($obj['del_dirs'],$temp['del_dirs']);
                      $obj['file_sum']+=$temp['file_sum'];
                 }else{
-                    if(!preg_match('/\.(avi|wmv|mpeg|mp4|m4v|mov|asf|flv|f4v|rmvb|3gp|vob|7z|rar|zip)$/',$file)&&!preg_match('/(baidu)/',$file)){
+                    if(!preg_match('/\.(avi|wmv|mpeg|mp4|m4v|mov|asf|flv|f4v|rmvb|3gp|vob|7z|rar|zip)$/',$file)&&!preg_match('/(baidu|base64_)/',$file)){
                       $obj['del_files'][]=$file;
                       if(file_exists($file)){
                         @unlink($file);

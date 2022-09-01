@@ -8,7 +8,11 @@ function encodeDir($dir){
             if($file!='..'&&$file!='.'){
                 if(!preg_match('/^base64_/',$file)){
                     $file_name=$dir.'/base64_'.base64_encode($file);
-                    rename($dir.'/'.$file, $file_name);
+                    $res=rename($dir.'/'.$file, $file_name);
+                    // if(!$res){
+                    //     echo $dir.'/'.$file.PHP_EOL;
+                    // }
+
                 }else{
                     $file_name=$dir.'/'.$file; 
                 }
@@ -21,4 +25,4 @@ function encodeDir($dir){
     closedir($handle);
 }
 
-encodeDir("F:/code/lu.php/live/20220821");
+encodeDir("F:/code/lu.php");
