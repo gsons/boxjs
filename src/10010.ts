@@ -268,7 +268,7 @@ class App extends Box {
             }
             const query_date = this.date('yyyy-MM-dd', res.time.replace(/-/g, '/'));
 
-            const fee_used_flow = parseFloat(res.sumresource);
+            const fee_used_flow = parseFloat((res.summary.sum-res.summary.freeFlow).toFixed(2));
             const fee_remain_flow = parseFloat(res.resources[0].remainResource);
             const fee_all_flow = parseInt((fee_used_flow + fee_remain_flow).toFixed(0));
             const free_used_flow = parseFloat(res.summary.freeFlow);
@@ -277,7 +277,7 @@ class App extends Box {
             const remain_top_flow = parseFloat(res.summary.remainFengDing);
 
             const second = (old_obj) ? parseFloat(((new Date(res.time.replace(/-/g, '/')).getTime() - new Date(old_obj.query_date_time.replace(/-/g, '/')).getTime()) / 1000).toFixed(2)) : 0;
-            const second_flow = (old_obj && old_obj.fee_remain_flow > fee_remain_flow) ? parseFloat((old_obj.fee_remain_flow - fee_remain_flow).toFixed(2)) : 0;
+            const second_flow = (old_obj && old_obj.fee_used_flow < fee_used_flow) ? parseFloat((fee_used_flow-old_obj.fee_used_flow).toFixed(2)) : 0;
 
             const last_day_fee_flow = (old_obj && old_obj.last_day_fee_flow>=0) ? old_obj.last_day_fee_flow : fee_used_flow;//0点已用收费流量
             const offset_fee = parseFloat((fee_used_flow - last_day_fee_flow).toFixed(2));
@@ -318,12 +318,13 @@ class App extends Box {
             };
 
             if (old_obj) {
-                if (obj.second_flow > 1) {
-                    this.log( `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
-                }
-                if(obj.one_day_fee_flow>(obj.fee_flow_limit/2)&&obj.second_flow > 1){
+                if(obj.one_day_fee_flow>(obj.fee_flow_limit/2)&&obj.second_flow > 0.1){
                     this.msg(this.name,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}`,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}，${obj.second}s 期间 产生跳点流量${obj.second_flow}`)
                 }
+                else if (obj.second_flow > 1) {
+                    this.log( `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
+                }
+
                 //每天0点发送流量报告
                 if (old_obj.query_date != obj.query_date) {
                     //重置0点流量缓存
