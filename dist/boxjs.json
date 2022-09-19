@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "http://192.168.101.149:8080/10010.js?v=dghgr"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=82p0"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "http://192.168.101.149:8080/somersaultcloud.js?v=dghgr"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=82p0"
                 }
             ],
             "keys": [
