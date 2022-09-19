@@ -1,10 +1,10 @@
 {
-    "id": "gsonhub.app",
+    "id": "gsonhub.application",
     "name": "@gsonhub的应用订阅",
     "author": "@gsonhub",
     "apps": [
         {
-            "id": "gsonhub.10010",
+            "id": "gsonhub.app.10010",
             "name": "中国联通",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10010.log'>查看日志</a>",
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=82p0"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=82pg"
                 }
             ],
             "keys": [
@@ -59,7 +59,7 @@
             ]
         },
         {
-            "id": "gsonhub.somersaultcloud",
+            "id": "gsonhub.app.somersaultcloud",
             "name": "筋斗云",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=82p0"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=82pg"
                 }
             ],
             "keys": [
