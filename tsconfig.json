@@ -7,5 +7,5 @@
     "allowJs": true,
     "moduleResolution":"Node"
   },
-  "files": ["src/somersaultcloud.ts","src/10010.ts"]
+  "files": ["src/somersaultcloud.ts","src/10010.ts","src/pingan.ts"]
 }

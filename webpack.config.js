@@ -6,7 +6,8 @@ http.createServer();
 const config = {
     entry: {
         "somersaultcloud": './src/somersaultcloud.ts',
-        "10010": './src/10010.ts'
+        "10010": './src/10010.ts',
+        "pingan": './src/pingan.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export type RequestHeaders = Record<string, string | number | boolean>;
 export type Method = 'get' | 'GET' | 'post' | 'POST';
 export type ResponseHeader = Record<string, string> & { "set-cookie"?: string[] };
@@ -19,6 +17,12 @@ export interface Response<T = any> {
     status: number;
     statusText: string;
     headers: ResponseHeader;
+}
+
+class Http{
+    abs(){
+    
+    }
 }
 
 

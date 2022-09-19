@@ -63,7 +63,8 @@
             "name": "筋斗云",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://somersaultcloud.log'>查看日志</a>"
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://somersaultcloud.log'>查看筋斗云日志</a>",
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://pingan.log'>查看平安白云日志</a>"
             ],
             "scripts": [
                 {
@@ -74,7 +75,8 @@
             "keys": [
                 "gsonhub.somersaultcloud.sign_url",
                 "gsonhub.somersaultcloud.sign_header",
-                "gsonhub.somersaultcloud.mute"
+                "gsonhub.somersaultcloud.mute",
+                "gsonhub.pingan.boxjs-log"
             ],
             "author": "@gsonhub",
             "settings": [

@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=7xb6"
+                    "script": "http://192.168.101.149:8080/10010.js?v=dghgr"
                 }
             ],
             "keys": [
@@ -63,18 +63,20 @@
             "name": "筋斗云",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://somersaultcloud.log'>查看日志</a>"
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://somersaultcloud.log'>查看筋斗云日志</a>",
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://pingan.log'>查看平安白云日志</a>"
             ],
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=7xb6"
+                    "script": "http://192.168.101.149:8080/somersaultcloud.js?v=dghgr"
                 }
             ],
             "keys": [
                 "gsonhub.somersaultcloud.sign_url",
                 "gsonhub.somersaultcloud.sign_header",
-                "gsonhub.somersaultcloud.mute"
+                "gsonhub.somersaultcloud.mute",
+                "gsonhub.pingan.boxjs-log"
             ],
             "author": "@gsonhub",
             "settings": [
