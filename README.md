@@ -17,6 +17,11 @@
         <td>定时签到/信息查询</td>
         <td>✔</td>
     </tr>
+    <tr align="center">
+        <td>平安白云</td>
+        <td>改有效期，无需充值续期</td>
+        <td>✔</td>
+    </tr>
 </table>
 
 ### 安装
@@ -74,7 +79,14 @@ npm run build
 
     [http://somersaultcloud.log](http://somersaultcloud.log)
 
-## 运行截图[]
+## 运行截图
 ![image](https://gsons.github.io/demo/notice.jpg)
 
-![image](https://gsons.github.io/demo/scriptable.jpg)      
+![image](https://gsons.github.io/demo/scriptable.jpg) 
+
+## 平安白云
+
+> 请务必添加如下reject规则，阻止平安白云上报打卡开门记录。
+```shell
+URL-REGEX,baiyunuser\/statistics\/reportOpenDoorRecord,REJECT
+```
