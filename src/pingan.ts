@@ -12,6 +12,7 @@ class App extends Box {
             let res=JSON.parse($response.body);
             res.obj=res.obj.map((vo:any)=>{vo.limitTime='2099-09-17';return vo});
             let body = JSON.stringify(res);
+            this.log(body);
             this.response={body};   
         }
     }
