@@ -1,4 +1,4 @@
-#!name= gsonhub的脚本v=${version}
+#!name= gsonhub@${env}的脚本v=${version}
 #!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=${version}
 
 [MITM] 
