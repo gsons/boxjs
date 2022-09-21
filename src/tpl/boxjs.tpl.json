@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.${env}",
-    "name": "@gsonhub的应用订阅@${env}",
+    "name": "@gsonhub的应用订阅v=${env}-${version}",
     "author": "@gsonhub",
     "apps": [
         {
