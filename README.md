@@ -80,9 +80,11 @@ npm run build
     [http://somersaultcloud.log](http://somersaultcloud.log)
 
 ## 运行截图
-![image](https://gsons.github.io/demo/notice.jpg)
 
-![image](https://gsons.github.io/demo/scriptable.jpg) 
+<img src='https://gsons.github.io/demo/notice.jpg' width='350px'>
+
+<img src='https://gsons.github.io/demo/scriptable.jpg' width='350px'>
+
 
 ## 平安白云
 
