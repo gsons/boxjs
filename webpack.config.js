@@ -7,7 +7,8 @@ const config = {
     entry: {
         "somersaultcloud": './src/somersaultcloud.ts',
         "10010": './src/10010.ts',
-        "pingan": './src/pingan.ts'
+        "pingan": './src/pingan.ts',
+        "yuekang": './src/yuekang.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

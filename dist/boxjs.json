@@ -1,10 +1,10 @@
 {
-    "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.84e2",
+    "id": "gsonhub.application.dev",
+    "name": "@gsonhub的应用订阅v=dev.dlni6",
     "author": "@gsonhub",
     "apps": [
         {
-            "id": "gsonhub.prod.10010",
+            "id": "gsonhub.dev.10010",
             "name": "中国联通",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10010.log'>查看日志</a>",
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=84e2"
+                    "script": "http://192.168.88.3:8080/10010.js?v=dlni6"
                 }
             ],
             "keys": [
@@ -59,17 +59,18 @@
             ]
         },
         {
-            "id": "gsonhub.prod.somersaultcloud",
+            "id": "gsonhub.dev.somersaultcloud",
             "name": "筋斗云",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://somersaultcloud.log'>查看筋斗云日志</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://pingan.log'>查看平安白云日志</a>"
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://pingan.log'>查看平安白云日志</a>",
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://yuekang.log'>查看粤康日志</a>"
             ],
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=84e2"
+                    "script": "http://192.168.88.3:8080/somersaultcloud.js?v=dlni6"
                 }
             ],
             "keys": [

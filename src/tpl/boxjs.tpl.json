@@ -64,7 +64,8 @@
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://somersaultcloud.log'>查看筋斗云日志</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://pingan.log'>查看平安白云日志</a>"
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://pingan.log'>查看平安白云日志</a>",
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://yuekang.log'>查看粤康日志</a>"
             ],
             "scripts": [
                 {

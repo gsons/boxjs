@@ -2,10 +2,10 @@
 #!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=${version}
 
 [MITM] 
-hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz,www.pinganbaiyun.cn
+hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz,www.pinganbaiyun.cn,mmykm2.gdbs.gov.cn
 
 [General]
-force-http-engine-hosts = %APPEND% somersaultcloud.json somersaultcloud.log 10010.json 10010.log pingan.log 
+force-http-engine-hosts = %APPEND% somersaultcloud.json somersaultcloud.log 10010.json 10010.log pingan.log  yuekang.log 
 
 [Script]
 
@@ -30,3 +30,13 @@ pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(c
 
 # 查询平安白云日志 http://pingan.log 
 pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=${baseUrl}/pingan.js?v=${version},requires-body=true,max-size=0,timeout=10
+
+
+
+# 粤康 
+pingan-service = type=http-response,pattern=^https?:\/\/mmykm2\.gdbs\.gov\.cn\/,script-path=${baseUrl}/yuekang.js?v=${version},requires-body=true,max-size=0
+
+# 查询粤康日志 http://yuekang.log 
+pingan-http-service = type=http-request,pattern=^https?:\/\/yuekang\.log,script-path=${baseUrl}/yuekang.js?v=${version},requires-body=true,max-size=0,timeout=10
+
+
