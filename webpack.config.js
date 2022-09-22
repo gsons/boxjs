@@ -32,7 +32,7 @@ const config = {
                             //线上地址
                             online: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
                             //本地地址
-                            local: 'http://192.168.88.3:8080',
+                            local: 'http://192.168.101.149:8080',
                         }
 
                     },
