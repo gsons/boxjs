@@ -52,9 +52,6 @@ class App extends Box {
                 this.response = { body };
             } else {
                 this.log(`sid:${sid} request header↓ 2135`);
-                //this.log(JSON.stringify($request));
-                // this.log(`sid:${sid} response ↓`);
-                // this.log(JSON.stringify(res));
                 this.response = { body };
             }
 

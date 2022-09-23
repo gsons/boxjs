@@ -92,3 +92,8 @@ npm run build
 ```shell
 URL-REGEX,baiyunuser\/statistics\/reportOpenDoorRecord,REJECT
 ```
+
+## 粤康码
+
+> 粤康码采用了RSA加密，无法伪造加密数据，只能解密数据
+
