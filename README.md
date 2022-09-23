@@ -1,6 +1,9 @@
-## 🚀 BOXJS脚本集合
+# 🚀 BOXJS脚本集合
+
+## 功能说明
 
 > 筋斗云自动签到领取流量脚本&中国联通自动登录流量查询监控
+
 <table>
     <tr align="center">
         <th>脚本</th>
@@ -10,17 +13,22 @@
     <tr align="center">
         <td>中国联通</td>
         <td>自动登录/流量监控与查询</td>
-        <td>✔</td>
+        <td>✔️</td>
     </tr>
     <tr align="center">
         <td>筋斗云</td>
         <td>定时签到/信息查询</td>
-        <td>✔</td>
+        <td>✔️</td>
     </tr>
     <tr align="center">
         <td>平安白云</td>
         <td>改有效期，无需充值续期</td>
-        <td>✔</td>
+        <td>✔️</td>
+    </tr>
+        <tr align="center">
+        <td>粤康码</td>
+        <td>改核酸结果，无需做核酸</td>
+        <td>❌</td>
     </tr>
 </table>
 
@@ -79,6 +87,14 @@ npm run build
 
     [http://somersaultcloud.log](http://somersaultcloud.log)
 
+5. [平安白云运行日志](http://pingan.log)
+
+    [http://pingan.log](http://pingan.log)
+
+6. [粤康码运行日志](http://yuekang.log)
+
+   [http://yuekang.log](http://yuekang.log)
+
 ## 运行截图
 
 <img src='https://gsons.github.io/demo/notice.jpg' width='350px'>
@@ -95,5 +111,5 @@ URL-REGEX,baiyunuser\/statistics\/reportOpenDoorRecord,REJECT
 
 ## 粤康码
 
-> 粤康码采用了RSA加密，无法伪造加密数据，只能解密数据
+> 粤康码采用了RSA加密，无法伪造加密数据，只能解密数据，已放弃😿
 
