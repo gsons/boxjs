@@ -97,8 +97,5 @@ class App extends Box {
     }
 }
 
-require ('./tpl/boxjs.tpl.json');
-require ('./tpl/gsonhub.tpl.sgmodule');
-
 new App('筋斗云', 'gsonhub.somersaultcloud').run();
 

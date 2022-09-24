@@ -34,8 +34,7 @@ pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-p
 
 
 # 粤康 
- yuekang-service = type=http-response,pattern=^https?:\/\/mmykm\d\.gdbs\.gov\.cn\/,script-path=${baseUrl}/yuekang.js?v=${version},requires-body=true,max-size=0
-# yuekang-service = type=http-response,pattern=ykmindex,script-path=${baseUrl}/yuekang.js?v=${version},requires-body=true,max-size=0
+yuekang-service = type=http-response,pattern=^https?:\/\/mmykm\d\.gdbs\.gov\.cn\/,script-path=${baseUrl}/yuekang.js?v=${version},requires-body=true,max-size=0
 
 # 查询粤康日志 http://yuekang.log 
 yuekang-http-service = type=http-request,pattern=^https?:\/\/yuekang\.log,script-path=${baseUrl}/yuekang.js?v=${version},requires-body=true,max-size=0,timeout=10

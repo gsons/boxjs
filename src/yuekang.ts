@@ -60,7 +60,5 @@ class App extends Box {
 
 }
 
-require('./tpl/boxjs.tpl.json');
-require('./tpl/gsonhub.tpl.sgmodule');
 new App('粤康码', 'gsonhub.yuekang').run();
 

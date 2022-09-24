@@ -19,7 +19,5 @@ class App extends Box {
 
 }
 
-require('./tpl/boxjs.tpl.json');
-require('./tpl/gsonhub.tpl.sgmodule');
 new App('平安白云', 'gsonhub.pingan').run();
 

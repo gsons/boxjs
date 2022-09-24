@@ -54,6 +54,8 @@ abstract class Box {
         this.log('当前环境为：' + this.env);
         let mute = this.getStore('mute', true);
         this.isMute = mute == 'true';
+        require('./tpl/boxjs.tpl.json');
+        require('./tpl/gsonhub.tpl.sgmodule');
     }
 
     //入口方法
