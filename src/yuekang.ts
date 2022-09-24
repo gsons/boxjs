@@ -21,7 +21,7 @@ class App extends Box {
             let body = JSON.stringify(res);
 
             if (/collection\/ykmindex\/nat/.test($request.url)) {
-                this.log(`sid:${sid} request header↓ 2135`);
+                this.log(`sid:${sid} request header↓`);
                 this.log(JSON.stringify($request));
                 this.log('response header↓ ');
                 this.log(JSON.stringify($response.headers));
@@ -50,8 +50,22 @@ class App extends Box {
                     this.log('str decode error', error);
                 }
                 this.response = { body };
-            } else {
-                this.log(`sid:${sid} request header↓ 2135`);
+            } 
+            //修改缓存时间达到秒开核酸码的目的
+            else if(/api\/open\/r\/ykmlb\/GetInfo/.test($request.url)){
+                this.log(`sid:${sid} request header↓`);
+                this.log(JSON.stringify($request));
+                for(let i in res.data.renqunhechaconfig){
+                    //改成缓存一年
+                    res.data.renqunhechaconfig[i]=res.data.renqunhechaconfig[i]+40000000;
+                }
+                let body = JSON.stringify(res);
+                this.log('new res body↓');
+                this.log(body);
+                this.response = { body };
+            }
+            else {
+                //this.log(`sid:${sid} request header↓`);
                 this.response = { body };
             }
 

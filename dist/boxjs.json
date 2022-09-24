@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.dev",
-    "name": "@gsonhub的应用订阅v=dev.dp8zh",
+    "name": "@gsonhub的应用订阅v=dev.dpahn",
     "author": "@gsonhub",
     "apps": [
         {
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "http://192.168.101.149:8080/10010.js?v=dp8zh"
+                    "script": "http://192.168.101.149:8080/10010.js?v=dpahn"
                 }
             ],
             "keys": [
@@ -70,7 +70,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "http://192.168.101.149:8080/somersaultcloud.js?v=dp8zh"
+                    "script": "http://192.168.101.149:8080/somersaultcloud.js?v=dpahn"
                 }
             ],
             "keys": [
