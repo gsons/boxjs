@@ -13,7 +13,7 @@ declare var $done: any;
 
 
 enum ENV {
-    Surge, Loon, QuanX, Shadowrocket, Node
+    Surge='Surge', Loon='Loon', QuanX='QuanX', Shadowrocket='Shadowrocket', Node='Node'
 };
 
 
@@ -120,7 +120,7 @@ abstract class Box {
         }
     }
 
-    getStore(key: string, attach = false): string {
+    getStore(key: string, attach = true): string {
         if (attach) {
             key = this.namespace + '.' + key;
         }
@@ -296,7 +296,7 @@ abstract class Box {
 
 
 
-    setStore(key: string, val: string, attach = false): boolean {
+    setStore(key: string, val: string, attach = true): boolean {
         if (attach) {
             key = this.namespace + '.' + key;
         }
@@ -311,15 +311,17 @@ abstract class Box {
     private initEnv() {
         if ('undefined' !== typeof $task) {
             this.env = ENV.QuanX;
-        } else if ('undefined' !== typeof $httpClient && 'undefined' === typeof $loon) {
-            this.env = ENV.Surge;
         }
         else if ('undefined' !== typeof $loon) {
             this.env = ENV.Loon;
         }
         else if ('undefined' !== typeof $rocket) {
             this.env = ENV.Shadowrocket;
-        } else {
+        } 
+        else if ('undefined' !== typeof $httpClient && 'undefined' === typeof $loon) {
+            this.env = ENV.Surge;
+        }
+        else {
             this.env = ENV.Node;
         }
     }
