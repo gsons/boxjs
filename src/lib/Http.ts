@@ -21,7 +21,7 @@ export interface Response<T = any> {
 
 class Http{
     abs(){
-    
+        // Object.defineProperties();
     }
 }
 
