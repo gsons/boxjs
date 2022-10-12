@@ -28,13 +28,7 @@ const config = {
                 use: {
                     loader: './webpack.tpl-loader',
                     options: {
-                        baseurl: {
-                            //线上地址
-                            online: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
-                            //本地地址
-                            local: 'http://192.168.101.149:8080',
-                        }
-
+                        onlineUrl: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
                     },
                 },
                 exclude: ['/node_modules/'],

@@ -12,7 +12,9 @@ class App extends Box {
         this.log('运行 》 筋斗云签到');
         let header = JSON.parse(this.getStore(this.signheaderKey, true));
         let url = this.getStore(this.signurlKey, true);
+
         let [domain] = /https?:\/\/.*?\//.exec(url);
+        
         let opts = {
             url: `${domain}user/checkin`,
             headers: header,

@@ -5,9 +5,9 @@ export type ResponseHeader = Record<string, string> & { "set-cookie"?: string[] 
 export type RequestData = Record<string, string | number | boolean>;
 
 
-export interface RequestConfig<D>{
+export interface RequestConfig<D=any>{
     url: string;
-    method?: Method;
+    method: Method;
     headers?: RequestHeaders;
     data?: D,
 }
@@ -15,7 +15,7 @@ export interface RequestConfig<D>{
 export interface Response<T = any> {
     body: T;
     status: number;
-    statusText: string;
+    statusText?: string;
     headers: ResponseHeader;
 }
 
