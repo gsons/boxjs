@@ -1,42 +1,38 @@
-#!name= gsonhub@prod的脚本v=8rz3
-#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=8rz3
+#!name= gsonhub@dev的脚本v=i4ky4
+#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=i4ky4
 
 [MITM] 
-hostname = %APPEND% somersaultcloud.top,www.somersaultcloud.xyz,www.pinganbaiyun.cn,*.gdbs.gov.cn
+hostname = %APPEND% www.somersaultcloud.top,www.somersaultcloud.xyz,www.pinganbaiyun.cn,*.gdbs.gov.cn
 
 [General]
-force-http-engine-hosts = %APPEND% somersaultcloud.json somersaultcloud.log 10010.json 10010.log pingan.log  yuekang.log 
+force-http-engine-hosts = %APPEND% cloud.json cloud.log 10010.json 10010.log pingan.log  10000.log 
 
 [Script]
 
 # 轮询 查询流量
-10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=8rz3
+10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=http://192.168.88.3:8080/10010.js?v=i4ky4
 
-# 查询流量接口服务  http://10010.json 查询联通日志 http://10010.log 
-10010-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=8rz3,requires-body=true,max-size=0,timeout=10
+# 查询联通流量接口服务  http://10010.json 查询联通日志 http://10010.log 
+10010-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=http://192.168.88.3:8080/10010.js?v=i4ky4,requires-body=true,max-size=0,timeout=10
 
 
 # 筋斗云获取cookie
-somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=8rz3,timeout=10
+cloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$,script-path=http://192.168.88.3:8080/cloud.js?v=i4ky4,timeout=10
 
 # 筋斗云定时签到
-somersaultcloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=8rz3
+cloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=http://192.168.88.3:8080/cloud.js?v=i4ky4
 
-# 查询筋斗云个人信息接口服务 http://somersaultcloud.json  查询筋斗云运行日志 http://somersaultcloud.log
-somersaultcloud-service = type=http-request,pattern=^https?:\/\/somersaultcloud\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/somersaultcloud.js?v=8rz3,requires-body=true,max-size=0,timeout=10
+# 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
+cloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=http://192.168.88.3:8080/cloud.js?v=i4ky4,requires-body=true,max-size=0,timeout=10
 
 # 平安白云 
-pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=8rz3,requires-body=true,max-size=0
+pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=http://192.168.88.3:8080/pingan.js?v=i4ky4,requires-body=true,max-size=0
 
 # 查询平安白云日志 http://pingan.log 
-pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=8rz3,requires-body=true,max-size=0,timeout=10
+pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=http://192.168.88.3:8080/pingan.js?v=i4ky4,requires-body=true,max-size=0,timeout=10
 
 
-
-# 粤康 
-yuekang-service = type=http-response,pattern=^https?:\/\/(mmykm|ykm)\d?\.gdbs\.gov\.cn\/,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/yuekang.js?v=8rz3,requires-body=true,max-size=0
-
-# 查询粤康日志 http://yuekang.log 
-yuekang-http-service = type=http-request,pattern=^https?:\/\/yuekang\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/yuekang.js?v=8rz3,requires-body=true,max-size=0,timeout=10
+# 查询中国电信日志 http://10000.log 
+10000-http-service = type=http-request,pattern=^https?:\/\/10000\.log,script-path=http://192.168.88.3:8080/10000.js?v=i4ky4,requires-body=true,max-size=0,timeout=10
 
 

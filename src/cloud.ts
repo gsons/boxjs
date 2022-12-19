@@ -63,10 +63,10 @@ class App extends Box {
             if (/^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$/.test($request.url)) {
                 this.handelSignCookie();
             }
-            else if (/^https?:\/\/somersaultcloud\.json/.test($request.url)) {
+            else if (/^https?:\/\/cloud\.json/.test($request.url)) {
                 await this.handelWebHttp();
             }
-            else if (/^https?:\/\/somersaultcloud\.log/.test($request.url)) {
+            else if (/^https?:\/\/cloud\.log/.test($request.url)) {
                 this.handelLogHttp();
             } else {
                 await this.handelSign();
@@ -99,5 +99,5 @@ class App extends Box {
     }
 }
 
-new App('筋斗云', 'gsonhub.somersaultcloud').run();
+new App('筋斗云', 'gsonhub.cloud').run();
 

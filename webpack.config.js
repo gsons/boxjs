@@ -5,10 +5,10 @@ http.createServer();
 
 const config = {
     entry: {
-        "somersaultcloud": './src/somersaultcloud.ts',
+        "cloud": './src/cloud.ts',
         "10010": './src/10010.ts',
         "pingan": './src/pingan.ts',
-        "yuekang": './src/yuekang.ts'
+        "10000": './src/10000.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -28,7 +28,7 @@ const config = {
                 use: {
                     loader: './webpack.tpl-loader',
                     options: {
-                        onlineUrl: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
+                        onlineUrl: 'https://cdn.jsdelivr.net/gh/gsons/boxjs/dist',  
                     },
                 },
                 exclude: ['/node_modules/'],
