@@ -2,7 +2,7 @@
 
 ## 功能说明
 
-> 筋斗云自动签到领取流量脚本&中国联通自动登录流量查询监控
+> 中国联通、中国电信自动登录流量查询监控
 
 <table>
     <tr align="center">
@@ -26,9 +26,9 @@
         <td>✔️</td>
     </tr>
         <tr align="center">
-        <td>粤康码</td>
-        <td>改核酸结果，无需做核酸</td>
-        <td>❌</td>
+        <td>中国电信</td>
+        <td>自动登录/流量监控与查询</td>
+        <td>✔️</td>
     </tr>
 </table>
 
@@ -76,21 +76,21 @@ npm run build
 
     [http://10010.log](http://10010.log)
 
-3. [查询筋斗云信息](http://somersaultcloud.json)
+3. [查询筋斗云信息](http://cloud.json)
 
-    [http://somersaultcloud.json](http://somersaultcloud.json)
+    [http://cloud.json](http://cloud.json)
 
-4. [筋斗云运行日志](http://somersaultcloud.log)
+4. [筋斗云运行日志](http://cloud.log)
 
-    [http://somersaultcloud.log](http://somersaultcloud.log)
+    [http://cloud.log](http://cloud.log)
 
 5. [平安白云运行日志](http://pingan.log)
 
     [http://pingan.log](http://pingan.log)
 
-6. [粤康码运行日志](http://yuekang.log)
+6. [中国电信运行日志](http://10000.log)
 
-   [http://yuekang.log](http://yuekang.log)
+   [http://10000.log](http://10000.log)
 
 ## 运行截图
 
@@ -105,8 +105,4 @@ npm run build
 ```shell
 URL-REGEX,baiyunuser\/statistics\/reportOpenDoorRecord,REJECT
 ```
-
-## 粤康码
-
-> 粤康码采用了RSA加密，无法伪造加密数据，只能解密数据，已放弃😿
 

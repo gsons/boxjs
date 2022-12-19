@@ -60,7 +60,7 @@ class App extends Box {
 
     async doAction() {
         if (typeof $request != 'undefined' && $request.method != 'OPTIONS') {
-            if (/^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user$/.test($request.url)) {
+            if (/^https?:\/\/(my\.|)somersaultcloud\.(xyz|top)\/user$/.test($request.url)) {
                 this.handelSignCookie();
             }
             else if (/^https?:\/\/cloud\.json/.test($request.url)) {
@@ -93,7 +93,7 @@ class App extends Box {
             momey: momey,
             commission: commission
         };
-        this.log('↓ fetchJindouyun');
+        this.log('↓ fetch Jindouyun');
         this.log(JSON.stringify(res));
         return res;
     }
