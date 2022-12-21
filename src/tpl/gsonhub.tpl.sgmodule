@@ -5,12 +5,12 @@
 hostname = %APPEND% www.somersaultcloud.top,www.somersaultcloud.xyz,www.pinganbaiyun.cn,*.gdbs.gov.cn
 
 [General]
-force-http-engine-hosts = %APPEND% cloud.json cloud.log 10010.json 10010.log pingan.log  10000.log 
+force-http-engine-hosts = %APPEND% cloud.json cloud.log 10010.json 10010.log pingan.log  10000.log 10000.json
 
 [Script]
 
 # 轮询 查询流量
-10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=${baseUrl}/10010.js?v=${version}
+# 10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=${baseUrl}/10010.js?v=${version}
 
 # 查询联通流量接口服务  http://10010.json 查询联通日志 http://10010.log 
 10010-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=${baseUrl}/10010.js?v=${version},requires-body=true,max-size=0,timeout=10
@@ -32,7 +32,8 @@ pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(c
 pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=${baseUrl}/pingan.js?v=${version},requires-body=true,max-size=0,timeout=10
 
 
-# 查询中国电信日志 http://10000.log 
-10000-http-service = type=http-request,pattern=^https?:\/\/10000\.log,script-path=${baseUrl}/10000.js?v=${version},requires-body=true,max-size=0,timeout=10
+# 查询中国电信流量接口服务  http://10000.json 查询电信日志 http://10000.log 
+10000-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=${baseUrl}/10000.js?v=${version},requires-body=true,max-size=0,timeout=10
 
-
+# 轮询 查询电信流量
+ 10000-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=${baseUrl}/10000.js?v=${version}

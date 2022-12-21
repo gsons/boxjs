@@ -64,18 +64,19 @@ abstract class Box {
     public run() {
         this.doAction().catch((err) => {
             if(err instanceof BaseErr){
+                this.log(''+err.code);
                 if(err.code==Err.BASE){
-                    this.msg(this.name, err.message,err.stack);
+                    this.msg(this.name, err.message,'');
                 }
                 else if(err.code==Err.HTTP){
                     if(Math.random()>0.8){
-                        this.msg(this.name, '网络异常：'+err.message,err.stack);
+                        this.msg(this.name, '网络异常：'+err.message,'');
                     }
                     else{
-                        this.log(this.name, '网络异常Log：'+err.message,err.stack);
+                        this.log(this.name, '网络异常Log：'+err.message,'');
                     }
                 }else{
-                    this.log(err.message,err.stack);
+                    this.log(err.message,'');
                 }
             }else{
                 this.log(err);

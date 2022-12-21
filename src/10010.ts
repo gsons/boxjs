@@ -87,6 +87,10 @@ class App extends Box {
         })
 
         let body = vo.body;
+
+        console.log('↓ res body')
+        console.log(body);
+        
         let res;
         try {
             res = JSON.parse(body)
@@ -94,8 +98,7 @@ class App extends Box {
             throw new BaseErr("密码方式登录失败！JSON数据解析异常");
         }
 
-        console.log('↓ res body')
-        console.log(body);
+
 
         let code = res.code;
         if (code === '0') {

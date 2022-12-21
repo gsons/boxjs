@@ -1,10 +1,10 @@
 {
     "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.avxz",
+    "name": "@gsonhub的应用订阅v=prod.axrm",
     "author": "@gsonhub",
     "apps": [
         {
-            "id": "gsonhub.prod.10010",
+            "id": "gson.prod.10010",
             "name": "中国联通",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10010.log'>查看日志</a>",
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/10010.js?v=avxz"
+                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/10010.js?v=axrm"
                 }
             ],
             "keys": [
@@ -59,7 +59,7 @@
             ]
         },
         {
-            "id": "gsonhub.prod.cloud",
+            "id": "gson.prod.cloud",
             "name": "筋斗云",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
@@ -70,7 +70,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/cloud.js?v=avxz"
+                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/cloud.js?v=axrm"
                 }
             ],
             "keys": [
@@ -89,24 +89,24 @@
             ]
         },
         {
-            "id": "gsonhub.prod.10000",
+            "id": "gson.prod.10000",
             "name": "中国电信",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10000.log'>查看日志</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick=\"axios.get('http://10000.json/action=login')\">登录</a>"
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>"
             ],
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/10000.js?v=avxz"
+                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/10000.js?v=axrm"
                 }
             ],
             "keys": [
                 "gsonhub.10000.mobile",
                 "gsonhub.10000.password",
-                "gsonhub.10000.cookie",
-                "gsonhub.10000.mute"
+                "gsonhub.10000.token",
+                "gsonhub.10000.mute",
+                "gsonhub.10000.login_info"
             ],
 
             "author": "@gsonhub",

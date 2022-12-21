@@ -4,7 +4,7 @@
     "author": "@gsonhub",
     "apps": [
         {
-            "id": "gsonhub.${env}.10010",
+            "id": "gson.${env}.10010",
             "name": "中国联通",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10010.log'>查看日志</a>",
@@ -59,7 +59,7 @@
             ]
         },
         {
-            "id": "gsonhub.${env}.cloud",
+            "id": "gson.${env}.cloud",
             "name": "筋斗云",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
@@ -89,12 +89,11 @@
             ]
         },
         {
-            "id": "gsonhub.${env}.10000",
+            "id": "gson.${env}.10000",
             "name": "中国电信",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10000.log'>查看日志</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick=\"axios.get('http://10000.json/action=login')\">登录</a>"
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>"
             ],
             "scripts": [
                 {
@@ -105,8 +104,9 @@
             "keys": [
                 "gsonhub.10000.mobile",
                 "gsonhub.10000.password",
-                "gsonhub.10000.cookie",
-                "gsonhub.10000.mute"
+                "gsonhub.10000.token",
+                "gsonhub.10000.mute",
+                "gsonhub.10000.login_info"
             ],
 
             "author": "@gsonhub",

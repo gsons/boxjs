@@ -92,6 +92,11 @@ npm run build
 
    [http://10000.log](http://10000.log)
 
+7. [查询中国电信流量](http://10000.json)
+
+    [http://10000.json](http://10000.json)
+
+
 ## 运行截图
 
 <img src='https://gsons.github.io/demo/notice.jpg' width='350px'>
