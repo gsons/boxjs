@@ -28,7 +28,7 @@ const config = {
                 use: {
                     loader: './webpack.tpl-loader',
                     options: {
-                        onlineUrl: 'https://cdn.jsdelivr.net/gh/gsons/boxjs/dist',  
+                        onlineUrl: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',  
                     },
                 },
                 exclude: ['/node_modules/'],

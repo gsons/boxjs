@@ -36,4 +36,4 @@ pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-p
 10000-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=${baseUrl}/10000.js?v=${version},requires-body=true,max-size=0,timeout=10
 
 # 轮询 查询电信流量
-# 10000-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=${baseUrl}/10000.js?v=${version}
+10000-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=${baseUrl}/10000.js?v=${version}

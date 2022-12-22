@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.ayiy",
+    "name": "@gsonhub的应用订阅v=prod.ayj5",
     "author": "@gsonhub",
     "apps": [
         {
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/10010.js?v=ayiy"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=ayj5"
                 }
             ],
             "keys": [
@@ -70,7 +70,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/cloud.js?v=ayiy"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ayj5"
                 }
             ],
             "keys": [
@@ -98,7 +98,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://cdn.jsdelivr.net/gh/gsons/boxjs/dist/10000.js?v=ayiy"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/10000.js?v=ayj5"
                 }
             ],
             "keys": [
