@@ -1,5 +1,5 @@
-#!name= gsonhub@prod的脚本v=ayj5
-#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=ayj5
+#!name= gsonhub@prod的脚本v=ayjv
+#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=ayjv
 
 [MITM] 
 hostname = %APPEND% www.somersaultcloud.top,www.somersaultcloud.xyz,www.pinganbaiyun.cn,*.gdbs.gov.cn
@@ -10,30 +10,30 @@ force-http-engine-hosts = %APPEND% cloud.json cloud.log 10010.json 10010.log pin
 [Script]
 
 # 轮询 查询流量
-# 10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=ayj5
+# 10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=ayjv
 
 # 查询联通流量接口服务  http://10010.json 查询联通日志 http://10010.log 
-10010-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=ayj5,requires-body=true,max-size=0,timeout=10
+10010-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10010.js?v=ayjv,requires-body=true,max-size=0,timeout=10
 
 
 # 筋斗云获取cookie
-cloud = type=http-request,pattern=^https?:\/\/(my\.|)somersaultcloud\.(xyz|top)\/user$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ayj5,timeout=10
+cloud = type=http-request,pattern=^https?:\/\/(my\.|)somersaultcloud\.(xyz|top)\/user$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ayjv,timeout=10
 
 # 筋斗云定时签到
-cloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ayj5
+cloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ayjv
 
 # 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
-cloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ayj5,requires-body=true,max-size=0,timeout=10
+cloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ayjv,requires-body=true,max-size=0,timeout=10
 
 # 平安白云 
-pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=ayj5,requires-body=true,max-size=0
+pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=ayjv,requires-body=true,max-size=0
 
 # 查询平安白云日志 http://pingan.log 
-pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=ayj5,requires-body=true,max-size=0,timeout=10
+pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=ayjv,requires-body=true,max-size=0,timeout=10
 
 
 # 查询中国电信流量接口服务  http://10000.json 查询电信日志 http://10000.log 
-10000-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10000.js?v=ayj5,requires-body=true,max-size=0,timeout=10
+10000-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10000.js?v=ayjv,requires-body=true,max-size=0,timeout=10
 
 # 轮询 查询电信流量
-10000-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10000.js?v=ayj5
+10000-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/10000.js?v=ayjv

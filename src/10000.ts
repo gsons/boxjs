@@ -213,7 +213,8 @@ class App extends Box {
             };
 
             if (old_obj) {
-                if (obj.one_day_fee_flow > (obj.fee_flow_limit / 2) && obj.second_flow > 0.1) {
+                // obj.one_day_fee_flow > (obj.fee_flow_limit / 2) &&
+                if (obj.second_flow > 0.1) {
                     this.msg(this.name, `今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}`, `今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}，${obj.second}s 期间 产生跳点流量${obj.second_flow}`)
                 }
                 else if (obj.second_flow > 1) {
