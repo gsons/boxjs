@@ -1,5 +1,5 @@
 #!name= gsonhub@${env}的脚本v=${version}
-#!desc= 筋斗云定时签到，查询筋斗云个人信息接口服务v=${version}
+#!desc= 中国电信中国联通筋流量查询与监控v=${version}
 
 [MITM] 
 hostname = %APPEND% www.somersaultcloud.top,www.somersaultcloud.xyz,www.pinganbaiyun.cn,*.gdbs.gov.cn
