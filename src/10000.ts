@@ -102,8 +102,8 @@ class App extends Box {
         };
 
 
-        //this.log('〽️ request body');
-        //this.log(JSON.stringify(body));
+        console.log('〽️ request body');
+        console.log(JSON.stringify(body));
 
         let res = await this.post({
             url: "https://appfuwu.189.cn:9021/query/qryImportantData",
@@ -111,8 +111,8 @@ class App extends Box {
             body: JSON.stringify(body)
         });
 
-        //this.log('response body:');
-        //this.log(res.body);
+        console.log('response body:');
+        console.log(res.body);
 
         let data = JSON.parse(res.body);
         if (data.responseData.resultCode == '0000') {
@@ -341,6 +341,7 @@ class App extends Box {
         try {
             let login_info = data.responseData.data.loginSuccessResult;
             if (login_info && login_info.token) {
+                this.log('登录成功');
                 return login_info;
             } else {
                 let re = data.responseData.resultDesc || data.headerInfos.reason;

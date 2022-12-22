@@ -106,6 +106,7 @@
                 "gsonhub.10000.password",
                 "gsonhub.10000.token",
                 "gsonhub.10000.mute",
+                "gsonhub.10000.vvv_flow",
                 "gsonhub.10000.login_info"
             ],
 
