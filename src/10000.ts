@@ -10,12 +10,20 @@ class App extends Box {
     mobile: string;
     password: string;
     token: string;
+    loginNum:number;
 
     constructor(name: string, namespace: string) {
         super(name, namespace);
         this.mobile = this.getStore(`mobile`);
         this.password = this.getStore(`password`);
         this.token = this.getStore(`token`);
+
+        let loginNum=this.getStore('login_num');
+        if(loginNum){
+            this.loginNum=Number(loginNum);
+        }else{
+            this.loginNum=0;
+        }
     }
     async doAction() {
         if (typeof $request != 'undefined' && /^https?:\/\/10000\.log/.test($request.url)) {
@@ -115,7 +123,7 @@ class App extends Box {
         console.log(res.body);
 
         let data = JSON.parse(res.body);
-        if (data.responseData.resultCode == '0000') {
+        if (data.responseData&&data.responseData.resultCode == '0000') {
             return data;
         }
         else {
@@ -223,6 +231,7 @@ class App extends Box {
 
                 //每天0点发送流量报告
                 if (old_obj.query_date != obj.query_date) {
+                    this.setStore('login_num','0');
                     //重置0点流量缓存
                     obj.last_day_fee_flow = fee_used_flow;
                     obj.last_day_free_flow = free_used_flow;
@@ -291,6 +300,9 @@ class App extends Box {
         if (!this.mobile || !this.password) {
             throw new BaseErr('⚠️ 请配置手机号(mobile), 密码(password)')
         }
+        if(this.loginNum>3){
+            throw new BaseErr('⚠️ 当日登录已超过三次！请明天再试')
+        }
 
         let Ts = this.date('yyyyMMddHHmm00')
         let message = `iPhone 14 13.2.3${this.mobile}${this.mobile}${Ts}${this.password}0$$$0.`;
@@ -330,6 +342,10 @@ class App extends Box {
         this.log('〽️ 开始尝试密码方式登录');
         this.log('request body');
         this.log(JSON.stringify(body));
+
+        this.loginNum++;
+        this.setStore('login_num',this.loginNum.toString());
+
         let res = await this.post({
             url: "https://appgologin.189.cn:9031/login/client/userLoginNormal",
             headers: headers,

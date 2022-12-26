@@ -24,6 +24,7 @@
                 "gsonhub.10010.password",
                 "gsonhub.10010.cookie",
                 "gsonhub.10010.smscode",
+                "gsonhub.10010.login_num",
                 "gsonhub.10010.mute"
             ],
 
@@ -107,6 +108,7 @@
                 "gsonhub.10000.token",
                 "gsonhub.10000.mute",
                 "gsonhub.10000.vvv_flow",
+                "gsonhub.10000.login_num",
                 "gsonhub.10000.login_info"
             ],
 

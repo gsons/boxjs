@@ -11,6 +11,7 @@ class App extends Box {
     password: string;
     cookie: string;
     smscode: string;
+    loginNum:number;
 
     constructor(name: string, namespace: string) {
         super(name, namespace);
@@ -31,6 +32,13 @@ class App extends Box {
             smscode: this.smscode
         };
         console.log(JSON.stringify(obj));
+
+        let loginNum=this.getStore('login_num');
+        if(loginNum){
+            this.loginNum=Number(loginNum);
+        }else{
+            this.loginNum=0;
+        }
     }
 
     async query() {
@@ -72,6 +80,12 @@ class App extends Box {
 
     async dologin() {
         this.log('〽️ 开始尝试密码方式登录');
+
+        if(this.loginNum>3){
+            throw new BaseErr('⚠️ 当日登录已超过三次！请明天再试')
+        }
+
+
         let appId = this.appId;
         let vo = await this.post({
             url: 'https://m.client.10010.com/mobileService/login.htm',
@@ -85,6 +99,9 @@ class App extends Box {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         })
+
+        this.loginNum++;
+        this.setStore('login_num',this.loginNum.toString());
 
         let body = vo.body;
 
@@ -330,6 +347,8 @@ class App extends Box {
 
                 //每天0点发送流量报告
                 if (old_obj.query_date != obj.query_date) {
+                    this.setStore('login_num','0');
+                    
                     //重置0点流量缓存
                     obj.last_day_fee_flow = fee_used_flow;
                     obj.last_day_free_flow = free_used_flow;
