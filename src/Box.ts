@@ -309,6 +309,30 @@ abstract class Box {
         return false;
     }
 
+    getLoginNum(){
+        let loginNum=this.getStore('login_num');
+        let td=this.date('yyyyMMdd');
+        if(loginNum){
+            let [date,num]=loginNum.split('_');
+            if(date==td&&num){
+                return Number(num);
+            }else{
+                this.setStore('login_num',`${td}_0`);
+                return 0;
+            }
+        }else{
+            this.setStore('login_num',`${td}_0`);
+            return 0;
+        }
+    }
+
+    incLoginNum(){
+        let num=this.getLoginNum();
+        num++;
+        let td=this.date('yyyyMMdd');
+        this.setStore('login_num',`${td}_${num}`);
+    }
+
     private initEnv() {
         if ('undefined' !== typeof $task) {
             this.env = ENV.QuanX;
