@@ -75,6 +75,7 @@
                 }
             ],
             "keys": [
+                "gsonhub.cloud.ip_list",
                 "gsonhub.cloud.sign_url",
                 "gsonhub.cloud.sign_header",
                 "gsonhub.cloud.mute"

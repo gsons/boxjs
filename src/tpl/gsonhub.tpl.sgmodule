@@ -17,10 +17,11 @@ force-http-engine-hosts = %APPEND% cloud.json cloud.log 10010.json 10010.log pin
 
 
 # 筋斗云获取cookie
-cloud = type=http-request,pattern=^https?:\/\/(my\.|)somersaultcloud\.(xyz|top)\/user$,script-path=${baseUrl}/cloud.js?v=${version},timeout=10
+# cloud = type=http-request,pattern=^https?:\/\/(my\.|)somersaultcloud\.(xyz|top)\/user$,script-path=${baseUrl}/cloud.js?v=${version},timeout=10
 
-# 筋斗云定时签到
-cloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version}
+# 筋斗云定时加白名单
+
+cloud-cron = type=cron,cronexp=*/2 * * * * ?,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=ip
 
 # 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
 cloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=${baseUrl}/cloud.js?v=${version},requires-body=true,max-size=0,timeout=10

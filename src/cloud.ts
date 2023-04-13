@@ -1,4 +1,5 @@
 declare var $request: any;
+declare var $argument: any;
 import BaseErr from "./lib/BaseErr"
 import Box from "./Box";
 
@@ -71,7 +72,47 @@ class App extends Box {
             } else {
                 await this.handelSign();
             }
-        } else {
+        } 
+        else if(typeof $argument != 'undefined' && $argument==='ip'){
+            let res=await this.get({'url':'https://whois.pconline.com.cn/ipJson.jsp'});
+            let ip='';
+            try {
+                let arr=res.body.match(/\d+\.\d+\.\d+\.\d+/);
+                ip=arr[0];
+                this.log('获取到当前外网ip地址：'+ip);
+                let ip_list_str=this.getStore('ip_list',true);
+                let ip_list=[];
+                if(ip_list_str){
+                     ip_list=JSON.parse(ip_list_str);
+                }
+                if(ip_list.includes(ip)){
+                     this.log('ip地址：'+ip+'已经加白，无需加白！'); 
+                     return;
+                }else{
+                    ip_list.push(ip);
+                    this.setStore('ip_list',JSON.stringify(ip_list),true);
+                }
+               
+            } catch (error) {
+                throw new BaseErr('获取IP外网失败 '+error+'=>res.body'+res.body);
+            }
+            if(ip){
+               this.log('尝试将ip地址：'+ip+' 加入到白名单'); 
+               this.get({url:'http://hk-trail.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://us-trail.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://jp-trail.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://sg-trail.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://tw-trail.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://ru-trail.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://hk-i.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://hk-ii.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://hk-iii.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://hk-d.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://hk-e.somnode.top/addip.php?ip='+ip});
+               this.get({url:'http://hk-f.somnode.top/addip.php?ip='+ip});
+            }
+        }
+        else {
             await this.handelSign();
         }
     }
