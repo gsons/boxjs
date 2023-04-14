@@ -10,7 +10,7 @@ force-http-engine-hosts = %APPEND% cloud.json cloud.log 10010.json 10010.log pin
 [Script]
 
 # 轮询 查询流量
-# 10010-for-cron = type=cron,cronexp=*/1 * * * * ?,timeout=10,script-path=${baseUrl}/10010.js?v=${version}
+# 10010-for-cron = type=cron,cronexp=*/1 * * * *,timeout=10,script-path=${baseUrl}/10010.js?v=${version}
 
 # 查询联通流量接口服务  http://10010.json 查询联通日志 http://10010.log 
 10010-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=${baseUrl}/10010.js?v=${version},requires-body=true,max-size=0,timeout=10
@@ -21,7 +21,7 @@ force-http-engine-hosts = %APPEND% cloud.json cloud.log 10010.json 10010.log pin
 
 # 筋斗云定时加白名单
 
-cloud-cron = type=cron,cronexp=*/2 * * * * ?,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=ip
+cloud-cron = type=cron,cronexp=*/2 * * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=ip
 
 # 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
 cloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=${baseUrl}/cloud.js?v=${version},requires-body=true,max-size=0,timeout=10
