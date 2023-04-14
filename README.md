@@ -17,7 +17,7 @@
     </tr>
     <tr align="center">
         <td>筋斗云</td>
-        <td>定时签到/信息查询</td>
+        <td>监控IP变化加入白名单</td>
         <td>✔️</td>
     </tr>
     <tr align="center">
@@ -101,7 +101,6 @@ npm run build
 
 <img src='https://raw.githubusercontent.com/gsons/gsons.github.io/master/images/QQ%E5%9B%BE%E7%89%8720221223165230.jpg' width='350px'>
 
-<img src='https://raw.githubusercontent.com/gsons/gsons.github.io/master/images/QQ%E5%9B%BE%E7%89%8720221223165223.jpg' width='350px'>
 
 
 <img src='https://raw.githubusercontent.com/gsons/gsons.github.io/master/images/QQ%E5%9B%BE%E7%89%8720221223165234.jpg' width='350px'>
