@@ -108,7 +108,7 @@ npm run build
 
 ## 平安白云
 
-> 请务必添加如下reject规则，阻止平安白云上报打卡开门记录。
+> 请务必添加如下reject规则，阻止平安白云上报打卡开门记录
 ```shell
 URL-REGEX,baiyunuser\/statistics\/reportOpenDoorRecord,REJECT
 ```
