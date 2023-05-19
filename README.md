@@ -1,4 +1,4 @@
-# 🚀 BOXJS脚本集合
+# 🚀 boxjs 脚本集合
 
 ## 功能说明
 
@@ -20,14 +20,14 @@
         <td>监控IP变化加入白名单</td>
         <td>✔️</td>
     </tr>
-    <tr align="center">
-        <td>平安白云</td>
-        <td>改有效期，无需充值续期</td>
-        <td>✔️</td>
-    </tr>
         <tr align="center">
         <td>中国电信</td>
         <td>自动登录/流量监控与查询</td>
+        <td>✔️</td>
+    </tr>
+        <tr align="center">
+        <td>平安白云</td>
+        <td>改有效期，无需充值续期</td>
         <td>✔️</td>
     </tr>
 </table>
@@ -99,11 +99,11 @@ npm run build
 
 ## 运行截图
 
-<img src='https://raw.githubusercontent.com/gsons/gsons.github.io/master/images/QQ%E5%9B%BE%E7%89%8720221223165230.jpg' width='350px'>
+<img src='https://raw.githubusercontent.com/gsons/gsons.github.io/demo/images/QQ%E5%9B%BE%E7%89%8720221223165230.jpg' width='350px'>
 
 
 
-<img src='https://raw.githubusercontent.com/gsons/gsons.github.io/master/images/QQ%E5%9B%BE%E7%89%8720221223165234.jpg' width='350px'>
+<img src='https://raw.githubusercontent.com/gsons/gsons.github.io/demo/images/QQ%E5%9B%BE%E7%89%8720221223165234.jpg' width='350px'>
 
 
 ## 平安白云
