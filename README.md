@@ -76,15 +76,15 @@ npm run build
     </tr>
     <tr align="center">
         <td>中国联通</td>
-        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js<td>
+        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.sgmodule<td>
     </tr>
     <tr align="center">
         <td>中国电信</td>
-         <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js<td>
+         <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.sgmodule<td>
     </tr>
         <tr align="center">
         <td>平安白云</td>
-        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js<td>
+        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.sgmodule<td>
     </tr>
 </table>
 
