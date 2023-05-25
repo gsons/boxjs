@@ -1,11 +1,8 @@
-import Box from "./Box";
-const RSAEncrypt = require('./lib/JSEncrypt');
-import BaseErr from "./lib/BaseErr"
+import VpnBox, { Action, BaseErr, Err } from "./VpnBox";
+import { RSAEncrypt } from "./lib/JSEncrypt";
+require('./tpl/unicom.tpl.sgmodule');
 
-
-declare var $request: any;
-class App extends Box {
-
+class App extends VpnBox {
     appId: string;
     mobile: string;
     password: string;
@@ -35,7 +32,7 @@ class App extends Box {
     }
 
     async query() {
-        this.log('〽️ 开始尝试查询流量');
+        this.log('--- 开始尝试查询流量');
         var cookie = this.cookie;
         let vo = await this.post({
             url: 'https://m.client.10010.com/servicequerybusiness/operationservice/queryOcsPackageFlowLeftContentRevisedInJune',
@@ -72,9 +69,9 @@ class App extends Box {
     }
 
     async dologin() {
-        this.log('〽️ 开始尝试密码方式登录');
+        this.log('--- 开始尝试密码方式登录');
 
-        if(this.getLoginNum()>4){
+        if (this.getSignCount() > 4) {
             throw new BaseErr('⚠️ 当日登录已超过四次！请明天再试')
         }
 
@@ -92,13 +89,13 @@ class App extends Box {
             },
         })
 
-        this.incLoginNum();
+        this.incSignCount();
 
         let body = vo.body;
 
         console.log('↓ res body')
         console.log(body);
-        
+
         let res;
         try {
             res = JSON.parse(body)
@@ -131,7 +128,7 @@ class App extends Box {
     }
 
     async doAction() {
-        let url = (typeof $request != 'undefined' && $request.method != 'OPTIONS' && $request.url ) ? $request.url : '';
+        let url = (typeof $request != 'undefined' && $request.method != 'OPTIONS' && $request.url) ? $request.url : '';
         let [, action] = /action=(\w+)/.exec(url) ?? [];
 
         switch (action) {
@@ -169,7 +166,7 @@ class App extends Box {
             body: this.transParams({
                 mobile: RSAEncrypt(this.mobile),
                 password: RSAEncrypt(this.smscode),
-                appId: this.random(160),
+                appId: this.randomString(160),
                 version: 'iphone_c@9.0100',
             }),
             headers: {
@@ -204,7 +201,7 @@ class App extends Box {
             this.setStore('cookie', cookie, true);
             this.setStore('appId', res.appId, true);
             this.log('appId:\n' + appId)
-            this.msg(this.name, '🍪 验证码方式登录成功！', '');
+            this.msg(this.appName, '🍪 验证码方式登录成功！', '');
             this.ajaxSuccess('验证码方式登录成功！');
         } else {
             let desc = res.dsc;
@@ -241,7 +238,7 @@ class App extends Box {
         }
 
         if (res.rsp_code == '0000') {
-            this.msg(this.name, '发送验证码成功', '');
+            this.msg(this.appName, '发送验证码成功', '');
             this.ajaxSuccess('发送验证码成功');
         } else {
             throw new BaseErr("发送验证码失败！" + body);
@@ -264,14 +261,14 @@ class App extends Box {
     }
 
 
-    getFeeFlowLimt(feeflow:number){
-        var dd=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate()-new Date().getDate()+1;
-        return parseInt((feeflow/dd).toFixed(0));
+    getFeeFlowLimt(feeflow: number) {
+        var dd = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate() - new Date().getDate() + 1;
+        return parseInt((feeflow / dd).toFixed(0));
     }
 
     handleQuery(res: any) {
         if (res) {
-            let old_obj = null;
+            let old_obj: any = null;
             try {
                 old_obj = JSON.parse(this.getStore(`vvv_flow`, true));
             } catch (error) {
@@ -279,7 +276,7 @@ class App extends Box {
             }
             const query_date = this.date('yyyy-MM-dd', res.time.replace(/-/g, '/'));
 
-            const fee_used_flow = parseFloat((res.summary.sum-res.summary.freeFlow).toFixed(2));
+            const fee_used_flow = parseFloat((res.summary.sum - res.summary.freeFlow).toFixed(2));
             const fee_remain_flow = parseFloat(res.resources[0].remainResource);
             const fee_all_flow = parseInt((fee_used_flow + fee_remain_flow).toFixed(0));
             const free_used_flow = parseFloat(res.summary.freeFlow);
@@ -288,17 +285,17 @@ class App extends Box {
             const remain_top_flow = parseFloat(res.summary.remainFengDing);
 
             const second = (old_obj) ? parseFloat(((new Date(res.time.replace(/-/g, '/')).getTime() - new Date(old_obj.query_date_time.replace(/-/g, '/')).getTime()) / 1000).toFixed(2)) : 0;
-            const second_flow = (old_obj && old_obj.fee_used_flow < fee_used_flow) ? parseFloat((fee_used_flow-old_obj.fee_used_flow).toFixed(2)) : 0;
+            const second_flow = (old_obj && old_obj.fee_used_flow < fee_used_flow) ? parseFloat((fee_used_flow - old_obj.fee_used_flow).toFixed(2)) : 0;
 
-            const last_day_fee_flow = (old_obj && old_obj.last_day_fee_flow>=0) ? old_obj.last_day_fee_flow : fee_used_flow;//0点已用收费流量
+            const last_day_fee_flow = (old_obj && old_obj.last_day_fee_flow >= 0) ? old_obj.last_day_fee_flow : fee_used_flow;//0点已用收费流量
             const offset_fee = parseFloat((fee_used_flow - last_day_fee_flow).toFixed(2));
             const one_day_fee_flow = offset_fee >= 0 ? offset_fee : old_obj.one_day_fee_flow;//当天已用收费流量
 
-            const last_day_free_flow = (old_obj && old_obj.last_day_free_flow>=0) ? old_obj.last_day_free_flow : free_used_flow;//0点已用免费流量
+            const last_day_free_flow = (old_obj && old_obj.last_day_free_flow >= 0) ? old_obj.last_day_free_flow : free_used_flow;//0点已用免费流量
             const offset_free = parseFloat((free_used_flow - last_day_free_flow).toFixed(2));
             const one_day_free_flow = (offset_free >= 0 ? offset_free : old_obj.one_day_free_flow);//当天已用免费流量
 
-            const last_day_flow = (old_obj && old_obj.last_day_flow>=0) ? old_obj.last_day_flow : used_flow;//0点已用流量
+            const last_day_flow = (old_obj && old_obj.last_day_flow >= 0) ? old_obj.last_day_flow : used_flow;//0点已用流量
             const offset_flow = parseFloat((used_flow - last_day_flow).toFixed(2));
             const one_day_flow = (offset_flow >= 0 ? offset_flow : old_obj.one_day_flow);//当天已用流量
 
@@ -325,15 +322,15 @@ class App extends Box {
                 'second': second,//每次查询时间差
                 'second_flow': second_flow,//时间差产生的收费流量
 
-                'fee_flow_limit':this.getFeeFlowLimt(fee_remain_flow),
+                'fee_flow_limit': this.getFeeFlowLimt(fee_remain_flow),
             };
 
             if (old_obj) {
-                if(obj.one_day_fee_flow>(obj.fee_flow_limit/2)&&obj.second_flow > 0.1){
-                    this.msg(this.name,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}`,`今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}，${obj.second}s 期间 产生跳点流量${obj.second_flow}`)
+                if (obj.one_day_fee_flow > (obj.fee_flow_limit / 2) && obj.second_flow > 0.1) {
+                    this.msg(this.appName, `今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}`, `今日已用流量已超过${one_day_fee_flow}，当日可用流量${obj.fee_flow_limit}，${obj.second}s 期间 产生跳点流量${obj.second_flow}`)
                 }
                 else if (obj.second_flow > 1) {
-                    this.log( `${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
+                    this.log(`${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
                 }
 
                 //每天0点发送流量报告
@@ -342,7 +339,7 @@ class App extends Box {
                     obj.last_day_fee_flow = fee_used_flow;
                     obj.last_day_free_flow = free_used_flow;
                     obj.last_day_flow = used_flow;
-                    this.msg(this.name, `过去一天已用收费流量${one_day_fee_flow}`, `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`);
+                    this.msg(this.appName, `过去一天已用收费流量${one_day_fee_flow}`, `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`);
                 }
             }
             const objstr = JSON.stringify(obj);

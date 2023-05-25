@@ -1,14 +1,10 @@
 const path = require('path');
-// const isProduction = process.env.NODE_ENV == 'production';
-const http=require('http-server');
-http.createServer();
 
 const config = {
     entry: {
-        "cloud": './src/cloud.ts',
-        "10010": './src/10010.ts',
         "pingan": './src/pingan.ts',
-        "10000": './src/10000.ts'
+        "telecom": './src/telecom.ts',
+        "unicom": './src/unicom.ts',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -28,7 +24,7 @@ const config = {
                 use: {
                     loader: './webpack.tpl-loader',
                     options: {
-                        onlineUrl: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',  
+                        onlineUrl: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
                     },
                 },
                 exclude: ['/node_modules/'],

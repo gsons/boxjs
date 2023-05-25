@@ -4,8 +4,7 @@
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
-    "allowJs": true,
     "moduleResolution":"Node"
   },
-  "files": ["src/cloud.ts","src/10010.ts","src/pingan.ts","src/10000.ts"]
+  "files": ["src/pingan.ts","src/telecom.ts","src/unicom.ts"]
 }

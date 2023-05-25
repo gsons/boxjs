@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "${baseUrl}/10010.js?v=${version}"
+                    "script": "${baseUrl}/unicom.js?v=${version}"
                 }
             ],
             "keys": [
@@ -60,37 +60,6 @@
             ]
         },
         {
-            "id": "gson.${env}.cloud",
-            "name": "筋斗云",
-            "descs_html": [
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://cloud.log'>查看筋斗云日志</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://pingan.log'>查看平安白云日志</a>",
-                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10000.log'>查看中国电信日志</a>"
-            ],
-            "scripts": [
-                {
-                    "name": "筋斗云签到",
-                    "script": "${baseUrl}/cloud.js?v=${version}"
-                }
-            ],
-            "keys": [
-                "gsonhub.cloud.ip_list",
-                "gsonhub.cloud.sign_url",
-                "gsonhub.cloud.sign_header",
-                "gsonhub.cloud.mute"
-            ],
-            "author": "@gsonhub",
-            "settings": [
-                {
-                    "id": "gsonhub.cloud.mute",
-                    "name": "禁音模式",
-                    "val": false,
-                    "type": "boolean"
-                }
-            ]
-        },
-        {
             "id": "gson.${env}.10000",
             "name": "中国电信",
             "descs_html": [
@@ -100,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "${baseUrl}/10000.js?v=${version}"
+                    "script": "${baseUrl}/telecom.js?v=${version}"
                 }
             ],
             "keys": [

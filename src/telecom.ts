@@ -1,15 +1,12 @@
-declare var $response: any;
-declare var $request: any;
+import VpnBox, { Action, BaseErr, Err } from "./VpnBox";
+import JSEncrypt from "./lib/JSEncrypt";
+require('./tpl/telecom.tpl.sgmodule');
 
-import Box from "./Box";
-const RSAEncrypt = require('./lib/JSEncrypt');
-import BaseErr from "./lib/BaseErr"
+class App extends VpnBox {
 
-class App extends Box {
-
-    mobile: string;
-    password: string;
-    token: string;
+    private mobile: string;
+    private password: string;
+    private token: string;
 
     constructor(name: string, namespace: string) {
         super(name, namespace);
@@ -18,22 +15,29 @@ class App extends Box {
         this.token = this.getStore(`token`);
     }
 
+
     async doAction() {
-        if (typeof $request != 'undefined' && /^https?:\/\/10000\.log/.test($request.url)) {
-            this.handelLogHttp();
-        }
-        else if (typeof $request != 'undefined' && /^https?:\/\/10000\.json/.test($request.url)) {
-            let vvv_flow=null;
-            try {  
-                vvv_flow=JSON.parse(this.getStore(`vvv_flow`, true));
+        switch (this.action) {
+            case Action.Request:
+                if ($request.url.includes('10000.log')) {
+                    this.handelLogHttp();
+                }
+                else if ($request.url.includes('10000.json')) {
+                    let vvv_flow = null;
+                    try {
+                        vvv_flow = JSON.parse(this.getStore(`vvv_flow`));
+                        await this.handleQuery();
+                    } catch (error) {
+                        this.log('查询流量出错',error.message||error);
+                        this.ajaxSuccess('查询流量出错，从缓存获取', vvv_flow);
+                    }
+                }
+                break;
+            case Action.Response:
+                break;
+            case Action.Script:
                 await this.handleQuery();
-            } catch (error) {
-                this.log(error.message);
-                this.ajaxSuccess('查询出错，从缓存获取',vvv_flow);
-            }
-        }
-        else {
-            await this.handleQuery();
+                break;
         }
     }
 
@@ -51,12 +55,12 @@ class App extends Box {
         }
         if (res) {
             await this.queryJson(res);
-        }else{
+        } else {
             throw new BaseErr('查询失败');
         }
     }
 
-    TransPhone(phoneNum: string) {
+    transPhone(phoneNum: string) {
         let result = ''
         let ArrPhone = phoneNum.toString().split('')
         for (let i = 0; i < 11; i++) {
@@ -67,10 +71,11 @@ class App extends Box {
 
     encrypt(message: string) {
         const key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBkLT15ThVgz6/NOl6s8GNPofdWzWbCkWnkaAm7O2LjkM1H7dMvzkiqdxU02jamGRHLX/ZNMCXHnPcW/sDhiFCBN18qFvy8g6VYb9QtroI09e176s+ZCtiv7hbin2cCTj99iUpnEloZm19lwHyo69u5UMiPMpq0/XKBO8lYhN/gwIDAQAB";
-        return RSAEncrypt(message, key)
+        return JSEncrypt(message, key)
     }
+
     async doQuery(token = '') {
-        this.log('〽️ 开始尝试查询');
+        this.log('--- 开始尝试查询');
         let Ts = this.date('yyyyMMddHHmm00')
         let body = {
             content: {
@@ -79,7 +84,7 @@ class App extends Box {
                     cityCode: "8441900",
                     shopId: '20002',
                     isChinatelecom: '0',
-                    account: this.TransPhone(this.mobile)
+                    account: this.transPhone(this.mobile)
                 },
                 attach: "test"
             },
@@ -103,7 +108,7 @@ class App extends Box {
         };
 
 
-        console.log('〽️ request body');
+        console.log('--- request body');
         console.log(JSON.stringify(body));
 
         let res = await this.post({
@@ -112,11 +117,11 @@ class App extends Box {
             body: JSON.stringify(body)
         });
 
-        console.log('response body:');
+        console.log('--- response body:');
         console.log(res.body);
 
         let data = JSON.parse(res.body);
-        if (data.responseData&&data.responseData.resultCode == '0000') {
+        if (data.responseData && data.responseData.resultCode == '0000') {
             return data;
         }
         else {
@@ -136,7 +141,7 @@ class App extends Box {
             try {
                 old_obj = JSON.parse(this.getStore(`vvv_flow`, true));
             } catch (error) {
-                //throw new BaseErr('解析JSON异常');
+                
             }
 
             let UnlimitInfo = res.responseData.data.flowInfo.specialAmount
@@ -207,8 +212,11 @@ class App extends Box {
                 'last_day_flow': last_day_flow,
                 'one_day_flow': one_day_flow,
 
-                'second': second,//每次查询时间差
-                'second_flow': second_flow,//时间差产生的收费流量
+                //每次查询时间差
+                'second': second,
+
+                //时间差产生的收费流量
+                'second_flow': second_flow,
 
                 'fee_flow_limit': this.getFeeFlowLimt(fee_remain_flow),
             };
@@ -216,7 +224,7 @@ class App extends Box {
             if (old_obj) {
                 // obj.one_day_fee_flow > (obj.fee_flow_limit / 2) &&
                 if (obj.second_flow > 0.1) {
-                    this.msg(this.name, `${obj.second}s期间跳点流量${obj.second_flow}M`, `今日已用${one_day_fee_flow}M通用流量,已免${one_day_free_flow}M,今日可用流量${obj.fee_flow_limit}M`)
+                    this.msg(this.appName, `${obj.second}s期间跳点流量${obj.second_flow}M`, `今日已用${one_day_fee_flow}M通用流量,已免${one_day_free_flow}M,今日可用流量${obj.fee_flow_limit}M`)
                 }
                 else if (obj.second_flow > 1) {
                     this.log(`${obj.second}s 期间 产生跳点流量${obj.second_flow} 今日已用流量${one_day_fee_flow}`, '');
@@ -228,7 +236,7 @@ class App extends Box {
                     obj.last_day_fee_flow = fee_used_flow;
                     obj.last_day_free_flow = free_used_flow;
                     obj.last_day_flow = used_flow;
-                    this.msg(this.name, `过去一天已用收费流量${one_day_fee_flow}`, `过去一天已用流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`);
+                    this.msg(this.appName, `过去一天已用收费流量${one_day_fee_flow}`, `过去一天已用总流量${one_day_flow}，免费流量${one_day_free_flow}，收费流量${one_day_fee_flow}`);
                 }
             }
             const objstr = JSON.stringify(obj);
@@ -241,14 +249,14 @@ class App extends Box {
     }
 
     async product(token = '') {
-        this.log('〽️ 开始尝试查询');
+        this.log('--- 开始尝试查询');
         let Ts = this.date('yyyyMMddHHmm00')
         let body = {
             content: {
                 fieldData: {
                     queryFlag: '0',
                     accessAuth: '1',
-                    account: this.TransPhone(this.mobile)
+                    account: this.transPhone(this.mobile)
                 },
                 attach: "test"
             },
@@ -293,8 +301,8 @@ class App extends Box {
             throw new BaseErr('⚠️ 请配置手机号(mobile), 密码(password)')
         }
 
-        if(this.getLoginNum()>10){
-            throw new BaseErr('⚠️ 当日登录已超过10次！请明天再试')
+        if (this.getSignCount() > 10) {
+            throw new BaseErr('⚠️ 当日登录已超过10次!  请明天再试')
         }
 
         let Ts = this.date('yyyyMMddHHmm00')
@@ -308,7 +316,7 @@ class App extends Box {
                     isChinatelecom: '0',
                     loginAuthCipherAsymmertric: this.encrypt(message),
                     loginType: "4",
-                    phoneNum: this.TransPhone(this.mobile),
+                    phoneNum: this.transPhone(this.mobile),
                     systemVersion: "13.2.3",
                 },
                 attach: "iPhone"
@@ -336,7 +344,7 @@ class App extends Box {
         this.log('request body');
         this.log(JSON.stringify(body));
 
-        this.incLoginNum();
+        this.incSignCount();
 
         let res = await this.post({
             url: "https://appgologin.189.cn:9031/login/client/userLoginNormal",
@@ -363,7 +371,6 @@ class App extends Box {
         }
         throw new BaseErr('登录失败！' + errMsg);
     }
-
 }
 
 new App('中国电信', 'gsonhub.10000').run();
