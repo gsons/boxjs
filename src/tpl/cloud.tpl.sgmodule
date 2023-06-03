@@ -1,0 +1,19 @@
+#!name= 筋斗云@${env} 
+#!desc= 筋斗云@author=gsonhub @version=${version}
+
+[MITM] 
+hostname = %APPEND% www.somersaultcloud.top,www.somersaultcloud.xyz
+
+[General]
+force-http-engine-hosts = %APPEND%  cloud.log   cloud.json
+
+[Script]
+
+# 筋斗云获取cookie
+somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user/profile,script-path=${baseUrl}/cloud.js?v=${version},timeout=10
+
+# 筋斗云定时签到
+# somersaultcloud-cron = type=cron,cronexp=0 0 * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version}
+
+# 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
+somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=${baseUrl}/cloud.js?v=${version},requires-body=true,max-size=0,timeout=10

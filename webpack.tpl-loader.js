@@ -8,7 +8,7 @@ function getIPAdress() {
         var iface = interfaces[devName];
         for (var i = 0; i < iface.length; i++) {
             var alias = iface[i];
-            if (alias.family === 'IPv4' &&  /^(192|10)\./.test(alias.address) && !alias.internal) {
+            if (alias.family === 'IPv4' && /^(10|192)\./.test(alias.address) && alias.address !== '127.0.0.1' && !alias.internal) {
                 return alias.address;
             }
         }

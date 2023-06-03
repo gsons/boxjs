@@ -3,8 +3,9 @@ const path = require('path');
 const config = {
     entry: {
         "pingan": './src/pingan.ts',
+        "cloud": './src/cloud.ts',
         "telecom": './src/telecom.ts',
-        "unicom": './src/unicom.ts',
+        "unicom": './src/unicom.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

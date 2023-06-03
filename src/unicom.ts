@@ -1,4 +1,4 @@
-import VpnBox, { Action, BaseErr, Err } from "./VpnBox";
+import VpnBox, { BaseErr } from "./VpnBox";
 import { RSAEncrypt } from "./lib/JSEncrypt";
 require('./tpl/unicom.tpl.sgmodule');
 
@@ -15,11 +15,11 @@ class App extends VpnBox {
     }
 
     init() {
-        this.appId = this.getStore(`appId`, true);
-        this.mobile = this.getStore(`mobile`, true);
-        this.password = this.getStore(`password`, true);
-        this.cookie = this.getStore(`cookie`, true);
-        this.smscode = this.getStore(`smscode`, true);
+        this.appId = this.getStore(`appId`) ?? '';
+        this.mobile = this.getStore(`mobile`) ?? '';
+        this.password = this.getStore(`password`) ?? '';
+        this.cookie = this.getStore(`cookie`) ?? '';
+        this.smscode = this.getStore(`smscode`) ?? '';
         const obj = {
             appId: this.appId,
             mobile: this.mobile,
@@ -127,29 +127,31 @@ class App extends VpnBox {
         }
     }
 
-    async doAction() {
-        let url = (typeof $request != 'undefined' && $request.method != 'OPTIONS' && $request.url) ? $request.url : '';
-        let [, action] = /action=(\w+)/.exec(url) ?? [];
-
+    public async doRequestAction($request: ScriptRequest): Promise<VpnResult> {
+        let [, action] = /action=(\w+)/.exec($request.url) ?? [];
         switch (action) {
             case 'send_code':
-                await this.handleSendCodeAction();
-                break;
+                return await this.handleSendCodeAction();
             case 'login':
-                await this.handleLoginAction();
-                break;
+                return await this.handleLoginAction();
             case 'query':
-                await this.handleQueryAction();
-                break;
+                return await this.handleQueryAction();
             default:
-                if (/^https?:\/\/10010\.log/.test(url)) {
-                    this.handelLogHttp();
+                if ($request.url.includes("10010.log")) {
+                    return this.handelLogHttp();
+                } else if ($request.url.includes("10010.json")) {
+                    return await this.handleQueryAction();
                 } else {
-                    await this.handleQueryAction();
+                    return false;
                 }
-
-                break;
         }
+    }
+    public doResponseAction($request: ScriptRequest, $response: ScriptResponse): VpnResult | Promise<VpnResult> {
+        return false;
+    }
+    public async doScriptAction(): Promise<VpnResult> {
+        this.log('以脚本方式运行');
+        return await this.handleQueryAction();
     }
 
     async handleLoginAction() {
@@ -202,7 +204,7 @@ class App extends VpnBox {
             this.setStore('appId', res.appId, true);
             this.log('appId:\n' + appId)
             this.msg(this.appName, '🍪 验证码方式登录成功！', '');
-            this.ajaxSuccess('验证码方式登录成功！');
+            return this.ajaxSuccessResult('验证码方式登录成功！');
         } else {
             let desc = res.dsc;
             throw new BaseErr('验证码方式登录失败！' + (desc || '未知错误'))
@@ -239,7 +241,7 @@ class App extends VpnBox {
 
         if (res.rsp_code == '0000') {
             this.msg(this.appName, '发送验证码成功', '');
-            this.ajaxSuccess('发送验证码成功');
+            return this.ajaxSuccessResult('发送验证码成功');
         } else {
             throw new BaseErr("发送验证码失败！" + body);
         }
@@ -257,7 +259,7 @@ class App extends VpnBox {
             await this.dologin();
             res = await this.query();
         }
-        this.handleQuery(res);
+        return this.handleQuery(res);
     }
 
 
@@ -270,7 +272,7 @@ class App extends VpnBox {
         if (res) {
             let old_obj: any = null;
             try {
-                old_obj = JSON.parse(this.getStore(`vvv_flow`, true));
+                old_obj = JSON.parse(this.getStore(`vvv_flow`) ?? '');
             } catch (error) {
                 //throw new BaseErr('解析JSON异常');
             }
@@ -345,7 +347,7 @@ class App extends VpnBox {
             const objstr = JSON.stringify(obj);
             this.log(objstr);
             this.setStore(`vvv_flow`, objstr, true);
-            this.ajaxSuccess('查询流量成功', obj);
+            return this.ajaxSuccessResult('查询流量成功', obj);
         } else {
             throw new BaseErr('查询流量失败');
         }

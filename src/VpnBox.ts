@@ -1,6 +1,3 @@
-/// <reference path="./global.d.ts" />
-require('./tpl/boxjs.tpl.json');
-
 export enum ENV {
     Surge = 'Surge', Loon = 'Loon', QuanX = 'QuanX', Shadowrocket = 'Shadowrocket', Node = 'Node'
 };
@@ -32,7 +29,6 @@ export class BaseErr extends Error {
         Object.setPrototypeOf(this, BaseErr.prototype);
     }
 }
-
 
 abstract class VpnBox {
     /**
@@ -66,7 +62,7 @@ abstract class VpnBox {
 
     private logSeparator: string = '\n\n';
 
-    public response: Record<string, any> = {};
+    public result: VpnResult;
 
     private isNeedRewrite: false;
 
@@ -85,10 +81,14 @@ abstract class VpnBox {
         this.initEnv();
 
         let mute = this.getStore('mute');
+
         this.isMute = mute == 'true';
+
+        require('./tpl/boxjs.tpl.json');
     }
 
-    initAction() {
+    private initAction() {
+
         if (typeof $response != 'undefined') {
             this.action = Action.Response;
         }
@@ -100,8 +100,33 @@ abstract class VpnBox {
         this.log('脚本类型为：' + this.action);
     }
 
-    //入口方法
-    public abstract doAction(): Promise<void>;
+    private async doAction() {
+        switch (this.action) {
+            case Action.Request:
+                this.result = await this.doRequestAction($request);
+                break;
+            case Action.Response:
+                this.result = await this.doResponseAction($request, $response);
+                break;
+            case Action.Script:
+                this.result = await this.doScriptAction();
+                break;
+            default:
+                this.log(this.appName, 'Unknow Action', '未知的脚本类型');
+                this.result = false;
+                break;
+        }
+        if (this.result === false) {
+            this.msg(this.appName, '不合法的脚本', '请检查脚本配置信息');
+        }
+    }
+
+    //没匹配到脚本请返回false
+    public abstract doRequestAction($request: ScriptRequest): Promise<VpnResult> | VpnResult;
+
+    public abstract doResponseAction($request: ScriptRequest, $response: ScriptResponse): Promise<VpnResult> | VpnResult;
+
+    public abstract doScriptAction(): Promise<VpnResult> | VpnResult;
 
     public run() {
 
@@ -124,7 +149,7 @@ abstract class VpnBox {
             } else {
                 this.log(err);
             }
-            this.ajaxFail(err.message || err);
+            this.result = this.ajaxFailResult(err.message || err);
         }).finally(() => {
             this.done();
         });
@@ -136,14 +161,14 @@ abstract class VpnBox {
             .join('&')
     }
 
-    public httpResponse(res: any, headers: Record<string, string> = {}) {
+    public httpResponseResult(res: any, headers: Record<string, string> = {}): VpnResult {
         const defaultHeaders = {
             'Content-Type': 'application/json; charset=utf-8',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'POST,GET',
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
         };
-        this.response = {
+        return {
             response: {
                 status: 200,
                 body: typeof res == 'string' ? res : JSON.stringify(res),
@@ -162,16 +187,16 @@ abstract class VpnBox {
         return result;
     }
 
-    public handelLogHttp() {
+    public handelLogHttp(): VpnResult {
         this.log(`运行 》 ${this.appName}系统运行日志http服务器`);
         let cacheLog = this.getStore(VpnBox.APP_LOG_KEY) || '';
         const reg = new RegExp(this.logSeparator, 'g');
         cacheLog = cacheLog.replace(reg, '<br>');
-        this.httpResponse(cacheLog, { 'Content-Type': 'text/html;charset=utf-8' });
+        return this.httpResponseResult(cacheLog, { 'Content-Type': 'text/html;charset=utf-8' });
     }
 
 
-    public send(opt: Record<string, any>): Promise<any> {
+    public send(opt: HttpOption): Promise<HttpResponse> {
         return new Promise((resolve, reject) => {
             this.doRequest(opt, (err: any, resp: any, body: any) => {
                 if (err) reject(new BaseErr(err, Err.HTTP))
@@ -181,12 +206,12 @@ abstract class VpnBox {
     }
 
 
-    public async post(opt: Record<string, any>) {
+    public async post(opt: HttpOption) {
         opt['method'] = 'post';
         return await this.send(opt);
     }
 
-    public async get(opt: Record<string, any>) {
+    public async get(opt: HttpOption) {
         opt['method'] = 'get';
         return await this.send(opt);
     }
@@ -243,22 +268,23 @@ abstract class VpnBox {
     }
 
 
-    public ajaxSuccess(msg: string, data: any = null) {
+    public ajaxSuccessResult(msg: string, data: any = null): VpnResult {
         let result = { time: +new Date(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: 1, 'msg': msg, data: data };
-        this.httpResponse(result);
+        return this.httpResponseResult(result);
     }
 
-    public ajaxFail(msg: string, data: any = null) {
+    public ajaxFailResult(msg: string, data: any = null): VpnResult {
         let result = { time: +new Date(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: 0, 'msg': msg, data: data };
-        this.httpResponse(result);
+        return this.httpResponseResult(result);
     }
 
-    public done() {
+    private done() {
         const endTime = new Date().getTime();
         const costTime = (endTime - this.startTime) / 1000;
-        this.print('运行 response: ' + JSON.stringify(this.response));
+        this.print('运行 response: ' + JSON.stringify(this.result));
         this.log(`🔔${this.appName}, 结束! 🕛 ${costTime} 秒 ${this.logSeparator}`);
         if (this.env == ENV.Node) {
+            //@ts-ignore
             process.exit(1);
         } else {
             let cacheLog = this.getStore(VpnBox.APP_LOG_KEY) || '';
@@ -266,11 +292,11 @@ abstract class VpnBox {
             cacheLog = this.logList.join('') + cacheLog
             this.setStore(VpnBox.APP_LOG_KEY, cacheLog);
             this.print(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + VpnBox.APP_LOG_KEY}`);
-            $done(this.response);
+            $done(this.result);
         }
     }
 
-    msg(title: string, subtitle: string, body: string) {
+    public msg(title: string, subtitle: string, body: string) {
         if (this.isMute) return;
         this.log('==============📣系统通知📣==============' + this.logSeparator + title + this.logSeparator + subtitle + this.logSeparator + body);
         if (this.env == ENV.Surge || this.env == ENV.Shadowrocket || this.env == ENV.Loon) $notification.post(title, subtitle, body)
@@ -290,7 +316,7 @@ abstract class VpnBox {
         console.log(logList.join(this.logSeparator))
     }
 
-    getStore(key: string, attach = true): string {
+    public getStore(key: string, attach = true): string | null {
         if (attach) {
             key = this.namespace + '.' + key;
         }
@@ -302,7 +328,7 @@ abstract class VpnBox {
         return null;
     }
 
-    setStore(key: string, val: string, attach = true): boolean {
+    public setStore(key: string, val: string, attach = true): boolean {
         if (attach) {
             key = this.namespace + '.' + key;
         }
@@ -336,7 +362,7 @@ abstract class VpnBox {
 
 
 
-    date(fmt: string, ts: string = '') {
+    public date(fmt: string, ts: string = '') {
         const date = ts ? new Date(ts) : new Date()
         let o: Record<string, any> = {
             'M+': date.getMonth() + 1,
@@ -356,7 +382,7 @@ abstract class VpnBox {
         return fmt
     }
 
-    getSignCount() {
+    public getSignCount() {
         let SignCount = this.getStore('sign_count');
         let td = this.date('yyyyMMdd');
         if (SignCount) {
@@ -373,7 +399,7 @@ abstract class VpnBox {
         }
     }
 
-    incSignCount() {
+    public incSignCount() {
         let num = this.getSignCount();
         num++;
         let td = this.date('yyyyMMdd');

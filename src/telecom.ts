@@ -1,4 +1,4 @@
-import VpnBox, { Action, BaseErr, Err } from "./VpnBox";
+import VpnBox, {BaseErr} from "./VpnBox";
 import JSEncrypt from "./lib/JSEncrypt";
 require('./tpl/telecom.tpl.sgmodule');
 
@@ -10,35 +10,34 @@ class App extends VpnBox {
 
     constructor(name: string, namespace: string) {
         super(name, namespace);
-        this.mobile = this.getStore(`mobile`);
-        this.password = this.getStore(`password`);
-        this.token = this.getStore(`token`);
+        this.mobile = this.getStore(`mobile`) ?? '';
+        this.password = this.getStore(`password`) ?? '';
+        this.token = this.getStore(`token`) ?? '';
     }
 
 
-    async doAction() {
-        switch (this.action) {
-            case Action.Request:
-                if ($request.url.includes('10000.log')) {
-                    this.handelLogHttp();
-                }
-                else if ($request.url.includes('10000.json')) {
-                    let vvv_flow = null;
-                    try {
-                        vvv_flow = JSON.parse(this.getStore(`vvv_flow`));
-                        await this.handleQuery();
-                    } catch (error) {
-                        this.log('查询流量出错',error.message||error);
-                        this.ajaxSuccess('查询流量出错，从缓存获取', vvv_flow);
-                    }
-                }
-                break;
-            case Action.Response:
-                break;
-            case Action.Script:
-                await this.handleQuery();
-                break;
+    public async doRequestAction($request: ScriptRequest): Promise<VpnResult> {
+        if ($request.url.includes('10000.log')) {
+            return this.handelLogHttp();
         }
+        else if ($request.url.includes('10000.json')) {
+            let vvv_flow = null;
+            try {
+                vvv_flow = JSON.parse(this.getStore(`vvv_flow`)??'');
+                return await this.handleQuery();
+            } catch (error) {
+                this.log('查询流量出错', error.message || error);
+                return this.ajaxSuccessResult('查询流量出错，从缓存获取', vvv_flow);
+            }
+        }else{
+            return false;
+        }
+    }
+    public doResponseAction($request: ScriptRequest, $response: ScriptResponse): VpnResult | Promise<VpnResult> {
+        return false;
+    }
+    public async doScriptAction():Promise<VpnResult> {
+        return await this.handleQuery();
     }
 
     async handleQuery() {
@@ -54,7 +53,7 @@ class App extends VpnBox {
             res = await this.doQuery(this.token);
         }
         if (res) {
-            await this.queryJson(res);
+            return this.queryJson(res);
         } else {
             throw new BaseErr('查询失败');
         }
@@ -139,9 +138,8 @@ class App extends VpnBox {
         if (res) {
             let old_obj = null;
             try {
-                old_obj = JSON.parse(this.getStore(`vvv_flow`, true));
+                old_obj = JSON.parse(this.getStore(`vvv_flow`, true)??'');
             } catch (error) {
-                
             }
 
             let UnlimitInfo = res.responseData.data.flowInfo.specialAmount
@@ -242,7 +240,7 @@ class App extends VpnBox {
             const objstr = JSON.stringify(obj);
             this.log(objstr);
             this.setStore(`vvv_flow`, objstr, true);
-            this.ajaxSuccess('查询流量成功', obj);
+            return this.ajaxSuccessResult('查询流量成功', obj);
         } else {
             throw new BaseErr('查询流量失败');
         }

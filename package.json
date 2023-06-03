@@ -7,12 +7,13 @@
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve":"node ./node_modules/http-server/bin/http-server ./dist  -c-1 -p 8080"
+    "serve": "node ./node_modules/http-server/bin/http-server ./dist  -c-1 -p 8080"
   },
   "devDependencies": {
+    "@types/node": "^20.2.5",
     "http-server": "^14.1.1",
-    "ts-loader": "^9.3.1",
-    "typescript": "^4.7.4",
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.0.4",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   }
