@@ -11,6 +11,7 @@
     "src/pingan.ts",
     "src/cloud.ts",
     "src/telecom.ts",
-    "src/unicom.ts"
+    "src/unicom.ts",
+    "src/bing.ts",
   ]
 }

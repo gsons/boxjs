@@ -5,7 +5,8 @@ const config = {
         "pingan": './src/pingan.ts',
         "cloud": './src/cloud.ts',
         "telecom": './src/telecom.ts',
-        "unicom": './src/unicom.ts'
+        "unicom": './src/unicom.ts',
+        "bing": './src/bing.ts'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
