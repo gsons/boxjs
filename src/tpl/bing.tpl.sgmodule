@@ -7,7 +7,7 @@ force-http-engine-hosts = %APPEND%  bing.log
 [Script]
 
 # 必应 
-bing-http-service = type=http-request,pattern=^https?:\/\/www\.bing\.com,script-path=${baseUrl}/bing.js?v=${version},max-size=0,timeout=10
+bing-request-service = type=http-request,pattern=^https?:\/\/www\.bing\.com,script-path=${baseUrl}/bing.js?v=${version},max-size=0,timeout=10
 
 # 必应日志 http://bing.log 
 bing-http-service = type=http-request,pattern=^https?:\/\/bing\.log,script-path=${baseUrl}/bing.js?v=${version},requires-body=true,max-size=0,timeout=10
