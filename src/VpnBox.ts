@@ -292,7 +292,9 @@ abstract class VpnBox {
             cacheLog = this.logList.join('') + cacheLog
             this.setStore(VpnBox.APP_LOG_KEY, cacheLog);
             this.print(`注意本次运行日志已缓存到变量 ${this.namespace + '.' + VpnBox.APP_LOG_KEY}`);
+            if(this.result)
             $done(this.result);
+            else $done({});
         }
     }
 
