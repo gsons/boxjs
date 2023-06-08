@@ -1,4 +1,4 @@
-import VpnBox, { BaseErr, Err } from "./VpnBox";
+import VpnBox, { BaseErr, Err } from "./lib/VpnBox";
 require('./tpl/pingan.tpl.sgmodule');
 
 class App extends VpnBox {

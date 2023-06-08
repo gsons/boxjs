@@ -6,12 +6,5 @@
     "target": "ES2020",
     "strictNullChecks": true
   },
-  "files": [
-    "src/global.d.ts",
-    "src/pingan.ts",
-    "src/cloud.ts",
-    "src/telecom.ts",
-    "src/unicom.ts",
-    "src/bing.ts",
-  ]
+  "include": ["src/**/*.ts"]
 }

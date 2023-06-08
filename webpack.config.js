@@ -1,13 +1,20 @@
 const path = require('path');
+const glob = require('glob');
+
+// 获取入口文件列表
+function getEntryFiles() {
+    const entryFiles = {};
+    const files = glob.sync('./src/*.ts'); // 使用通配符匹配多个入口文件
+    files.forEach((file) => {
+        const entryName = file.replace('./src/', '').replace('.ts', '');
+        if (entryName != 'global.d' && entryName != 'VpnBox') entryFiles[entryName] = file;
+    });
+    return entryFiles;
+}
+
 
 const config = {
-    entry: {
-        "pingan": './src/pingan.ts',
-        "cloud": './src/cloud.ts',
-        "telecom": './src/telecom.ts',
-        "unicom": './src/unicom.ts',
-        "bing": './src/bing.ts'
-    },
+    entry: getEntryFiles(),
     output: {
         path: path.resolve(__dirname, 'dist'),
     },

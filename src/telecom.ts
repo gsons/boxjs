@@ -1,4 +1,4 @@
-import VpnBox, {BaseErr} from "./VpnBox";
+import VpnBox, {BaseErr} from "./lib/VpnBox";
 import JSEncrypt from "./lib/JSEncrypt";
 require('./tpl/telecom.tpl.sgmodule');
 

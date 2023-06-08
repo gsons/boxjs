@@ -1,4 +1,4 @@
-import VpnBox, { BaseErr } from "./VpnBox";
+import VpnBox, { BaseErr } from "./lib/VpnBox";
 require('./tpl/cloud.tpl.sgmodule');
 
 class App extends VpnBox {

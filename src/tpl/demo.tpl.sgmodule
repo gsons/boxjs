@@ -1,0 +1,11 @@
+#!name= 开发示例@${env} 
+#!desc= 开发示例@author=gsonhub @version=${version}
+
+[General]
+force-http-engine-hosts = %APPEND%  demo.log  
+
+[Script]
+
+# 开发示例de日志 http://demo.log 
+bing-http-service = type=http-request,pattern=^https?:\/\/demo\.log,script-path=${baseUrl}/demo.js?v=${version},requires-body=true,max-size=0,timeout=10
+

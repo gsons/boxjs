@@ -1,4 +1,4 @@
-import VpnBox, { BaseErr } from "./VpnBox";
+import VpnBox, { BaseErr } from "./lib/VpnBox";
 import { RSAEncrypt } from "./lib/JSEncrypt";
 require('./tpl/unicom.tpl.sgmodule');
 

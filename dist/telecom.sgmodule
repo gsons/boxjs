@@ -1,5 +1,5 @@
 #!name= 中国电信@prod 
-#!desc= 中国电信@author=gsonhub @version=g24h
+#!desc= 中国电信@author=gsonhub @version=g5vz
 
 [General]
 force-http-engine-hosts = %APPEND%  10000.log 10000.json
@@ -7,8 +7,8 @@ force-http-engine-hosts = %APPEND%  10000.log 10000.json
 [Script]
 
 # 查询中国电信流量接口服务  http://10000.json 查询电信日志 http://10000.log 
-10000-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=g24h,requires-body=true,max-size=0,timeout=10
+10000-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=g5vz,requires-body=true,max-size=0,timeout=10
 
 # 轮询 查询电信流量
-10000-for-cron = type=cron,cronexp=*/1 * * * *,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=g24h
+10000-for-cron = type=cron,cronexp=*/1 * * * *,timeout=10,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=g5vz
 

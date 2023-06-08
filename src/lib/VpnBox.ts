@@ -84,7 +84,7 @@ abstract class VpnBox {
 
         this.isMute = mute == 'true';
 
-        require('./tpl/boxjs.tpl.json');
+        require('../tpl/boxjs.tpl.json');
     }
 
     private initAction() {
