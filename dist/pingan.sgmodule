@@ -1,5 +1,5 @@
 #!name= 平安白云@prod 
-#!desc= 平安白云@author=gsonhub @version=g5w1
+#!desc= 平安白云@author=gsonhub @version=g5w2
 
 [MITM] 
 hostname = %APPEND% www.pinganbaiyun.cn
@@ -10,8 +10,8 @@ force-http-engine-hosts = %APPEND%  pingan.log
 [Script]
 
 # 平安白云 
-pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=g5w1,requires-body=true,max-size=0
+pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=g5w2,requires-body=true,max-size=0
 
 # 查询平安白云日志 http://pingan.log 
-pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=g5w1,requires-body=true,max-size=0,timeout=10
+pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.js?v=g5w2,requires-body=true,max-size=0,timeout=10
 
