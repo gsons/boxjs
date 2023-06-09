@@ -1,5 +1,5 @@
-#!name= 筋斗云@prod 
-#!desc= 筋斗云@author=gsonhub @version=g5w2
+#!name= 筋斗云@dev 
+#!desc= 筋斗云@author=gsonhub @version=qyh9y
 
 [MITM] 
 hostname = %APPEND% www.somersaultcloud.top,www.somersaultcloud.xyz
@@ -10,10 +10,10 @@ force-http-engine-hosts = %APPEND%  cloud.log   cloud.json
 [Script]
 
 # 筋斗云获取cookie
-somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user/profile,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=g5w2,timeout=10
+somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user/profile,script-path=http://192.168.88.3:8080/cloud.js?v=qyh9y,timeout=10
 
 # 筋斗云定时签到
-somersaultcloud-cron = type=cron,cronexp=0 11 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=g5w2
+somersaultcloud-cron = type=cron,cronexp=0 11 * * *,timeout=30,script-path=http://192.168.88.3:8080/cloud.js?v=qyh9y
 
 # 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
-somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=g5w2,requires-body=true,max-size=0,timeout=10
+somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=http://192.168.88.3:8080/cloud.js?v=qyh9y,requires-body=true,max-size=0,timeout=10

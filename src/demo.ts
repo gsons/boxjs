@@ -12,4 +12,4 @@ class App extends VpnBox {
     }
 }
 
-new App("开发示s例",'gsonhub.demo');
+new App("开发示s例",'gsonhub.demo').run();

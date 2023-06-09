@@ -1,10 +1,10 @@
 {
-    "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.g5w2",
+    "id": "gsonhub.application.dev",
+    "name": "@gsonhub的应用订阅v=dev.qyj1a",
     "author": "@gsonhub",
     "apps": [
         {
-            "id": "gson.prod.10010",
+            "id": "gson.dev.10010",
             "name": "中国联通",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10010.log'>查看日志</a>",
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=g5w2"
+                    "script": "http://192.168.88.3:8080/unicom.js?v=qyj1a"
                 }
             ],
             "keys": [
@@ -60,7 +60,7 @@
             ]
         },
         {
-            "id": "gson.prod.10000",
+            "id": "gson.dev.10000",
             "name": "中国电信",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10000.log'>查看日志</a>",
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=g5w2"
+                    "script": "http://192.168.88.3:8080/telecom.js?v=qyj1a"
                 }
             ],
             "keys": [

@@ -3,6 +3,9 @@
   "description": "My webpack project",
   "name": "my-webpack-project",
   "scripts": {
+    "bb": "webpack",
+    "dev": "webpack  --mode=development --entry ./src/$npm_config_name.ts -o ./dist/$npm_config_name.js",
+    "webpack": "webpack",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
@@ -11,6 +14,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
+    "glob": "^10.2.7",
     "http-server": "^14.1.1",
     "ts-loader": "^9.4.3",
     "typescript": "^5.0.4",
