@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.g6bx",
+    "name": "@gsonhub的应用订阅v=prod.hfve",
     "author": "@gsonhub",
     "apps": [
         {
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=g6bx"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=hfve"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=g6bx"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=hfve"
                 }
             ],
             "keys": [

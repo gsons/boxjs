@@ -1,5 +1,5 @@
 import VpnBox, {BaseErr} from "./lib/VpnBox";
-import JSEncrypt from "./lib/JSEncrypt";
+import {Encrypt} from "./lib/JSEncrypt";
 require('./tpl/telecom.tpl.sgmodule');
 
 class App extends VpnBox {
@@ -70,7 +70,7 @@ class App extends VpnBox {
 
     encrypt(message: string) {
         const key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBkLT15ThVgz6/NOl6s8GNPofdWzWbCkWnkaAm7O2LjkM1H7dMvzkiqdxU02jamGRHLX/ZNMCXHnPcW/sDhiFCBN18qFvy8g6VYb9QtroI09e176s+ZCtiv7hbin2cCTj99iUpnEloZm19lwHyo69u5UMiPMpq0/XKBO8lYhN/gwIDAQAB";
-        return JSEncrypt(message, key)
+        return Encrypt(message, key)
     }
 
     async doQuery(token = '') {

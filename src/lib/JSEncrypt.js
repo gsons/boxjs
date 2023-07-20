@@ -6,7 +6,7 @@ export function RSAEncrypt(message,Key='') {
     var encrypt = new JSEncrypt; var pKey =Key?Key:"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDc+CZK9bBA9IU+gZUOc6FUGu7yO9WpTNB0PzmgFBh96Mg1WrovD1oqZ+eIF4LjvxKXGOdI79JRdve9NPhQo07+uqGQgE4imwNnRx7PFtCRryiIEcUoavuNtuRVoBAm6qdB0SrctgaqGfLgKvZHOnwTjyNqjBUxzMeQlEC2czEMSwIDAQAB"; encrypt.setPublicKey(pKey); var encrypted = encrypt.encrypt(message); return encrypted
 };
 
-var JSEncrypt = JSEncryptExports.JSEncrypt;
 
-// export RSAEncrypt;
-export default JSEncrypt;
+export  function Encrypt(message,key){
+    return RSAEncrypt(message,key);
+}
