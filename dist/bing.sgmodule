@@ -1,5 +1,5 @@
 #!name= 必应@prod 
-#!desc= 必应@author=gsonhub @version=iqt5
+#!desc= 必应@author=gsonhub @version=iquc
 
 [General]
 force-http-engine-hosts = %APPEND%  bing.log  
@@ -7,8 +7,8 @@ force-http-engine-hosts = %APPEND%  bing.log
 [Script]
 
 # 必应 
-bing-request-service = type=http-request,pattern=^https?:\/\/www\.bing\.com,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/bing.js?v=iqt5,max-size=0,timeout=10
+bing-request-service = type=http-request,pattern=^https?:\/\/www\.bing\.com,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/bing.js?v=iquc,max-size=0,timeout=10
 
 # 必应日志 http://bing.log 
-bing-http-service = type=http-request,pattern=^https?:\/\/bing\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/bing.js?v=iqt5,requires-body=true,max-size=0,timeout=10
+bing-http-service = type=http-request,pattern=^https?:\/\/bing\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/bing.js?v=iquc,requires-body=true,max-size=0,timeout=10
 
