@@ -47,18 +47,53 @@ class App extends VpnBox {
     }
     public async doScriptAction(): Promise<VpnResult> {
         if($argument=='auto_sign_ip'){
+            let res=await this.get({'url':'https://whois.pconline.com.cn/ipJson.jsp'});
+            let ip='';
+            try {
+                let arr=res.body.match(/\d+\.\d+\.\d+\.\d+/);
+                if(arr&&arr[0]){
+                    ip=arr[0];
+                    this.log('获取到当前外网ip地址 '+ip);
+                    let ip_list_str=this.getStore('ip_list');
+                    let ip_list=[];
+                    if(ip_list_str){
+                         ip_list=JSON.parse(ip_list_str);
+                    }
+                    if(ip_list.includes(ip)){
+                         this.log('ip地址 '+ip+'已经加白，无需加白！'); 
+                         return {};
+                    }else{
+                        ip_list.push(ip);
+                        this.setStore('ip_list',JSON.stringify(ip_list));
+                    }
+                }else{
+                    throw new BaseErr('获取IP外网失败,'+res.body);
+                }
+
+            } catch (error) {
+                throw new BaseErr('获取IP外网失败 '+error+'=>res.body'+res.body);
+            }
+
             this.log(`IP白名单start $argument=${$argument}`);
             let url_arr=["http://hk-trail.somnode.top","http://us-trail.somnode.top","http://jp-trail.somnode.top","http://sg-trail.somnode.top","http://tw-trail.somnode.top","http://ru-trail.somnode.top","http://hk-i.somnode.top","http://hk-ii.somnode.top","http://hk-iii.somnode.top","http://hk-a.somnode.top","http://hk-b.somnode.top","http://hk-c.somnode.top","http://hk-d.somnode.top","http://hk-e.somnode.top","http://hk-f.somnode.top","http://hk-m.somnode.top"];
             let random_url=url_arr[Math.floor(Math.random()*url_arr.length)]+'/addallip.php';
             url_arr=url_arr.map((url=>{return url+'/addip.php'}));
             url_arr.push(random_url);
             const promises = url_arr.map(async url => {
+                const opts = {
+                    url: url,
+                    headers: {
+                        Cookie: this.getStore('login_cookie') ?? '',
+                        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42",
+                        referer: url
+                    }
+                };
                 try {
-                    let res=await this.get({url:url,headers:{"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.62"}});
+                    let res=await this.get(opts);
                     if(res.body.includes('Cloudflare')){
-                        this.log(`${url} 加白失败！Cloudflare User-Agent`);
+                        this.log(`加白失败!Cloudflare,${url}`);
                     }else{
-                        this.log(`${url} 加白失败 Cloudflare！User-Agent`);
+                        this.log(`加白成功!,${url}`);
                     }
                 } catch (error) {
                    this.log(`http request error:${error} url:${url}`);

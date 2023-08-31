@@ -13,10 +13,10 @@ force-http-engine-hosts = %APPEND%  cloud.log   cloud.json
 somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user/profile,script-path=${baseUrl}/cloud.js?v=${version},timeout=10
 
 # 筋斗云定时签到
-# somersaultcloud-cron = type=cron,cronexp=0 11 * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version}
+somersaultcloud-cron = type=cron,cronexp=0 11 * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version}
 
 # 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
 somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=${baseUrl}/cloud.js?v=${version},requires-body=true,max-size=0,timeout=10
 
 # 轮询 
-# somersaultcloud-for-cron = type=cron,cronexp=*/5 * * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=auto_sign_ip
+somersaultcloud-for-cron = type=cron,cronexp=*/5 * * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=auto_sign_ip
