@@ -20,3 +20,6 @@ somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log
 
 # 轮询 
 somersaultcloud-for-cron = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=auto_sign_ip
+
+# network changed
+somersaultcloud-network-changed = ${baseUrl}/cloud.js?v=${version},argument=auto_sign_ip,type=event,event-name=network-changed
