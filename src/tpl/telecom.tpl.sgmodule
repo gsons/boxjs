@@ -10,5 +10,5 @@ force-http-engine-hosts = %APPEND%  10000.log 10000.json
 10000-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=${baseUrl}/telecom.js?v=${version},requires-body=true,max-size=0,timeout=10
 
 # 轮询 查询电信流量
-10000-for-cron = type=cron,cronexp=*/1 * * * *,timeout=10,script-path=${baseUrl}/telecom.js?v=${version}
+10000-for-cron = type=cron,cronexp=*/5 * * * *,timeout=10,script-path=${baseUrl}/telecom.js?v=${version}
 

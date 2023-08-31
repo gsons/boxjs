@@ -116,14 +116,13 @@ class App extends VpnBox {
             body: JSON.stringify(body)
         });
 
-        console.log('--- response body:');
-        console.log(res.body);
-
         let data = JSON.parse(res.body);
         if (data.responseData && data.responseData.resultCode == '0000') {
             return data;
         }
         else {
+            console.log('--- response body:');
+            console.log(res.body);
             return false;
         }
     }

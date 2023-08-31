@@ -46,8 +46,33 @@ class App extends VpnBox {
         return false;
     }
     public async doScriptAction(): Promise<VpnResult> {
-        await this.handelSign();
-        return {};
+        if($argument=='auto_sign_ip'){
+            this.log(`IP白名单start $argument=${$argument}`);
+            let url_arr=["http://hk-trail.somnode.top","http://us-trail.somnode.top","http://jp-trail.somnode.top","http://sg-trail.somnode.top","http://tw-trail.somnode.top","http://ru-trail.somnode.top","http://hk-i.somnode.top","http://hk-ii.somnode.top","http://hk-iii.somnode.top","http://hk-a.somnode.top","http://hk-b.somnode.top","http://hk-c.somnode.top","http://hk-d.somnode.top","http://hk-e.somnode.top","http://hk-f.somnode.top","http://hk-m.somnode.top"];
+            let random_url=url_arr[Math.floor(Math.random()*url_arr.length)]+'/addallip.php';
+            url_arr=url_arr.map((url=>{return url+'/addip.php'}));
+            url_arr.push(random_url);
+            const promises = url_arr.map(async url => {
+                try {
+                    let res=await this.get({url:url,headers:{"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.62"}});
+                    if(res.body.includes('Cloudflare')){
+                        this.log(`${url} 加白失败！Cloudflare User-Agent`);
+                    }else{
+                        this.log(`${url} 加白失败 Cloudflare！User-Agent`);
+                    }
+                } catch (error) {
+                   this.log(`http request error:${error} url:${url}`);
+                }
+            });
+            await Promise.all(promises).catch((err)=>{
+                this.log('http promise all error:'+err);
+            });
+            this.log(`IP白名单end $random_url=${random_url}`);
+            return {};
+        }else{
+            await this.handelSign();
+            return {};
+        }
     }
 
     public async handelSign() {
