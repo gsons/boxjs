@@ -19,7 +19,7 @@ somersaultcloud-cron = type=cron,cronexp=0 11 * * *,timeout=30,script-path=${bas
 somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=${baseUrl}/cloud.js?v=${version},requires-body=true,max-size=0,timeout=10
 
 # 轮询 
-somersaultcloud-for-cron = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=auto_sign_ip
+somersaultcloud-for-cron = type=cron,cronexp=*/5 * * * *,timeout=30,script-path=${baseUrl}/cloud.js?v=${version},argument=auto_sign_ip
 
 # network changed
 somersaultcloud-network-changed = ${baseUrl}/cloud.js?v=${version},argument=auto_sign_ip,type=event,event-name=network-changed

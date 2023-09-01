@@ -4,10 +4,14 @@ specifiers:
   '@types/node': ^20.2.5
   glob: ^10.2.7
   http-server: ^14.1.1
+  surge-config-parser: ^1.2.1
   ts-loader: ^9.4.3
   typescript: ^5.0.4
   webpack: ^5.74.0
   webpack-cli: ^4.10.0
+
+dependencies:
+  surge-config-parser: registry.npmmirror.com/surge-config-parser/1.2.1
 
 devDependencies:
   '@types/node': registry.npmmirror.com/@types/node/20.2.5
@@ -1438,6 +1442,12 @@ packages:
     version: 1.0.0
     engines: {node: '>= 0.4'}
     dev: true
+
+  registry.npmmirror.com/surge-config-parser/1.2.1:
+    resolution: {integrity: sha512-7LQuL4nVk6U+tbdAanj2RubQ+6t0OEfnHbRLh2NLI/TCCzIUxx5HivrbWc4wS/A/IdvxSr/NweZoHhEjHSAv2w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/surge-config-parser/-/surge-config-parser-1.2.1.tgz}
+    name: surge-config-parser
+    version: 1.2.1
+    dev: false
 
   registry.npmmirror.com/tapable/2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tapable/-/tapable-2.2.1.tgz}

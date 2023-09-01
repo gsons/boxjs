@@ -1,5 +1,5 @@
 #!name= 筋斗云@prod 
-#!desc= 筋斗云@author=gsonhub @version=iqwj
+#!desc= 筋斗云@author=gsonhub @version=irpt
 
 [MITM] 
 hostname = %APPEND% www.somersaultcloud.top,www.somersaultcloud.xyz
@@ -10,16 +10,16 @@ force-http-engine-hosts = %APPEND%  cloud.log   cloud.json
 [Script]
 
 # 筋斗云获取cookie
-somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user/profile,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=iqwj,timeout=10
+somersaultcloud = type=http-request,pattern=^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)\/user/profile,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=irpt,timeout=10
 
 # 筋斗云定时签到
-somersaultcloud-cron = type=cron,cronexp=0 11 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=iqwj
+somersaultcloud-cron = type=cron,cronexp=0 11 * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=irpt
 
 # 查询筋斗云个人信息接口服务 http://cloud.json  查询筋斗云运行日志 http://cloud.log
-somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=iqwj,requires-body=true,max-size=0,timeout=10
+somersaultcloud-service = type=http-request,pattern=^https?:\/\/cloud\.(json|log),script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=irpt,requires-body=true,max-size=0,timeout=10
 
 # 轮询 
-somersaultcloud-for-cron = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=iqwj,argument=auto_sign_ip
+somersaultcloud-for-cron = type=cron,cronexp=*/5 * * * *,timeout=30,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=irpt,argument=auto_sign_ip
 
 # network changed
-somersaultcloud-network-changed = https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=iqwj,argument=auto_sign_ip,type=event,event-name=network-changed
+somersaultcloud-network-changed = https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=irpt,argument=auto_sign_ip,type=event,event-name=network-changed

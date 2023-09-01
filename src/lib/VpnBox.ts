@@ -281,7 +281,7 @@ abstract class VpnBox {
     private done() {
         const endTime = new Date().getTime();
         const costTime = (endTime - this.startTime) / 1000;
-        this.print('运行 response: ' + JSON.stringify(this.result));
+        if(this.action===Action.Script) this.print('运行 response: ' + JSON.stringify(this.result));
         this.log(`🔔${this.appName}, 结束! 🕛 ${costTime} 秒 ${this.logSeparator}`);
         if (this.env == ENV.Node) {
             //@ts-ignore
