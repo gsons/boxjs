@@ -25,6 +25,11 @@
         <td>改有效期无需充值续期</td>
         <td>✔️</td>
     </tr>
+        <tr align="center">
+        <td>筋斗云机场</td>
+        <td>自动加ip白名单</td>
+        <td>✔️</td>
+    </tr>
 </table>
 
 
@@ -68,7 +73,7 @@ npm run build
 > 打包dist到服务器，建议打包至github作为线上环境
 ### 配置软件运行
 
-> 将模块的url地址添加到“小火箭”模块,在“BOXJS”订阅box.json的url地址 https://raw.githubusercontent.com/gsons/boxjs/main/dist/boxjs.json
+> 将模块的url地址添加到“shadowrocket/surge/loon/qx”模块,在“BOXJS”订阅box.json的url地址 https://raw.githubusercontent.com/gsons/boxjs/main/dist/boxjs.json
 <table>
     <tr align="center">
         <th>脚本</th>
@@ -85,6 +90,11 @@ npm run build
         <tr align="center">
         <td>平安白云</td>
         <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.sgmodule<td>
+    </tr>
+        </tr>
+    <tr align="center">
+        <td>筋斗云机场</td>
+        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.sgmodule<td>
     </tr>
 </table>
 
