@@ -267,6 +267,9 @@ abstract class VpnBox {
         }
     }
 
+    public sleep(ms:number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     public ajaxSuccessResult(msg: string, data: any = null): VpnResult {
         let result = { time: +new Date(), datetime: this.date('yyyy-MM-dd HH:mm:ss'), code: 1, 'msg': msg, data: data };

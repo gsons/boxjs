@@ -47,6 +47,7 @@ class App extends VpnBox {
     }
     public async doScriptAction(): Promise<VpnResult> {
         if($argument=='auto_sign_ip'){
+            await this.sleep(10*1000);
             let res=await this.get({'url':'https://whois.pconline.com.cn/ipJson.jsp'});
             let ip='';
             try {
