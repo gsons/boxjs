@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.iwax",
+    "name": "@gsonhub的应用订阅v=prod.ixfm",
     "author": "@gsonhub",
     "apps": [
         {
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=iwax"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=ixfm"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=iwax"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=ixfm"
                 }
             ],
             "keys": [
@@ -118,7 +118,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=iwax"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ixfm"
                 }
             ],
             "keys": [

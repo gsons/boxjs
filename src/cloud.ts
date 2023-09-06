@@ -126,7 +126,12 @@ class App extends VpnBox {
         let res = await this.post(opts);
         try {
             const data = JSON.parse(res.body);
-            this.msg(this.appName, data.msg, (JSON.stringify(data)));
+            if(data&&data?.ret){
+                this.msg(this.appName, data.msg, (JSON.stringify(data)));
+            }
+            else{
+                this.log(res.body);
+            }
         } catch (error) {
             throw new BaseErr('登录状态可能已经失效,' + error?.message);
         }
