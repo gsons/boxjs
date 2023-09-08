@@ -1,0 +1,11 @@
+#!name= 百度网盘直链@${env} 
+#!desc= 百度网盘直链@author=gsonhub @version=${version}
+
+[General]
+force-http-engine-hosts = %APPEND%  baiduwp.log  
+
+[Script]
+
+#  http://baiduwp.log 
+bing-http-service = type=http-request,pattern=^https?:\/\/baiduwp\.log,script-path=${baseUrl}/baiduwp.js?v=${version},requires-body=true,max-size=0,timeout=10
+

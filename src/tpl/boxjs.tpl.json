@@ -136,6 +136,41 @@
                     "type": "boolean"
                 }
             ]
-        }
+        },
+        {
+            "id": "gson.${env}.baiduwp",
+            "name": "百度网盘直连",
+            "descs_html": [
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://baiduwp.log'>查看日志</a>",
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>"
+            ],
+            "scripts": [
+                {
+                    "name": "百度网盘直连",
+                    "script": "${baseUrl}/telecom.js?v=${version}"
+                }
+            ],
+            "keys": [
+                "gsonhub.baiduwp.user_agent",
+                "gsonhub.baiduwp.mute"
+            ],
+
+            "author": "@gsonhub",
+            "settings": [
+                {
+                    "id": "gsonhub.baiduwp.user_agent",
+                    "name": "User-Agent",
+                    "val": "",
+                    "type": "text",
+                    "desc": "User-Agent"
+                },
+                {
+                    "id": "gsonhub.baiduwp.mute",
+                    "name": "禁音模式",
+                    "val": false,
+                    "type": "boolean"
+                }
+            ]
+        },
     ]
 }

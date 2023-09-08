@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.ixfm",
+    "name": "@gsonhub的应用订阅v=prod.izfu",
     "author": "@gsonhub",
     "apps": [
         {
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=ixfm"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=izfu"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=ixfm"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=izfu"
                 }
             ],
             "keys": [
@@ -118,7 +118,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=ixfm"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=izfu"
                 }
             ],
             "keys": [
@@ -136,6 +136,41 @@
                     "type": "boolean"
                 }
             ]
-        }
+        },
+        {
+            "id": "gson.prod.baiduwp",
+            "name": "百度网盘直连",
+            "descs_html": [
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://baiduwp.log'>查看日志</a>",
+                "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>"
+            ],
+            "scripts": [
+                {
+                    "name": "百度网盘直连",
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=izfu"
+                }
+            ],
+            "keys": [
+                "gsonhub.baiduwp.user_agent",
+                "gsonhub.baiduwp.mute"
+            ],
+
+            "author": "@gsonhub",
+            "settings": [
+                {
+                    "id": "gsonhub.baiduwp.user_agent",
+                    "name": "User-Agent",
+                    "val": "",
+                    "type": "text",
+                    "desc": "User-Agent"
+                },
+                {
+                    "id": "gsonhub.baiduwp.mute",
+                    "name": "禁音模式",
+                    "val": false,
+                    "type": "boolean"
+                }
+            ]
+        },
     ]
 }
