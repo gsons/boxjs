@@ -1,5 +1,9 @@
 #!name= 百度网盘直链@prod 
-#!desc= 百度网盘直链@author=gsonhub @version=izfu
+#!desc= 百度网盘直链@author=gsonhub @version=izg7
+
+[MITM] 
+hostname = %APPEND% *.baidupcs.com
+
 
 [General]
 force-http-engine-hosts = %APPEND%  baiduwp.log  
@@ -7,5 +11,7 @@ force-http-engine-hosts = %APPEND%  baiduwp.log
 [Script]
 
 #  http://baiduwp.log 
-bing-http-service = type=http-request,pattern=^https?:\/\/baiduwp\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=izfu,requires-body=true,max-size=0,timeout=10
+baiduwp-http-service = type=http-request,pattern=^https?:\/\/baiduwp\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=izg7,requires-body=true,max-size=0,timeout=10
 
+# 百度网盘直链 
+baiduwp-request-service = type=http-request,pattern=^https?:\/\/([0-9a-zA-Z]+)\.baidupcs\.com,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=izg7,max-size=0,timeout=10
