@@ -10,6 +10,7 @@ class App extends VpnBox {
         this.BASE_URL=this.getStore('domain_url')??'https://www.somersaultcloud.xyz';
     }
 
+
     public async doRequestAction($request: ScriptRequest): Promise<VpnResult> {
         if ($request.url.includes("cloud.log")) {
             return this.handelLogHttp();
@@ -21,6 +22,7 @@ class App extends VpnBox {
                 this.msg(this.appName, "读取cookie成功", '');
                 const [domain_url]=/^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)/.exec($request.url)??[];
                 this.setStore('domain_url',domain_url??this.BASE_URL);
+                this.log('domain_url '+domain_url);
             } else {
                 this.log("读取cookie失败", $request.headers);
                 this.msg(this.appName, "读取cookie失败", '');
