@@ -1,5 +1,5 @@
 #!name= 开发示例@prod 
-#!desc= 开发示例@author=gsonhub @version=j2tb
+#!desc= 开发示例@author=gsonhub @version=j2un
 
 [General]
 force-http-engine-hosts = %APPEND%  demo.log  
@@ -7,5 +7,5 @@ force-http-engine-hosts = %APPEND%  demo.log
 [Script]
 
 # 开发示例de日志 http://demo.log 
-bing-http-service = type=http-request,pattern=^https?:\/\/demo\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/demo.js?v=j2tb,requires-body=true,max-size=0,timeout=10
+bing-http-service = type=http-request,pattern=^https?:\/\/demo\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/demo.js?v=j2un,requires-body=true,max-size=0,timeout=10
 

@@ -3,17 +3,24 @@ require('./tpl/cloud.tpl.sgmodule');
 
 class App extends VpnBox {
 
-    public static readonly BASE_URL = "https://www.somersaultcloud.xyz/";
+    public  BASE_URL = "";
+
+    constructor(appName: string, namespace: string){
+        super(appName, namespace);
+        this.BASE_URL=this.getStore('domain_url')??'https://www.somersaultcloud.xyz';
+    }
 
     public async doRequestAction($request: ScriptRequest): Promise<VpnResult> {
         if ($request.url.includes("cloud.log")) {
             return this.handelLogHttp();
-        } else if ($request.url.includes("somersaultcloud.xyz/user/profile") || $request.url.includes("somersaultcloud.top/user/profile")) {
+        } else if ($request.url.includes("/user/profile")) {
             if ($request.headers && $request.headers['Cookie']) {
                 this.log("读取header成功", $request.headers);
                 this.setStore('login_cookie', $request.headers['Cookie']);
                 this.log("读取cookie成功", $request.headers['Cookie']);
                 this.msg(this.appName, "读取cookie成功", '');
+                const [domain_url]=/^https?:\/\/(www\.|)somersaultcloud\.(xyz|top)/.exec($request.url)??[];
+                this.setStore('domain_url',domain_url??this.BASE_URL);
             } else {
                 this.log("读取cookie失败", $request.headers);
                 this.msg(this.appName, "读取cookie失败", '');
@@ -21,7 +28,7 @@ class App extends VpnBox {
             return {};
         }
         else if ($request.url.includes("cloud.json")) {
-            const url = `${App.BASE_URL}user`;
+            const url = `${this.BASE_URL}/user`;
             const opt = {
                 url: url,
                 headers: {
@@ -113,7 +120,7 @@ class App extends VpnBox {
 
     public async handelSign() {
         this.log('运行 》 筋斗云签到');
-        const url = `${App.BASE_URL}user/checkin`;
+        const url = `${this.BASE_URL}/user/checkin`;
         const opts = {
             url: url,
             headers: {
