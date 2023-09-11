@@ -146,8 +146,8 @@
             ],
             "scripts": [
                 {
-                    "name": "百度网盘直连",
-                    "script": "${baseUrl}/telecom.js?v=${version}"
+                    "name": "百度网盘直链",
+                    "script": "${baseUrl}/baiduwp.js?v=${version}"
                 }
             ],
             "keys": [

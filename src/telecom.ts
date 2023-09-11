@@ -23,7 +23,8 @@ class App extends VpnBox {
         else if ($request.url.includes('10000.json')) {
             let vvv_flow = null;
             try {
-                vvv_flow = JSON.parse(this.getStore(`vvv_flow`)??'');
+                const str=this.getStore(`vvv_flow`)??'';
+                if(str) vvv_flow = JSON.parse(str);
                 return await this.handleQuery();
             } catch (error) {
                 this.log('查询流量出错', error.message || error);

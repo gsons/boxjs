@@ -2,7 +2,7 @@
 #!desc= 百度网盘直链@author=gsonhub @version=${version}
 
 [MITM] 
-hostname = %APPEND% *.baidupcs.com
+hostname = %APPEND% *.baidupcs.com,passport.baidu.com
 
 
 [General]
@@ -10,8 +10,11 @@ force-http-engine-hosts = %APPEND%  baiduwp.log
 
 [Script]
 
-#  http://baiduwp.log 
+# 日志
 baiduwp-http-service = type=http-request,pattern=^https?:\/\/baiduwp\.log,script-path=${baseUrl}/baiduwp.js?v=${version},requires-body=true,max-size=0,timeout=10
 
 # 百度网盘直链 
-baiduwp-request-service = type=http-request,pattern=^https?:\/\/([0-9a-zA-Z]+)\.baidupcs\.com,script-path=${baseUrl}/baiduwp.js?v=${version},max-size=0,timeout=10
+baiduwp-request-service = type=http-request,pattern=^https?:\/\/([0-9a-zA-Z-_]+)\.baidupcs\.com\/file,script-path=${baseUrl}/baiduwp.js?v=${version},max-size=0,timeout=10
+
+# 百度网盘模拟登录
+baiduwp-qrcode-login = type=http-response,pattern=^https?:\/\/passport\.baidu\.com\/v2\/api\/qrcode,script-path=${baseUrl}/baiduwp.js?v=${version},max-size=1310720,requires-body=true,binary-mode=true,binary-body-mode=true,timeout=100

@@ -2,8 +2,6 @@
 
 ## 功能说明
 
-> 中国联通、中国电信自动登录流量查询监控
-
 <table>
     <tr align="center">
         <th>脚本</th>
@@ -30,50 +28,14 @@
         <td>自动加ip白名单</td>
         <td>✔️</td>
     </tr>
+    </tr>
+        <tr align="center">
+        <td>百度网盘直链</td>
+        <td>修改useragent下载</td>
+        <td>✔️</td>
+    </tr>
 </table>
 
-
-
-## 开发阶段
-
-0. 安装依赖
-```
-npm i 
-```
-
-1. 监听文件并编译
-```js
-npm run watch 
-```
-
-2. 启动静态文件服务器
-
-```js
-npm run serve 
-```
-
-3. 更新模块
-
-> 将模块的url地址添加到“小火箭”模块
-
-
-## 上线打包
-
-### 配置
-> 在webpack.config.js 配置你的线上地址(online)
-```c
-    options: {
-        onlineUrl: 'https://raw.githubusercontent.com/gsons/boxjs/main/dist',
-    },
-````
-
-```js
-npm run build 
-```
-> 打包dist到服务器，建议打包至github作为线上环境
-### 配置软件运行
-
-> 将模块的url地址添加到“shadowrocket/surge/loon/qx”模块,在“BOXJS”订阅box.json的url地址 https://raw.githubusercontent.com/gsons/boxjs/main/dist/boxjs.json
 <table>
     <tr align="center">
         <th>脚本</th>
@@ -96,7 +58,48 @@ npm run build
         <td>筋斗云机场</td>
         <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.sgmodule<td>
     </tr>
+        <tr align="center">
+        <td>百度网盘直链</td>
+        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.sgmodule<td>
+    </tr>
 </table>
+
+
+
+
+## 开发阶段
+
+0. 安装依赖
+```
+npm i 
+```
+
+1. 监听文件并编译
+```js
+npm run dev 
+```
+
+2. 更新模块
+
+> 将模块的url地址添加到“小火箭”模块
+
+
+## 上线打包
+
+### 配置
+> 在.env 配置你的线上地址
+```
+ONLINE_URL=https://raw.githubusercontent.com/gsons/boxjs/main/dist
+````
+
+> 编译打包
+```
+npm run build 
+```
+> 打包dist到服务器，建议打包至github作为线上环境
+### 配置软件运行
+
+> 将模块的url地址添加到“shadowrocket/surge/loon/qx”模块,在“BOXJS”订阅box.json的url地址 https://raw.githubusercontent.com/gsons/boxjs/main/dist/boxjs.json
 
 
 ### API接口
