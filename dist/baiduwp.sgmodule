@@ -1,5 +1,5 @@
-#!name= 百度网盘直链@dev 
-#!desc= 百度网盘直链@author=gsonhub @version=wkg4k
+#!name= 百度网盘直链@prod 
+#!desc= 百度网盘直链@author=gsonhub @version=jjh3
 
 [MITM] 
 hostname = %APPEND% *.baidupcs.com,passport.baidu.com
@@ -11,10 +11,10 @@ force-http-engine-hosts = %APPEND%  baiduwp.log
 [Script]
 
 # 日志
-baiduwp-http-service = type=http-request,pattern=^https?:\/\/baiduwp\.log,script-path=http://9a1c574.r18.cpolar.top/baiduwp.js?v=wkg4k,requires-body=true,max-size=0,timeout=10
+baiduwp-http-service = type=http-request,pattern=^https?:\/\/baiduwp\.log,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=jjh3,requires-body=true,max-size=0,timeout=10
 
 # 百度网盘直链 
-baiduwp-request-service = type=http-request,pattern=^https?:\/\/([0-9a-zA-Z-_]+)\.baidupcs\.com\/file,script-path=http://9a1c574.r18.cpolar.top/baiduwp.js?v=wkg4k,max-size=0,timeout=10
+baiduwp-request-service = type=http-request,pattern=^https?:\/\/([0-9a-zA-Z-_]+)\.baidupcs\.com\/file,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=jjh3,max-size=0,timeout=10
 
 # 百度网盘模拟登录
-baiduwp-qrcode-login = type=http-response,pattern=^https?:\/\/passport\.baidu\.com\/v2\/api\/qrcode,script-path=http://9a1c574.r18.cpolar.top/baiduwp.js?v=wkg4k,max-size=1310720,requires-body=true,binary-mode=true,binary-body-mode=true,timeout=100
+baiduwp-qrcode-login = type=http-response,pattern=^https?:\/\/passport\.baidu\.com\/v2\/api\/qrcode,script-path=https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=jjh3,max-size=1310720,requires-body=true,binary-mode=true,binary-body-mode=true,timeout=100

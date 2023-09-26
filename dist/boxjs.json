@@ -1,10 +1,10 @@
 {
-    "id": "gsonhub.application.dev",
-    "name": "@gsonhub的应用订阅v=dev.wkg4k",
+    "id": "gsonhub.application.prod",
+    "name": "@gsonhub的应用订阅v=prod.jjh3",
     "author": "@gsonhub",
     "apps": [
         {
-            "id": "gson.dev.10010",
+            "id": "gson.prod.10010",
             "name": "中国联通",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10010.log'>查看日志</a>",
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "http://9a1c574.r18.cpolar.top/unicom.js?v=wkg4k"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=jjh3"
                 }
             ],
             "keys": [
@@ -60,7 +60,7 @@
             ]
         },
         {
-            "id": "gson.dev.10000",
+            "id": "gson.prod.10000",
             "name": "中国电信",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://10000.log'>查看日志</a>",
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "http://9a1c574.r18.cpolar.top/telecom.js?v=wkg4k"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=jjh3"
                 }
             ],
             "keys": [
@@ -107,7 +107,7 @@
             ]
         },
         {
-            "id": "gson.dev.cloud",
+            "id": "gson.prod.cloud",
             "name": "筋斗云",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='javascript:;' onClick='window.location.reload(true);'>刷新</a>",
@@ -118,7 +118,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "http://9a1c574.r18.cpolar.top/cloud.js?v=wkg4k"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=jjh3"
                 }
             ],
             "keys": [
@@ -138,7 +138,7 @@
             ]
         },
         {
-            "id": "gson.dev.baiduwp",
+            "id": "gson.prod.baiduwp",
             "name": "百度网盘直连",
             "descs_html": [
                 "<a class=\"mb-2 v-btn v-btn--is-elevated\" href='http://baiduwp.log'>查看日志</a>",
@@ -147,7 +147,7 @@
             "scripts": [
                 {
                     "name": "百度网盘直链",
-                    "script": "http://9a1c574.r18.cpolar.top/baiduwp.js?v=wkg4k"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=jjh3"
                 }
             ],
             "keys": [
