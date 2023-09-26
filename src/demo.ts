@@ -4,7 +4,7 @@ class App extends VpnBox {
     public doRequestAction($request: ScriptRequest): VpnResult | Promise<VpnResult> {
         throw new Error("Method not implemented.");
     }
-    public doResponseAction($request: ScriptRequest, $response: ScriptResponse): VpnResult | Promise<VpnResult> {
+    public async doResponseAction($request: ScriptRequest, $response: ScriptResponse): Promise<VpnResult> {
         throw new Error("Method not implemented.");
     }
     public doScriptAction(): VpnResult | Promise<VpnResult> {
@@ -12,4 +12,4 @@ class App extends VpnBox {
     }
 }
 
-new App("开发示s例",'gsonhub.demo').run();
+new App("开发示s例", 'gsonhub.demo').run();

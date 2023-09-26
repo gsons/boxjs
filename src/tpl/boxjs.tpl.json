@@ -152,7 +152,9 @@
             ],
             "keys": [
                 "gsonhub.baiduwp.user_agent",
-                "gsonhub.baiduwp.mute"
+                "gsonhub.baiduwp.mute",
+                "gsonhub.baiduwp.aria_ip",
+                "gsonhub.baiduwp.is_aria2"
             ],
 
             "author": "@gsonhub",
@@ -163,6 +165,19 @@
                     "val": "",
                     "type": "text",
                     "desc": "User-Agent"
+                },
+                {
+                    "id": "gsonhub.baiduwp.is_aria2",
+                    "name": "aria2下载",
+                    "val": false,
+                    "type": "boolean"
+                },
+                {
+                    "id": "gsonhub.baiduwp.aria2_ip",
+                    "name": "aria2-RPC地址",
+                    "val": "",
+                    "type": "text",
+                    "desc": "aria2-RPC地址"
                 },
                 {
                     "id": "gsonhub.baiduwp.mute",
