@@ -1,0 +1,16 @@
+#!name= 腾讯大王卡动态免流@${env} 
+#!desc= 腾讯大王卡动态免流@author=gsonhub @version=${version}
+
+[General]
+force-http-engine-hosts = %APPEND%  txdwk.log  txdwk.json 
+
+[Script]
+
+# 接口服务  http://txdwk.json  http://txdwk.log 
+txdwk-http-service = type=http-request,pattern=^https?:\/\/txdwk\.(json|log),script-path=${baseUrl}/txdwk.js?v=${version},requires-body=true,max-size=0,timeout=10
+
+# 轮询 
+txdwk-for-cron = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=${baseUrl}/txdwk.js?v=${version},argument=auto
+
+#network-changed
+txdwk-network-changed = script-path=${baseUrl}/txdwk.js?v=${version},argument=auto,type=event,event-name=network-changed
