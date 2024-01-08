@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.jjh3",
+    "name": "@gsonhub的应用订阅v=prod.mrby",
     "author": "@gsonhub",
     "apps": [
         {
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=jjh3"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.js?v=mrby"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=jjh3"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.js?v=mrby"
                 }
             ],
             "keys": [
@@ -118,7 +118,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=jjh3"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.js?v=mrby"
                 }
             ],
             "keys": [
@@ -147,7 +147,7 @@
             "scripts": [
                 {
                     "name": "百度网盘直链",
-                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=jjh3"
+                    "script": "https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.js?v=mrby"
                 }
             ],
             "keys": [
