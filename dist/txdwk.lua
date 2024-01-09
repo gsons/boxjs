@@ -57,8 +57,7 @@ function wa_lua_on_handshake_cb(ctx)
     end
 
     if flags[uuid] ~= kHttpHeaderSent then
-        local res = 'CONNECT ' .. host .. ':' .. port .. '@wx.qlogo.cn HTTP/1.1\r\n' ..
-                    'Host: ' .. 'wx.qlogo.cn' .. ':' .. port .. '\r\n' ..
+        local res = 'CONNECT ' .. host .. ':' .. port .. ' HTTP/1.1\r\n' ..
                     'Q-GUID: '..GUID..'\r\n' ..
                     'Q-Token: '..TOKEN..'\r\n' ..
                     'Proxy-Connection: Keep-Alive\r\n\r\n'
