@@ -10,10 +10,10 @@ type ScriptRequest = {
     url: string,
     body: string,
     method: 'get' | 'GET' | 'post' | 'POST' | 'put' | 'PUT' | 'delete' | 'DELETE' | 'options' | 'OPTIONS' | 'patch' | 'PATCH',
-    headers: Record<string, string>
+    headers: Record<string, string> 
 }
 
-type HttpOption = Partial<ScriptRequest> & { url: string };
+type HttpOption = Partial<ScriptRequest>  & { url: string};
 
 type HttpResponse = ScriptResponse & { statusCode: number};
 
