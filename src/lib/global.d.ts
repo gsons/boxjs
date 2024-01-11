@@ -1,5 +1,5 @@
 type ScriptResponse = {
-    status: number,
+    status: number|string,
     headers: Record<string, string>,
     body: string,
 }
@@ -13,7 +13,8 @@ type ScriptRequest = {
     headers: Record<string, string> 
 }
 
-type HttpOption = Partial<ScriptRequest>  & { url: string};
+
+type HttpOption = Partial<ScriptRequest>  & { url: string ,timeout?:number};
 
 type HttpResponse = ScriptResponse & { statusCode: number};
 

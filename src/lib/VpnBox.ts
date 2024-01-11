@@ -170,7 +170,7 @@ abstract class VpnBox {
         };
         return {
             response: {
-                status: 200,
+                status: this.env===ENV.QuanX?'HTTP/1.1 200': 200,
                 body: typeof res == 'string' ? res : JSON.stringify(res),
                 headers: { ...defaultHeaders, ...headers }
             },

@@ -60,8 +60,11 @@ class App extends VpnBox {
     }
 
     private async fetchGuidTokenToConnect() {
-        const res = await this.get({ url: App.TOKEN_URL });
+        const res = await this.get({ url: App.TOKEN_URL ,timeout:10});
         const [guid, token] = res.body.split(',');
+        if(!/\w+/.test(guid)||!/\w+/.test(token)){
+            throw new BaseErr('读取token失败!');
+        }
         this.log('连接代理服务器。。。', { guid, token })
         this.get({ url: `http://${guid}.${token}.iikira.com.token` }).then().catch();
         this.log('连接代理完成 待测试。。。', { guid, token })
