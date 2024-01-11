@@ -43,24 +43,28 @@
     </tr>
     <tr align="center">
         <td>中国联通</td>
-        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/unicom.sgmodule<td>
+        <td>https://charming-gnome-9c9592.netlify.app/unicom.sgmodule<td>
     </tr>
     <tr align="center">
         <td>中国电信</td>
-         <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/telecom.sgmodule<td>
+         <td>https://charming-gnome-9c9592.netlify.app/telecom.sgmodule<td>
     </tr>
         <tr align="center">
         <td>平安白云</td>
-        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/pingan.sgmodule<td>
+        <td>https://charming-gnome-9c9592.netlify.app/pingan.sgmodule<td>
     </tr>
         </tr>
     <tr align="center">
         <td>筋斗云机场</td>
-        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/cloud.sgmodule<td>
+        <td>https://charming-gnome-9c9592.netlify.app/cloud.sgmodule<td>
+    </tr>
+    <tr align="center">
+        <td>百度网盘直链</td>
+        <td>https://charming-gnome-9c9592.netlify.app/baiduwp.sgmodule<td>
     </tr>
         <tr align="center">
         <td>百度网盘直链</td>
-        <td>https://raw.githubusercontent.com/gsons/boxjs/main/dist/baiduwp.sgmodule<td>
+        <td>https://charming-gnome-9c9592.netlify.app/baiduwp.sgmodule<td>
     </tr>
 </table>
 
@@ -89,7 +93,7 @@ npm run dev
 ### 配置
 > 在.env 配置你的线上地址
 ```
-ONLINE_URL=https://raw.githubusercontent.com/gsons/boxjs/main/dist
+ONLINE_URL=https://charming-gnome-9c9592.netlify.app
 ````
 
 > 编译打包
@@ -99,7 +103,7 @@ npm run build
 > 打包dist到服务器，建议打包至github作为线上环境
 ### 配置软件运行
 
-> 将模块的url地址添加到“shadowrocket/surge/loon/qx”模块,在“BOXJS”订阅box.json的url地址 https://raw.githubusercontent.com/gsons/boxjs/main/dist/boxjs.json
+> 将模块的url地址添加到“shadowrocket/surge/loon/qx”模块,在“BOXJS”订阅box.json的url地址 https://charming-gnome-9c9592.netlify.app/boxjs.json
 
 
 ### API接口
