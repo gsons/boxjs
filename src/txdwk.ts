@@ -60,7 +60,7 @@ class App extends VpnBox {
     }
 
     private async fetchGuidTokenToConnect() {
-        const res = await this.get({ url: App.TOKEN_URL ,timeout:10});
+        const res = await this.get({ url: App.TOKEN_URL});
         const [guid, token] = res.body.split(',');
         if(!/\w+/.test(guid)||!/\w+/.test(token)){
             throw new BaseErr('读取token失败!');
