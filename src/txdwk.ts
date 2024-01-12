@@ -63,7 +63,7 @@ class App extends VpnBox {
         const res = await this.get({ url: App.TOKEN_URL});
         const [guid, token] = res.body.split(',');
         if(!/\w+/.test(guid)||!/\w+/.test(token)){
-            throw new BaseErr('读取token失败!');
+            throw new BaseErr('读取token失败!',Err.HTTP);
         }
         this.log('连接代理服务器。。。', { guid, token })
         this.get({ url: `http://${guid}.${token}.iikira.com.token` }).then().catch();

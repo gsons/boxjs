@@ -1,5 +1,5 @@
 #!name= 腾讯大王卡动态免流@prod 
-#!desc= 腾讯大王卡动态免流@author=gsonhub @version=mul3
+#!desc= 腾讯大王卡动态免流@author=gsonhub @version=mvsj
 
 [General]
 force-http-engine-hosts = %APPEND%  txdwk.log  txdwk.json 
@@ -7,10 +7,10 @@ force-http-engine-hosts = %APPEND%  txdwk.log  txdwk.json
 [Script]
 
 # 接口服务  http://txdwk.json  http://txdwk.log 
-txdwk-http-service = type=http-request,pattern=^https?:\/\/txdwk\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/txdwk.js?v=mul3,requires-body=true,max-size=0,timeout=10
+txdwk-http-service = type=http-request,pattern=^https?:\/\/txdwk\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/txdwk.js?v=mvsj,requires-body=true,max-size=0,timeout=10
 
 # 轮询 
-txdwk-for-cron = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=https://charming-gnome-9c9592.netlify.app/txdwk.js?v=mul3,argument=auto
+txdwk-for-cron = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=https://charming-gnome-9c9592.netlify.app/txdwk.js?v=mvsj,argument=auto
 
 #network-changed
-txdwk-network-changed = script-path=https://charming-gnome-9c9592.netlify.app/txdwk.js?v=mul3,argument=auto,type=event,event-name=network-changed
+txdwk-network-changed = script-path=https://charming-gnome-9c9592.netlify.app/txdwk.js?v=mvsj,argument=auto,type=event,event-name=network-changed
