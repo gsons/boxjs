@@ -1,9 +1,11 @@
 import VpnBox, { BaseErr, Err } from "./lib/VpnBox";
 require('./tpl/txdwk.tpl.sgmodule');
+require('./tpl/txdwk_link.tpl.conf');
+require('./tpl/txdwk.tpl.conf');
+
 class App extends VpnBox {
 
     public static readonly TOKEN_URL = 'http://kc.iikira.com/kingcard';
-    public static readonly VERSION = '0.0.2';
 
     public async doRequestAction($request: ScriptRequest): Promise<VpnResult> {
         if ($request.url.includes('txdwk.log')) {
@@ -32,8 +34,8 @@ class App extends VpnBox {
     }
 
     private renderHtml(htm: string) {
-        const vv=(+new Date() - +new Date('2022-01-01'))/60/1000;
-        const version = parseInt((vv+'')).toString(36)
+        const vv = (+new Date() - +new Date('2022-01-01')) / 60 / 1000;
+        const version = parseInt((vv + '')).toString(36)
         const html = `
         <html>
         <title>大王卡动态免流</title>
@@ -66,28 +68,28 @@ class App extends VpnBox {
 
 
     public async doScriptAction(): Promise<VpnResult> {
-        let isConnect=true;
+        let isConnect = true;
         if ($argument == 'network-changed') {
             this.log('network-changed:当网络改变时等待2s 保证VPN已经自动连接');
             await this.sleep(2000);
-            isConnect=true;
+            isConnect = true;
         }
         else if ($argument == 'network-check') {
             this.log('network-check:检查网络状态');
-            const status=await this.checkConnectStatus();
-            if(status){
-                isConnect=false; 
+            const status = await this.checkConnectStatus();
+            if (status) {
+                isConnect = false;
             }
-            this.log(status?'已连接':'连接异常，尝试重新连接');
+            this.log(status ? '已连接' : '连接异常，尝试重新连接');
         }
         else if ($argument == 'network-token') {
             this.log('network-token:更新TOKEN');
-            isConnect=true;
+            isConnect = true;
         }
 
-        if(isConnect){
+        if (isConnect) {
             await this.fetchGuidTokenToConnect();
-        }else{
+        } else {
             this.log('本次不更新token');
         }
         return {};
@@ -98,20 +100,19 @@ class App extends VpnBox {
         return response.status == 204;
     }
 
-    private async fetchGuidTokenToConnect():Promise<boolean> {
+    private async fetchGuidTokenToConnect(): Promise<boolean> {
         this.log('开始更新token');
-        const res = await this.get({ url: App.TOKEN_URL});
+        const res = await this.get({ url: App.TOKEN_URL });
         const [guid, token] = res.body.split(',');
         if (!/\w+/.test(guid) || !/\w+/.test(token)) {
             throw new BaseErr('读取token失败!', Err.HTTP);
         }
         this.log('连接代理服务器。。。', { guid, token })
         this.get({ url: `http://${guid}.${token}.iikira.com.token` }).then().catch();
-        this.get({ url: `http://${guid}.${token}.iikira.com.token.cn` }).then().catch();
         //稍微等等再测试
         this.sleep(100);
         this.log('连接代理完成 待测试。。。', { guid, token })
-        const status=await this.checkConnectStatus();
+        const status = await this.checkConnectStatus();
         return status;
     }
 }
