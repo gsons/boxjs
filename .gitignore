@@ -3,4 +3,4 @@ temp
 git.bat
 .vscode
 .idea
-/dist/txdwk.*
+dist/txdwk.*
