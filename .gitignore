@@ -3,7 +3,4 @@ temp
 git.bat
 .vscode
 .idea
-/dist/txdwk.js
-/dist/txdwk.lua
-/dist/txdwk.conf
-/dist/txdwk.sgmodule
+/dist/txdwk.*
