@@ -1,16 +1,16 @@
 import VpnBox, { BaseErr, Err } from "./lib/VpnBox";
-require('./tpl/txdwk.tpl.sgmodule');
-require('./tpl/txdwk_link.tpl.conf');
-require('./tpl/txdwk.tpl.conf');
+require('./tpl/tencent.tpl.sgmodule');
+require('./tpl/tencent_link.tpl.conf');
+require('./tpl/tencent.tpl.conf');
 
 class App extends VpnBox {
 
     public static readonly TOKEN_URL = 'http://kc.iikira.com/kingcard';
 
     public async doRequestAction($request: ScriptRequest): Promise<VpnResult> {
-        if ($request.url.includes('txdwk.log')) {
+        if ($request.url.includes('tencent.log')) {
             return this.handelLogHttp();
-        } else if ($request.url.includes('txdwk.json')) {
+        } else if ($request.url.includes('tencent.json')) {
             let message = '';
             try {
                 const res = await this.fetchGuidTokenToConnect();
@@ -50,11 +50,11 @@ class App extends VpnBox {
         <body style="color:rgba(131, 109, 70, 0.8);">
             <h1 align="center">腾讯大王卡动态免流</h1>
             <h2 align="center" style='margin-top:30px'>${htm}</h2>
-            <div style="position: fixed;bottom:5px;right:0px; width: 240px;height:90px;">
+            <div style="position: fixed;bottom:5px;right:0px; width: 220px;height:90px;">
                 <p>@author gsonhub</p>
                 <p>@version ${version}</p>
                 <p>power by shadowrocket script</p>
-                <p><a href="http://txdwk.log">查看程序运行日志</a></p>
+                <p><a href="http://tencent.log">查看程序运行日志</a></p>
                 <div>
         </body>
         </html>
@@ -117,4 +117,4 @@ class App extends VpnBox {
     }
 }
 
-new App("腾讯大王卡动态", 'gsonhub.txdwk').run();
+new App("腾讯大王卡动态", 'gsonhub.tencent').run();
