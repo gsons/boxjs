@@ -168,13 +168,12 @@ abstract class VpnBox {
             'Access-Control-Allow-Methods': 'POST,GET',
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
         };
-        return {
-            response: {
-                status: this.env===ENV.QuanX?'HTTP/1.1 200': 200,
-                body: typeof res == 'string' ? res : JSON.stringify(res),
-                headers: { ...defaultHeaders, ...headers }
-            },
-        }
+        const response={
+            status: this.env===ENV.QuanX?'HTTP/1.1 200': 200,
+            body: typeof res == 'string' ? res : JSON.stringify(res),
+            headers: { ...defaultHeaders, ...headers }
+        };
+        return this.env===ENV.QuanX?response:{response};
     }
 
     randomString(length: number) {
