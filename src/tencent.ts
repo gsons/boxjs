@@ -95,9 +95,24 @@ class App extends VpnBox {
         return {};
     }
 
-    private async checkConnectStatus(): Promise<boolean> {
-        const response = await this.get({ url: `http://www.gstatic.com/generate_204` });
-        return response.status == 204;
+    private async checkConnectStatus(isThrow:boolean=false): Promise<boolean> {
+        let connected=false,err_msg='';
+        try{
+            const response = await this.get({ url: `http://www.gstatic.com/generate_204` });
+            if(response.status == 204){
+                connected= true;
+            }else{
+                err_msg=JSON.stringify(response);
+            }
+        }catch(err){
+            err_msg=err;
+        }
+        if(connected){
+            return true;
+        }else{
+            if(isThrow) throw new BaseErr('测试连接状态失败，'+err_msg,Err.HTTP);
+            return false;
+        }
     }
 
     private async fetchGuidTokenToConnect(): Promise<boolean> {
@@ -112,7 +127,7 @@ class App extends VpnBox {
         //稍微等等再测试
         this.sleep(100);
         this.log('连接代理完成 待测试。。。', { guid, token })
-        const status = await this.checkConnectStatus();
+        const status = await this.checkConnectStatus(true);
         return status;
     }
 }
