@@ -1,5 +1,5 @@
 #!name= 开发示例@prod 
-#!desc= 开发示例@author=gsonhub @version=nbba
+#!desc= 开发示例@author=gsonhub @version=nbc0
 
 [General]
 force-http-engine-hosts = %APPEND%  demo.log  
@@ -7,5 +7,5 @@ force-http-engine-hosts = %APPEND%  demo.log
 [Script]
 
 # 开发示例de日志 http://demo.log 
-bing-http-service = type=http-request,pattern=^https?:\/\/demo\.log,script-path=https://charming-gnome-9c9592.netlify.app/demo.js?v=nbba,requires-body=true,max-size=0,timeout=10
+bing-http-service = type=http-request,pattern=^https?:\/\/demo\.log,script-path=https://charming-gnome-9c9592.netlify.app/demo.js?v=nbc0,requires-body=true,max-size=0,timeout=10
 

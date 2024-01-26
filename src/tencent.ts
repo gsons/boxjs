@@ -5,6 +5,8 @@ require('./tpl/tencent.tpl.conf');
 
 class App extends VpnBox {
 
+    public static readonly VERSION = '1.0.2'
+
     public static readonly TOKEN_URL = 'http://kc.iikira.com/kingcard';
 
     public async doRequestAction($request: ScriptRequest): Promise<VpnResult> {
@@ -36,8 +38,7 @@ class App extends VpnBox {
    
 
     private renderHtml(htm: string) {
-        const vv = (+new Date() - +new Date('2022-01-01')) / 60 / 1000;
-        const version = parseInt((vv + '')).toString(36)
+        const version = App.VERSION
         const html = `
         <html>
         <title>大王卡动态免流</title>

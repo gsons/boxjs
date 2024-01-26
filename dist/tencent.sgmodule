@@ -1,5 +1,5 @@
 #!name= 腾讯大王卡动态免流@prod 
-#!desc= 腾讯大王卡动态免流@author=gsonhub @version=nbba
+#!desc= 腾讯大王卡动态免流@author=gsonhub @version=nbc0
 
 [General]
 force-http-engine-hosts = %APPEND%  tencent.log  tencent.json 
@@ -7,13 +7,13 @@ force-http-engine-hosts = %APPEND%  tencent.log  tencent.json
 [Script]
 
 # 接口服务  http://tencent.json  http://tencent.log 
-tencent-http-service = type=http-request,pattern=^https?:\/\/tencent\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbba,requires-body=true,max-size=0,timeout=10
+tencent-http-service = type=http-request,pattern=^https?:\/\/tencent\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbc0,requires-body=true,max-size=0,timeout=10
 
 # 轮询1检查网络 
-tencent-for-cron1 = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbba,argument=network-check
+tencent-for-cron1 = type=cron,cronexp=*/1 * * * *,timeout=30,script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbc0,argument=network-check
 
 # 轮询5更新TOKEN 
-tencent-for-cron5 = type=cron,cronexp=*/10 * * * *,timeout=30,script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbba,argument=network-token
+tencent-for-cron5 = type=cron,cronexp=*/10 * * * *,timeout=30,script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbc0,argument=network-token
 
 #network-changed
-tencent-network-changed = script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbba,argument=network-changed,type=event,event-name=network-changed
+tencent-network-changed = script-path=https://charming-gnome-9c9592.netlify.app/tencent.js?v=nbc0,argument=network-changed,type=event,event-name=network-changed
