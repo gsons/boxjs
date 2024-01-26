@@ -34,37 +34,43 @@
         <td>修改useragent下载</td>
         <td>✔️</td>
     </tr>
+        </tr>
+        <tr align="center">
+        <td>腾讯大王卡</td>
+        <td>动态免流</td>
+        <td>✔️</td>
+    </tr>
 </table>
 
 <table>
-    <tr align="center">
+    <tr align="left">
         <th>脚本</th>
         <th>模块地址</th>
     </tr>
-    <tr align="center">
+    <tr align="left">
         <td>中国联通</td>
         <td>https://charming-gnome-9c9592.netlify.app/unicom.sgmodule<td>
     </tr>
-    <tr align="center">
+    <tr align="left">
         <td>中国电信</td>
          <td>https://charming-gnome-9c9592.netlify.app/telecom.sgmodule<td>
     </tr>
-        <tr align="center">
+        <tr align="left">
         <td>平安白云</td>
         <td>https://charming-gnome-9c9592.netlify.app/pingan.sgmodule<td>
     </tr>
         </tr>
-    <tr align="center">
+    <tr align="left">
         <td>筋斗云机场</td>
         <td>https://charming-gnome-9c9592.netlify.app/cloud.sgmodule<td>
     </tr>
-    <tr align="center">
+    <tr align="left">
         <td>百度网盘直链</td>
         <td>https://charming-gnome-9c9592.netlify.app/baiduwp.sgmodule<td>
     </tr>
-        <tr align="center">
-        <td>百度网盘直链</td>
-        <td>https://charming-gnome-9c9592.netlify.app/baiduwp.sgmodule<td>
+        <tr align="left">
+        <td>腾讯大王卡</td>
+        <td>https://charming-gnome-9c9592.netlify.app/tencent.conf<td>
     </tr>
 </table>
 
@@ -91,7 +97,7 @@ npm run dev
 ## 上线打包
 
 ### 配置
-> 在.env 配置你的线上地址
+> 在.env 文件配置线上地址
 ```
 ONLINE_URL=https://charming-gnome-9c9592.netlify.app
 ````
@@ -146,3 +152,20 @@ npm run build
 URL-REGEX,baiyunuser\/statistics\/reportOpenDoorRecord,REJECT
 ```
 
+## 腾讯大王卡
+* shadowrocket 配置lua代理服务器
+
+服务器备注名 腾讯大王卡
+IP 157.148.54.212  端口 8091
+lua文件下载地址
+
+https://charming-gnome-9c9592.netlify.app/txdwk.lua
+
+* 导入配置文件并选择
+
+配置文件下载地址
+https://charming-gnome-9c9592.netlify.app/txdwk.conf
+
+* 启动shadowrocket 
+
+浏览器访问入口 http://txdwk.json
