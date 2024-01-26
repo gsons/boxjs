@@ -1,6 +1,6 @@
 {
     "id": "gsonhub.application.prod",
-    "name": "@gsonhub的应用订阅v=prod.na8k",
+    "name": "@gsonhub的应用订阅v=prod.nbau",
     "author": "@gsonhub",
     "apps": [
         {
@@ -15,7 +15,7 @@
             "scripts": [
                 {
                     "name": "中国联通流量查询",
-                    "script": "https://charming-gnome-9c9592.netlify.app/unicom.js?v=na8k"
+                    "script": "https://charming-gnome-9c9592.netlify.app/unicom.js?v=nbau"
                 }
             ],
             "keys": [
@@ -69,7 +69,7 @@
             "scripts": [
                 {
                     "name": "中国电信流量查询",
-                    "script": "https://charming-gnome-9c9592.netlify.app/telecom.js?v=na8k"
+                    "script": "https://charming-gnome-9c9592.netlify.app/telecom.js?v=nbau"
                 }
             ],
             "keys": [
@@ -118,7 +118,7 @@
             "scripts": [
                 {
                     "name": "筋斗云签到",
-                    "script": "https://charming-gnome-9c9592.netlify.app/cloud.js?v=na8k"
+                    "script": "https://charming-gnome-9c9592.netlify.app/cloud.js?v=nbau"
                 }
             ],
             "keys": [
@@ -147,7 +147,7 @@
             "scripts": [
                 {
                     "name": "百度网盘直链",
-                    "script": "https://charming-gnome-9c9592.netlify.app/baiduwp.js?v=na8k"
+                    "script": "https://charming-gnome-9c9592.netlify.app/baiduwp.js?v=nbau"
                 }
             ],
             "keys": [

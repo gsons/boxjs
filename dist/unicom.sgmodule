@@ -1,5 +1,5 @@
 #!name= 中国联通@prod 
-#!desc= 中国联通@author=gsonhub @version=na8k
+#!desc= 中国联通@author=gsonhub @version=nbau
 
 [General]
 force-http-engine-hosts = %APPEND%  10010.log 10010.json
@@ -7,7 +7,7 @@ force-http-engine-hosts = %APPEND%  10010.log 10010.json
 [Script]
 
 # 轮询 查询中国联通流量
-unicom-for-cron = type=cron,cronexp=*/5 * * * *,timeout=10,script-path=https://charming-gnome-9c9592.netlify.app/unicom.js?v=na8k
+unicom-for-cron = type=cron,cronexp=*/5 * * * *,timeout=10,script-path=https://charming-gnome-9c9592.netlify.app/unicom.js?v=nbau
 
 # 查询中国联通流量接口服务  http://10010.json 查询联通日志 http://10010.log 
-unicom-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/unicom.js?v=na8k,requires-body=true,max-size=0,timeout=10
+unicom-http-service = type=http-request,pattern=^https?:\/\/10010\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/unicom.js?v=nbau,requires-body=true,max-size=0,timeout=10

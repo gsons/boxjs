@@ -1,5 +1,5 @@
 #!name= 平安白云@prod 
-#!desc= 平安白云@author=gsonhub @version=na8k
+#!desc= 平安白云@author=gsonhub @version=nbau
 
 [MITM] 
 hostname = %APPEND% www.pinganbaiyun.cn
@@ -10,8 +10,8 @@ force-http-engine-hosts = %APPEND%  pingan.log
 [Script]
 
 # 平安白云 
-pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=https://charming-gnome-9c9592.netlify.app/pingan.js?v=na8k,requires-body=true,max-size=0
+pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=https://charming-gnome-9c9592.netlify.app/pingan.js?v=nbau,requires-body=true,max-size=0
 
 # 查询平安白云日志 http://pingan.log 
-pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=https://charming-gnome-9c9592.netlify.app/pingan.js?v=na8k,requires-body=true,max-size=0,timeout=10
+pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=https://charming-gnome-9c9592.netlify.app/pingan.js?v=nbau,requires-body=true,max-size=0,timeout=10
 

@@ -17,14 +17,14 @@ class App extends VpnBox {
                 if (res) {
                     message = '连接成功！'
                 } else {
-                    message = '连接失败！系统错误，' + JSON.stringify(res);
+                    message = '连接失败！';
                 }
             } catch (err) {
                 let msg = '';
                 if (err instanceof BaseErr) {
                     msg = err.message;
                 }
-                message = '连接失败！系统异常，' + msg;
+                message = '连接失败！出现异常，' + msg;
             }
             this.log(message)
             let html = this.renderHtml(message)
@@ -32,6 +32,8 @@ class App extends VpnBox {
         }
         return false;
     }
+
+   
 
     private renderHtml(htm: string) {
         const vv = (+new Date() - +new Date('2022-01-01')) / 60 / 1000;
@@ -110,7 +112,7 @@ class App extends VpnBox {
         if(connected){
             return true;
         }else{
-            if(isThrow) throw new BaseErr('测试连接状态失败，'+err_msg,Err.HTTP);
+            if(isThrow) throw new BaseErr('测试连接状态，连接失败，'+err_msg,Err.HTTP);
             return false;
         }
     }
