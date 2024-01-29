@@ -1,5 +1,5 @@
 #!name= 必应@prod 
-#!desc= 必应@author=gsonhub @version=nbc0
+#!desc= 必应@author=gsonhub @version=nel1
 
 [General]
 force-http-engine-hosts = %APPEND%  bing.log  
@@ -7,8 +7,8 @@ force-http-engine-hosts = %APPEND%  bing.log
 [Script]
 
 # 必应 
-bing-request-service = type=http-request,pattern=^https?:\/\/www\.bing\.com,script-path=https://charming-gnome-9c9592.netlify.app/bing.js?v=nbc0,max-size=0,timeout=10
+bing-request-service = type=http-request,pattern=^https?:\/\/www\.bing\.com,script-path=https://charming-gnome-9c9592.netlify.app/bing.js?v=nel1,max-size=0,timeout=10
 
 # 必应日志 http://bing.log 
-bing-http-service = type=http-request,pattern=^https?:\/\/bing\.log,script-path=https://charming-gnome-9c9592.netlify.app/bing.js?v=nbc0,requires-body=true,max-size=0,timeout=10
+bing-http-service = type=http-request,pattern=^https?:\/\/bing\.log,script-path=https://charming-gnome-9c9592.netlify.app/bing.js?v=nel1,requires-body=true,max-size=0,timeout=10
 
