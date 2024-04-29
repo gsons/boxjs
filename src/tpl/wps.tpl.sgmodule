@@ -1,0 +1,17 @@
+#!name= WPS@${env} 
+#!desc= WPS@author=gsonhub @version=${version}
+
+[MITM] 
+hostname = %APPEND% vaf.wps.cn
+
+[General]
+force-http-engine-hosts = %APPEND%  wps.log  
+
+[Script]
+
+# WPS 
+wps-service = type=http-response,pattern=^https?:\/\/vaf\.wps\.cn\/proxy\/msg-sender\/api\/v1\/masshelper\/c\/detail,script-path=${baseUrl}/wps.js?v=${version},requires-body=true,max-size=0
+
+# 查询WPS日志 http://wps.log 
+wps-http-service = type=http-request,pattern=^https?:\/\/wps\.log,script-path=${baseUrl}/wps.js?v=${version},requires-body=true,max-size=0,timeout=10
+
