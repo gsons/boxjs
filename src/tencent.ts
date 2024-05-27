@@ -128,7 +128,7 @@ class App extends VpnBox {
         this.log('连接代理服务器。。。', { guid, token })
         this.get({ url: `http://${guid}.${token}.iikira.com.token` }).then().catch();
         //稍微等等再测试
-        this.sleep(100);
+        await this.sleep(100);
         this.log('连接代理完成 待测试。。。', { guid, token })
         const status = await this.checkConnectStatus(true);
         return status;

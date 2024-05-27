@@ -1,0 +1,14 @@
+#!name= 青海移动@${env} 
+#!desc= 青海移动@author=gsonhub @version=${version}
+
+[General]
+force-http-engine-hosts = %APPEND%  10086.log 10086.json
+
+[Script]
+
+# 查询青海移动流量接口服务  http://10086.json 查询电信日志 http://10086.log 
+10086-http-service = type=http-request,pattern=^https?:\/\/10086\.(json|log),script-path=${baseUrl}/10086.js?v=${version},requires-body=true,max-size=0,timeout=10
+
+# 轮询 查询青海移动
+10086-for-cron = type=cron,cronexp=*/5 * * * *,timeout=10,script-path=${baseUrl}/10086.js?v=${version}
+
