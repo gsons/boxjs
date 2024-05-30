@@ -1,5 +1,5 @@
 #!name= 中国电信@prod 
-#!desc= 中国电信@author=gsonhub @version=r2uu
+#!desc= 中国电信@author=gsonhub @version=r5yo
 
 [General]
 force-http-engine-hosts = %APPEND%  10000.log 10000.json
@@ -7,8 +7,8 @@ force-http-engine-hosts = %APPEND%  10000.log 10000.json
 [Script]
 
 # 查询中国电信流量接口服务  http://10000.json 查询电信日志 http://10000.log 
-telecom-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/telecom.js?v=r2uu,requires-body=true,max-size=0,timeout=10
+telecom-http-service = type=http-request,pattern=^https?:\/\/10000\.(json|log),script-path=https://charming-gnome-9c9592.netlify.app/telecom.js?v=r5yo,requires-body=true,max-size=0,timeout=10
 
 # 轮询 查询电信流量
-telecom-for-cron = type=cron,cronexp=*/5 * * * *,timeout=10,script-path=https://charming-gnome-9c9592.netlify.app/telecom.js?v=r2uu
+telecom-for-cron = type=cron,cronexp=*/5 * * * *,timeout=10,script-path=https://charming-gnome-9c9592.netlify.app/telecom.js?v=r5yo
 
