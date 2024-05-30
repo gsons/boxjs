@@ -163,8 +163,11 @@ https://charming-gnome-9c9592.netlify.app/txdwk.lua
 
 * 导入配置文件并选择
 
-配置文件下载地址
+配置文件下载地址1
 https://charming-gnome-9c9592.netlify.app/txdwk.conf
+
+备选配置文件下载地址2
+https://charming-gnome-9c9592.netlify.app/tencent.conf
 
 * 启动shadowrocket 
 
