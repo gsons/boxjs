@@ -1,5 +1,5 @@
 #!name= WPS@prod 
-#!desc= WPS@author=gsonhub @version=r5yo
+#!desc= WPS@author=gsonhub @version=rmup
 
 [MITM] 
 hostname = %APPEND% vaf.wps.cn
@@ -10,8 +10,8 @@ force-http-engine-hosts = %APPEND%  wps.log
 [Script]
 
 # WPS 
-wps-service = type=http-response,pattern=^https?:\/\/vaf\.wps\.cn\/proxy\/msg-sender\/api\/v1\/masshelper\/c\/detail,script-path=https://charming-gnome-9c9592.netlify.app/wps.js?v=r5yo,requires-body=true,max-size=0
+wps-service = type=http-response,pattern=^https?:\/\/vaf\.wps\.cn\/proxy\/msg-sender\/api\/v1\/masshelper\/c\/detail,script-path=https://charming-gnome-9c9592.netlify.app/wps.js?v=rmup,requires-body=true,max-size=0
 
 # 查询WPS日志 http://wps.log 
-wps-http-service = type=http-request,pattern=^https?:\/\/wps\.log,script-path=https://charming-gnome-9c9592.netlify.app/wps.js?v=r5yo,requires-body=true,max-size=0,timeout=10
+wps-http-service = type=http-request,pattern=^https?:\/\/wps\.log,script-path=https://charming-gnome-9c9592.netlify.app/wps.js?v=rmup,requires-body=true,max-size=0,timeout=10
 

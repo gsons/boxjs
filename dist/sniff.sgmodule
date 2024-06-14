@@ -1,5 +1,5 @@
 #!name= 流媒体资源嗅探@prod 
-#!desc= 流媒体资源嗅探@author=gsonhub @version=r5yo
+#!desc= 流媒体资源嗅探@author=gsonhub @version=rmup
 
 [General]
 force-http-engine-hosts = %APPEND%  sniff.log  sniff.json
@@ -7,7 +7,7 @@ force-http-engine-hosts = %APPEND%  sniff.log  sniff.json
 [Script]
 
 # http://sniff.log http://sniff.json 
-sniff-http-service = type=http-request,pattern=^https?:\/\/sniff\.(log|json),script-path=https://charming-gnome-9c9592.netlify.app/sniff.js?v=r5yo,requires-body=true,max-size=0,timeout=10
+sniff-http-service = type=http-request,pattern=^https?:\/\/sniff\.(log|json),script-path=https://charming-gnome-9c9592.netlify.app/sniff.js?v=rmup,requires-body=true,max-size=0,timeout=10
 
 # 
-sniff-request-service = type=http-request,pattern=\.(flv|m3u8)\?,script-path=https://charming-gnome-9c9592.netlify.app/sniff.js?v=r5yo,max-size=0,timeout=10
+sniff-request-service = type=http-request,pattern=\.(flv|m3u8)\?,script-path=https://charming-gnome-9c9592.netlify.app/sniff.js?v=rmup,max-size=0,timeout=10

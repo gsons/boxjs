@@ -2,16 +2,16 @@
 #!desc= 平安白云@author=gsonhub @version=${version}
 
 [MITM] 
-hostname = %APPEND% www.pinganbaiyun.cn
+hostname = %APPEND% www.pinganbaiyun.cn,pingan.json.cpolar.cn,pingan.json
 
 [General]
-force-http-engine-hosts = %APPEND%  pingan.log  
+force-http-engine-hosts = %APPEND%  pingan.log  pingan.json.cpolar.cn pingan.json
 
 [Script]
 
 # 平安白云 
-pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=${baseUrl}/pingan.js?v=${version},requires-body=true,max-size=0
+pingan-service = type=http-response,pattern=^https?:\/\/(www\.|)pinganbaiyun\.(cn|com)\/baiyunuser\/entranceguard\/getList$,script-path=${baseUrl}/pingan.js?v=${version},requires-body=true,max-size=0,argument=gsonhub
 
-# 查询平安白云日志 http://pingan.log 
-pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.log,script-path=${baseUrl}/pingan.js?v=${version},requires-body=true,max-size=0,timeout=10
+# 查询平安白云日志 http://pingan.log  http://pingan.json 
+pingan-http-service = type=http-request,pattern=^https?:\/\/pingan\.(json|log|),script-path=${baseUrl}/pingan.js?v=${version},requires-body=true,max-size=0,timeout=10
 
