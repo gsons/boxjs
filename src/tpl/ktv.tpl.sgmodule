@@ -1,6 +1,9 @@
 #!name= KTV@${env} 
 #!desc= KTV@author=gsonhub @version=${version}
 
+[MITM] 
+hostname = %APPEND% app-normal-biz.y-wechat.cn,app-core-biz.y-wechat.cn
+
 [General]
 force-http-engine-hosts = %APPEND%  ktv.log  
 
