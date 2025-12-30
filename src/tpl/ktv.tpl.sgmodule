@@ -9,5 +9,11 @@ force-http-engine-hosts = %APPEND%  ktv.log
 # KTV de日志 http://ktv.log 
 bing-http-service = type=http-request,pattern=^https?:\/\/ktv\.log,script-path=${baseUrl}/ktv.js?v=${version},requires-body=true,max-size=0,timeout=10
 
-# KTV 
-ktv-service = type=http-response,pattern=^https?:\/\/app-normal-biz\.y-wechat\.cn\/public\/mini_pro\/user\/get_user_info$,script-path=${baseUrl}/ktv.js?v=${version},requires-body=true,max-size=0,argument=gsonhub
+# KTV1 
+ktv1-service = type=http-response,pattern=^https?:\/\/app-normal-biz\.y-wechat\.cn\/public\/mini_pro\/user\/get_user_info$,script-path=${baseUrl}/ktv.js?v=${version},requires-body=true,max-size=0,argument=gsonhub
+
+# KTV2
+ktv2-service = type=http-response,pattern=^https?:\/\/app-core-biz\.y-wechat\.cn\/core\/login\/login$,script-path=${baseUrl}/ktv.js?v=${version},requires-body=true,max-size=0,argument=gsonhub
+
+
+

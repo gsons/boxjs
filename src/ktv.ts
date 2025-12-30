@@ -20,7 +20,23 @@ class App extends VpnBox {
                 this.log('解析json失败,修改响应体失败', { url: $request.url, body: $response.body })
                 throw new BaseErr('修改响应数据失败', Err.BASE);
             }
-        } else {
+        }
+        else if ($request.url.includes('core/login/login')) {
+            try {
+                let res = JSON.parse($response.body);
+                let user_info=res.data.user_info;
+                user_info['EXPIRE_DATE']=2177424000;
+                user_info['VIP_STATUS']=2;
+                res['data']['user_info'] = user_info;
+                let body = JSON.stringify(res);
+                this.log(body);
+                return { body };
+            } catch (error) {
+                this.log('解析json失败,修改响应体失败', { url: $request.url, body: $response.body })
+                throw new BaseErr('修改响应数据失败', Err.BASE);
+            }
+        }
+        else {
             this.log('未匹配到需要修改的响应...');
             return false;
         }
