@@ -1,8 +1,14 @@
 import VpnBox, { BaseErr, Err } from "./lib/VpnBox";
 require('./tpl/ktv.tpl.sgmodule');
 class App extends VpnBox {
+
     public doRequestAction($request: ScriptRequest): VpnResult | Promise<VpnResult> {
-        throw new Error("Method not implemented.");
+        if ($request.url.includes('ktv.log')) {
+            return this.handelLogHttp();
+        }
+        else {
+            return false;
+        }
     }
 
     public doResponseAction($request: ScriptRequest, $response: ScriptResponse): VpnResult | Promise<VpnResult> {
